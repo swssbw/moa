@@ -8,21 +8,18 @@ import Nl2br from '@/components/Nl2br';
 const menuItems = [
   {
     title: '고객/콘텐츠 관리',
-    // description: '고객 정보와 콘텐츠를 효율적으로 관리하세요',
     href: '/home/customer',
     icon: PeopleAltRounded,
     size: 6,
   },
   {
     title: '방문 관리',
-    // description: '방문 일정을 체계적으로 관리하세요',
     href: '/home/schedule',
     icon: CalendarMonthRounded,
     size: 6,
   },
   {
     title: '인지재활 서비스 시작하기',
-    // description: '체계적인 인지재활 서비스를 시작해보세요',
     href: '/service',
     icon: PsychologyRounded,
     size: 12,
@@ -32,7 +29,8 @@ const menuItems = [
 export default function Home() {
   return (
     <Stack
-      sx={{ height: '100%' }}
+      flex={1}
+      minHeight={'100%'}
       justifyContent={'center'}
       alignItems={'center'}
       gap={4}
