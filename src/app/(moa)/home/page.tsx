@@ -1,30 +1,30 @@
 import { Card, CardContent, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
-import PeopleAltRounded from '@mui/icons-material/PeopleAltRounded';
-import CalendarMonthRounded from '@mui/icons-material/CalendarMonthRounded';
-import PsychologyRounded from '@mui/icons-material/PsychologyRounded';
+// import PeopleAltRounded from '@mui/icons-material/PeopleAltRounded';
+// import CalendarMonthRounded from '@mui/icons-material/CalendarMonthRounded';
+// import PsychologyRounded from '@mui/icons-material/PsychologyRounded';
 import Nl2br from '@/components/Nl2br';
 
-const menuItems = [
-  {
-    title: '고객/콘텐츠 관리',
-    href: '/home/customer',
-    icon: PeopleAltRounded,
-    size: 6,
-  },
-  {
-    title: '방문 관리',
-    href: '/home/schedule',
-    icon: CalendarMonthRounded,
-    size: 6,
-  },
-  {
-    title: '인지재활 서비스 시작하기',
-    href: '/service',
-    icon: PsychologyRounded,
-    size: 12,
-  },
-];
+// const menuItems = [
+//   {
+//     title: '고객/콘텐츠 관리',
+//     href: '/home/customer',
+//     icon: PeopleAltRounded,
+//     size: 6,
+//   },
+//   {
+//     title: '방문 관리',
+//     href: '/home/schedule',
+//     icon: CalendarMonthRounded,
+//     size: 6,
+//   },
+//   {
+//     title: '인지재활 서비스 시작하기',
+//     href: '/service',
+//     icon: PsychologyRounded,
+//     size: 12,
+//   },
+// ];
 
 export default function Home() {
   return (

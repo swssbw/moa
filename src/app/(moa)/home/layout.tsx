@@ -1,9 +1,9 @@
+'use client';
 import { Box, Paper, Typography, List, ListItem, ListItemText, Stack } from '@mui/material';
-
-import Image from 'next/image';
 import Logo from '@/components/logo.svg';
 
-const menuItems = ['고객 관리', '재활 자료 관리', '방문 일정 조회', '인지 재활 서비스'];
+const menuItems = ['고객 관리', '평가지 관리', '재활 자료 관리', '방문 일정 조회', '인지 재활 서비스'];
+
 export default function SideBarLayout({
   children,
 }: Readonly<{
@@ -20,8 +20,9 @@ export default function SideBarLayout({
     >
       {/* 사이드바 */}
       <Paper
+        elevation={3}
         sx={{
-          width: 240,
+          width: 300,
           height: '100%',
           backgroundColor: '#ffffff',
           boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.1)',
@@ -29,11 +30,9 @@ export default function SideBarLayout({
           flexShrink: 0,
         }}
       >
-        <Stack gap={2}>
+        <Stack spacing={4}>
           <Stack alignItems={'center'}>
-            <Image
-              src={Logo}
-              alt='Moa 로고'
+            <Logo
               width={50}
               height={50}
             />
@@ -45,7 +44,7 @@ export default function SideBarLayout({
             </Typography>
           </Stack>
 
-          <List sx={{ p: 0 }}>
+          <List>
             {menuItems.map((text, index) => (
               <ListItem
                 key={index}

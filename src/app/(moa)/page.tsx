@@ -1,4 +1,4 @@
-import Image from 'next/image';
+'use client';
 import Logo from '@/components/logo.svg';
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
@@ -12,9 +12,7 @@ export default function Home() {
       gap={1}
     >
       <Box>
-        <Image
-          src={Logo}
-          alt='Moa 로고'
+        <Logo
           width={120}
           height={120}
         />
