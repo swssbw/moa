@@ -1,9 +1,43 @@
 import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
 import './globals.css';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
+const inter = Inter({ subsets: ['latin'] });
+
 export const metadata: Metadata = {
-  title: '모아 Moa',
+  title: 'Moa',
+  description: '모아',
+  manifest: '/manifest.json',
+  themeColor: '#ffffff',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'black-translucent',
+    title: 'Moa',
+    startupImage: [
+      {
+        url: '/splash/apple-splash-2048-2732.png',
+        media: '(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)',
+      },
+      {
+        url: '/splash/apple-splash-1668-2388.png',
+        media: '(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)',
+      },
+      {
+        url: '/splash/apple-splash-1536-2048.png',
+        media: '(device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)',
+      },
+    ],
+  },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
+  icons: {
+    apple: [{ url: '/icons/icon-192x192.png', sizes: '192x192', type: 'image/png' }],
+  },
 };
 
 export default function RootLayout({
@@ -13,7 +47,44 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body>
+      <head>
+        <link
+          rel='apple-touch-icon'
+          href='/icons/icon-192x192.png'
+        />
+        <meta
+          name='apple-mobile-web-app-capable'
+          content='yes'
+        />
+        <meta
+          name='apple-mobile-web-app-status-bar-style'
+          content='black-translucent'
+        />
+        <meta
+          name='apple-mobile-web-app-title'
+          content='Moa'
+        />
+
+        {/* iPad Pro */}
+        <link
+          rel='apple-touch-startup-image'
+          media='screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)'
+          href='/splash/apple-splash-2048-2732.png'
+        />
+        {/* iPad Air */}
+        <link
+          rel='apple-touch-startup-image'
+          media='screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)'
+          href='/splash/apple-splash-1668-2388.png'
+        />
+        {/* iPad */}
+        <link
+          rel='apple-touch-startup-image'
+          media='screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)'
+          href='/splash/apple-splash-1536-2048.png'
+        />
+      </head>
+      <body className={inter.className}>
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
     </html>

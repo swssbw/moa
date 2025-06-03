@@ -6,7 +6,10 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate-pwa-icons": "node scripts/generate-pwa-icons.mjs",
+    "generate-pwa-splash": "node scripts/generate-pwa-splash.mjs",
+    "generate-pwa-assets": "npm run generate-pwa-icons && npm run generate-pwa-splash"
   },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
@@ -21,8 +24,10 @@
     "clsx": "^2.1.1",
     "lucide-react": "^0.511.0",
     "next": "15.3.3",
+    "next-pwa": "^5.6.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "sharp": "^0.34.2",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7"
   },

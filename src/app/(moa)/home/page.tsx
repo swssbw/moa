@@ -38,18 +38,18 @@ export default function Home() {
       <Stack gap={1}>
         <Typography
           variant='h4'
-          textAlign={'center'}
+          // textAlign={'center'}
           sx={{
             fontFamily: 'IBM Plex Sans KR',
             fontWeight: 700,
           }}
         >
-          <Nl2br>안녕하세요! \n홍길동 매니저님</Nl2br>
+          <Nl2br>안녕하세요! 홍길동 매니저님</Nl2br>
         </Typography>
 
         <Typography
           variant='h6'
-          textAlign={'center'}
+          // textAlign={'center'}
           sx={{
             fontFamily: 'IBM Plex Sans KR',
             fontWeight: 500,
