@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid, Stack, Typography } from '@mui/material';
+import { Card, CardContent, Stack, Typography } from '@mui/material';
 import Link from 'next/link';
 import PeopleAltRounded from '@mui/icons-material/PeopleAltRounded';
 import CalendarMonthRounded from '@mui/icons-material/CalendarMonthRounded';
@@ -31,9 +31,10 @@ export default function Home() {
     <Stack
       flex={1}
       minHeight={'100%'}
-      justifyContent={'center'}
-      alignItems={'center'}
+      // justifyContent={'center'}
+      // alignItems={'center'}
       gap={4}
+      width={'100%'}
     >
       <Stack gap={1}>
         <Typography
@@ -59,7 +60,68 @@ export default function Home() {
         </Typography>
       </Stack>
 
-      <Grid
+      <Stack
+        direction='row'
+        height='120px'
+        gap={2}
+      >
+        <Link
+          href={'/service'}
+          style={{ width: '50%' }}
+        >
+          <Card
+            elevation={0}
+            sx={{
+              height: '120px',
+              border: '1px solid #eee',
+              borderRadius: '16px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }}
+          >
+            <CardContent sx={{ p: '24px' }}>
+              <Stack gap={1}>
+                <Typography
+                  variant='h5'
+                  sx={{
+                    color: 'secondary.main',
+                  }}
+                >
+                  검사하기
+                </Typography>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Link>
+        <Link
+          href={'/service'}
+          style={{ width: '50%' }}
+        >
+          <Card
+            elevation={0}
+            sx={{
+              height: '120px',
+              border: '1px solid #eee',
+              borderRadius: '16px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }}
+          >
+            <CardContent sx={{ p: '24px' }}>
+              <Stack gap={1}>
+                <Typography
+                  variant='h5'
+                  sx={{
+                    color: 'secondary.main',
+                  }}
+                >
+                  검사하기
+                </Typography>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Link>
+      </Stack>
+
+      {/* <Grid
         container
         width={640}
         spacing={2}
@@ -101,7 +163,7 @@ export default function Home() {
             </Link>
           </Grid>
         ))}
-      </Grid>
+      </Grid> */}
     </Stack>
   );
 }
