@@ -54,7 +54,10 @@ export default function RootLayout({
               </Typography>
             </Stack>
 
-            <Stack component='ul'>
+            <Stack
+              component='ul'
+              sx={{ padding: '12px', gap: 1 }}
+            >
               {menuItems.map((item) => {
                 const isActive = pathname.startsWith(item.path);
 
@@ -70,19 +73,20 @@ export default function RootLayout({
                     <Stack
                       component='li'
                       sx={{
-                        padding: '10px 20px',
-                        backgroundColor: isActive ? 'primary.light' : 'transparent',
-                        color: isActive ? 'primary.main' : 'inherit',
-                        '&:hover': {
-                          backgroundColor: isActive ? 'primary.light' : 'rgba(0, 0, 0, 0.04)',
-                          cursor: 'pointer',
-                        },
+                        borderRadius: '16px',
+                        padding: '12px 20px',
+                        backgroundColor: isActive ? '#70b1ab5c' : 'transparent',
+                        // color: isActive ? 'primary.main' : 'inherit',
+                        // '&:hover': {
+                        //   backgroundColor: isActive ? 'primary.light' : 'rgba(0, 0, 0, 0.04)',
+                        //   cursor: 'pointer',
+                        // },
                       }}
                     >
                       <Typography
                         sx={{
-                          fontWeight: isActive ? 600 : 400,
-                          color: isActive ? '#ffffff' : 'inherit',
+                          fontWeight: isActive ? 700 : 400,
+                          // color: isActive ? '#ffffff' : 'inherit',
                         }}
                       >
                         {item.text}
