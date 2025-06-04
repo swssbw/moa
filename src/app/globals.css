@@ -69,4 +69,5 @@ body {
   font-family: 'Pretendard', sans-serif;
   color: #333;
   overscroll-behavior-y: none;
+  overscroll-behavior-x: none;
 }

@@ -1,35 +1,44 @@
 'use client';
-import { Card, CardContent, Dialog, Stack, Typography, Button, Select, MenuItem } from '@mui/material';
-import Link from 'next/link';
+import {
+  Stack,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+  Stepper,
+  Step,
+  StepLabel,
+  StepContent,
+  Box,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from '@mui/material';
 import Nl2br from '@/components/Nl2br';
-import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { useGlobalStore } from '@/hooks/globalStore';
 
+const steps = [
+  {
+    label: '대상자 선택',
+    description: `서비스 대상자를 선택해주세요.`,
+  },
+  {
+    label: '검사 선택',
+    description: '검사를 선택해주세요.',
+  },
+];
+
 export default function Home() {
-  const [open, setOpen] = useState(false);
+  // const target = useGlobalStore((state) => state.targetName);
+  // const setTargetName = useGlobalStore((state) => state.setTargetName);
+
   const [target, setTarget] = useState('');
-  const router = useRouter();
+  const [activeStep, setActiveStep] = useState(0);
 
-  const setTargetName = useGlobalStore((state) => state.setTargetName);
-
-  const handleClickOpen = () => {
-    setOpen(true);
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  const handleTargetSubmitClick = () => {
-    setOpen(false);
-    setTargetName(target);
-    router.push('/service');
-  };
-
-  useEffect(() => {
-    setTarget('');
-  }, [open]);
 
   return (
     <Stack
@@ -60,131 +69,80 @@ export default function Home() {
         </Typography>
       </Stack>
 
-      <Button
-        variant='contained'
-        onClick={handleClickOpen}
+      <Stepper
+        activeStep={activeStep}
+        orientation='vertical'
       >
-        대상자 선택하기
-      </Button>
+        <Step expanded>
+          <StepLabel>
+            <Typography variant='h6'>{steps[0].label}</Typography>
+          </StepLabel>
 
-      <Stack
-        direction='row'
-        height='120px'
-        gap={2}
-      >
-        <Link
-          href={'/service'}
-          style={{ width: '50%' }}
-        >
-          <Card
-            elevation={0}
-            sx={{
-              height: '120px',
-              border: '1px solid #eee',
-              borderRadius: '16px',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-            }}
-          >
-            <CardContent sx={{ p: '24px' }}>
-              <Stack gap={1}>
-                <Typography
-                  variant='h5'
-                  sx={{
-                    color: 'secondary.main',
-                  }}
-                >
-                  검사하기
-                </Typography>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Link>
+          <StepContent>
+            <Typography>{steps[0].description}</Typography>
 
-        <Link
-          href={'/service'}
-          style={{ width: '50%' }}
-        >
-          <Card
-            elevation={0}
-            sx={{
-              height: '120px',
-              border: '1px solid #eee',
-              borderRadius: '16px',
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-            }}
-          >
-            <CardContent sx={{ p: '24px' }}>
-              <Stack gap={1}>
-                <Typography
-                  variant='h5'
-                  sx={{
-                    color: 'secondary.main',
-                  }}
-                >
-                  검사하기
-                </Typography>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Link>
-      </Stack>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby='target-dialog-title'
-        aria-describedby='target-dialog-description'
-      >
-        <Stack
-          p={3}
-          gap={3}
-        >
-          <Typography
-            variant='h5'
-            textAlign={'center'}
-            sx={{
-              fontFamily: 'IBM Plex Sans KR',
-              fontWeight: 700,
-            }}
-          >
-            서비스 대상자를 선택해주세요.
-          </Typography>
-          <Select
-            sx={{ width: '100%' }}
-            value={target}
-            onChange={(e) => setTarget(e.target.value)}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-          >
-            <MenuItem value={'김길동'}>김길동</MenuItem>
-            <MenuItem value={'이길동'}>이길동</MenuItem>
-            <MenuItem value={'박길동'}>박길동</MenuItem>
-          </Select>
-
-          <Stack
-            gap={1}
-            direction='row'
-          >
-            <Button
-              sx={{ width: '50%' }}
-              onClick={handleClose}
-              size='large'
-              color='secondary'
-              variant='outlined'
+            <Select
+              size='small'
+              sx={{ width: '80%' }}
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+              displayEmpty
+              inputProps={{ 'aria-label': 'Without label' }}
             >
-              취소
-            </Button>
-            <Button
-              sx={{ width: '50%' }}
-              onClick={handleTargetSubmitClick}
-              size='large'
-              autoFocus
+              <MenuItem value={'김길동'}>김길동</MenuItem>
+              <MenuItem value={'이길동'}>이길동</MenuItem>
+              <MenuItem value={'박길동'}>박길동</MenuItem>
+            </Select>
+
+            <Box sx={{ mb: 2 }}>
+              <Button
+                variant='contained'
+                onClick={handleNext}
+                sx={{ mt: 1, mr: 1 }}
+              >
+                확인
+              </Button>
+            </Box>
+          </StepContent>
+        </Step>
+
+        <Step expanded>
+          <StepLabel>
+            <Typography variant='h6'>{steps[1].label}</Typography>
+          </StepLabel>
+
+          <StepContent>
+            <Typography>{steps[1].description}</Typography>
+
+            <RadioGroup
+              aria-labelledby='service-radio-buttons-group-label'
+              defaultValue='diagnosis'
+              name='service-radio-buttons-group'
             >
-              확인
-            </Button>
-          </Stack>
-        </Stack>
-      </Dialog>
+              <FormControlLabel
+                value='diagnosis'
+                control={<Radio />}
+                label='진단'
+              />
+              <FormControlLabel
+                value='rehabilitation'
+                control={<Radio />}
+                label='재활'
+              />
+            </RadioGroup>
+
+            <Box sx={{ mb: 2 }}>
+              <Button
+                variant='contained'
+                onClick={handleNext}
+                sx={{ mt: 1, mr: 1 }}
+              >
+                완료
+              </Button>
+            </Box>
+          </StepContent>
+        </Step>
+      </Stepper>
     </Stack>
   );
 }
