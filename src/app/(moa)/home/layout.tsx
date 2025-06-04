@@ -1,14 +1,23 @@
 'use client';
-import { Box, Paper, Typography, List, ListItem, ListItemText, Stack } from '@mui/material';
-import Logo from '@/components/logo.svg';
+import { Box, Paper, Typography, ListItemText, Stack } from '@mui/material';
+import Logo from '@/components/logo';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
-const menuItems = ['고객 관리', '평가지 관리', '재활 자료 관리', '방문 일정 조회', '인지 재활 서비스'];
+const menuItems = [
+  { text: '인지 재활 서비스', path: '/service' },
+  { text: '고객 관리', path: '/customer' },
+  { text: '재활 자료 관리', path: '/contents' },
+  { text: '방문 일정 조회', path: '/schedule' },
+];
 
 export default function SideBarLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const pathname = usePathname();
+
   return (
     <Stack
       direction='row'
@@ -22,7 +31,7 @@ export default function SideBarLayout({
       <Paper
         elevation={3}
         sx={{
-          width: 300,
+          width: 240,
           height: '100%',
           backgroundColor: '#ffffff',
           boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.1)',
@@ -30,12 +39,9 @@ export default function SideBarLayout({
           flexShrink: 0,
         }}
       >
-        <Stack spacing={4}>
+        <Stack gap={2}>
           <Stack alignItems={'center'}>
-            <Logo
-              width={50}
-              height={50}
-            />
+            <Logo />
             <Typography
               variant='h4'
               sx={{ fontFamily: 'HakgyoansimDunggeunmiso', color: '#707070' }}
@@ -44,29 +50,44 @@ export default function SideBarLayout({
             </Typography>
           </Stack>
 
-          <List>
-            {menuItems.map((text, index) => (
-              <ListItem
-                key={index}
-                sx={{
-                  padding: '10px 20px',
-                  '&:hover': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
-                    cursor: 'pointer',
-                  },
-                }}
-              >
-                <ListItemText
-                  primary={text}
-                  sx={{
-                    '& .MuiTypography-root': {
-                      fontSize: '16px',
-                    },
+          <Stack component='ul'>
+            {menuItems.map((item) => {
+              const isActive = pathname.startsWith('/home' + item.path);
+              return (
+                <Link
+                  href={item.path}
+                  key={item.path}
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
                   }}
-                />
-              </ListItem>
-            ))}
-          </List>
+                >
+                  <Stack
+                    component='li'
+                    sx={{
+                      padding: '10px 20px',
+                      backgroundColor: isActive ? 'primary.light' : 'transparent',
+                      color: isActive ? 'primary.main' : 'inherit',
+                      '&:hover': {
+                        backgroundColor: isActive ? 'primary.light' : 'rgba(0, 0, 0, 0.04)',
+                        cursor: 'pointer',
+                      },
+                    }}
+                  >
+                    <ListItemText
+                      primary={item.text}
+                      sx={{
+                        '& .MuiTypography-root': {
+                          fontSize: '16px',
+                          fontWeight: isActive ? 600 : 400,
+                        },
+                      }}
+                    />
+                  </Stack>
+                </Link>
+              );
+            })}
+          </Stack>
         </Stack>
       </Paper>
 

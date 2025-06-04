@@ -1,106 +1,190 @@
-import { Card, CardContent, Grid, MenuItem, Select, Stack, Typography } from '@mui/material';
+'use client';
+import { Card, CardContent, Dialog, Stack, Typography, Button, Select, MenuItem } from '@mui/material';
 import Link from 'next/link';
-import SpeedIcon from '@mui/icons-material/Speed';
-import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
-
-const menuItems = [
-  {
-    title: '진단하기',
-    // description: '고객 정보와 콘텐츠를 효율적으로 관리하세요',
-    href: '/home/service/test',
-    icon: SpeedIcon,
-    size: 6,
-  },
-  {
-    title: '재활하기',
-    // description: '방문 일정을 체계적으로 관리하세요',
-    href: '/home/service/rehab',
-    icon: DirectionsWalkIcon,
-    size: 6,
-  },
-];
+import Nl2br from '@/components/Nl2br';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useGlobalStore } from '@/hooks/globalStore';
 
 export default function Home() {
+  const [open, setOpen] = useState(false);
+  const [target, setTarget] = useState('');
+  const router = useRouter();
+
+  const setTargetName = useGlobalStore((state) => state.setTargetName);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleTargetSubmitClick = () => {
+    setOpen(false);
+    setTargetName(target);
+    router.push('/service');
+  };
+
+  useEffect(() => {
+    setTarget('');
+  }, [open]);
+
   return (
     <Stack
-      sx={{ height: '100%' }}
-      justifyContent={'center'}
-      alignItems={'center'}
+      flex={1}
+      minHeight={'100%'}
       gap={4}
+      width={'100%'}
     >
       <Stack gap={1}>
         <Typography
-          variant='h5'
-          textAlign={'center'}
+          variant='h4'
           sx={{
             fontFamily: 'IBM Plex Sans KR',
             fontWeight: 700,
           }}
         >
-          대상자를 선택해주세요.
+          <Nl2br>안녕하세요! 홍길동 매니저님</Nl2br>
         </Typography>
 
-        <Select
-          labelId='demo-simple-select-label'
-          id='demo-simple-select'
-          // value={age}
-          label='이름'
-          // onChange={handleChange}
+        <Typography
+          variant='h6'
+          sx={{
+            fontFamily: 'IBM Plex Sans KR',
+            fontWeight: 500,
+          }}
         >
-          <MenuItem value={10}>김길동</MenuItem>
-          <MenuItem value={20}>이길동</MenuItem>
-          <MenuItem value={30}>박길동</MenuItem>
-        </Select>
+          오늘도 활기차게 시작해볼까요?
+        </Typography>
       </Stack>
 
-      <Grid
-        container
-        width={560}
-        spacing={2}
+      <Button
+        variant='contained'
+        onClick={handleClickOpen}
       >
-        {menuItems.map((item) => (
-          <Grid
-            key={item.href}
-            size={item.size}
+        대상자 선택하기
+      </Button>
+
+      <Stack
+        direction='row'
+        height='120px'
+        gap={2}
+      >
+        <Link
+          href={'/service'}
+          style={{ width: '50%' }}
+        >
+          <Card
+            elevation={0}
+            sx={{
+              height: '120px',
+              border: '1px solid #eee',
+              borderRadius: '16px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }}
           >
-            <Link href={item.href}>
-              <Card
-                elevation={0}
-                sx={{
-                  border: '1px solid #eee',
-                  borderRadius: '16px',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
-                }}
-              >
-                <CardContent sx={{ p: '24px', height: 240 }}>
-                  <Stack
-                    gap={1}
-                    height={'100%'}
-                    justifyContent={'center'}
-                    alignItems={'center'}
-                  >
-                    <item.icon
-                      sx={{
-                        fontSize: 40,
-                        color: 'primary.main',
-                        mb: 1,
-                      }}
-                    />
-                    <Typography
-                      variant='h5'
-                      sx={{
-                        color: 'secondary.main',
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-                  </Stack>
-                </CardContent>
-              </Card>
-            </Link>
-          </Grid>
-        ))}
-      </Grid>
+            <CardContent sx={{ p: '24px' }}>
+              <Stack gap={1}>
+                <Typography
+                  variant='h5'
+                  sx={{
+                    color: 'secondary.main',
+                  }}
+                >
+                  검사하기
+                </Typography>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Link>
+
+        <Link
+          href={'/service'}
+          style={{ width: '50%' }}
+        >
+          <Card
+            elevation={0}
+            sx={{
+              height: '120px',
+              border: '1px solid #eee',
+              borderRadius: '16px',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)',
+            }}
+          >
+            <CardContent sx={{ p: '24px' }}>
+              <Stack gap={1}>
+                <Typography
+                  variant='h5'
+                  sx={{
+                    color: 'secondary.main',
+                  }}
+                >
+                  검사하기
+                </Typography>
+              </Stack>
+            </CardContent>
+          </Card>
+        </Link>
+      </Stack>
+
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby='target-dialog-title'
+        aria-describedby='target-dialog-description'
+      >
+        <Stack
+          p={3}
+          gap={3}
+        >
+          <Typography
+            variant='h5'
+            textAlign={'center'}
+            sx={{
+              fontFamily: 'IBM Plex Sans KR',
+              fontWeight: 700,
+            }}
+          >
+            서비스 대상자를 선택해주세요.
+          </Typography>
+          <Select
+            sx={{ width: '100%' }}
+            value={target}
+            onChange={(e) => setTarget(e.target.value)}
+            displayEmpty
+            inputProps={{ 'aria-label': 'Without label' }}
+          >
+            <MenuItem value={'김길동'}>김길동</MenuItem>
+            <MenuItem value={'이길동'}>이길동</MenuItem>
+            <MenuItem value={'박길동'}>박길동</MenuItem>
+          </Select>
+
+          <Stack
+            gap={1}
+            direction='row'
+          >
+            <Button
+              sx={{ width: '50%' }}
+              onClick={handleClose}
+              size='large'
+              color='secondary'
+              variant='outlined'
+            >
+              취소
+            </Button>
+            <Button
+              sx={{ width: '50%' }}
+              onClick={handleTargetSubmitClick}
+              size='large'
+              autoFocus
+            >
+              확인
+            </Button>
+          </Stack>
+        </Stack>
+      </Dialog>
     </Stack>
   );
 }

@@ -1,5 +1,6 @@
 'use client';
-import Logo from '@/components/logo.svg';
+import Logocopy from '@/components/logo';
+
 import { Box, Button, Stack, TextField, Typography } from '@mui/material';
 import Link from 'next/link';
 
@@ -12,10 +13,7 @@ export default function Home() {
       gap={1}
     >
       <Box>
-        <Logo
-          width={120}
-          height={120}
-        />
+        <Logocopy />
         <Typography
           variant='h2'
           sx={{ fontFamily: 'HakgyoansimDunggeunmiso', color: '#707070' }}
