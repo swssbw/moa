@@ -16,7 +16,6 @@ import {
 } from '@mui/material';
 import Nl2br from '@/components/Nl2br';
 import { useState } from 'react';
-import { useGlobalStore } from '@/hooks/globalStore';
 
 const steps = [
   {
