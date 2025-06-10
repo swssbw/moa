@@ -1,7 +1,10 @@
 'use client';
-import { Stack, Typography, Button, Select, MenuItem, RadioGroup, FormControlLabel, Radio } from '@mui/material';
+import Nl2br from '@/components/Nl2br';
 import { useState } from 'react';
-import { useGlobalStore } from '@/hooks/globalStore';
+import { Button } from '@/components/ui/button';
+import { CircleCheckBig, CircleDashed } from 'lucide-react';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Link from 'next/link';
 
 const steps = [
   {
@@ -9,8 +12,8 @@ const steps = [
     description: `서비스 대상자를 선택해주세요.`,
   },
   {
-    label: '검사 선택',
-    description: '검사를 선택해주세요.',
+    label: '서비스 선택',
+    description: '진행할 서비스를 선택해주세요.',
   },
 ];
 
@@ -18,193 +21,90 @@ export default function Home() {
   const managerInfo = useGlobalStore((state) => state.managerInfo);
 
   const [target, setTarget] = useState('');
-  const [activeStep, setActiveStep] = useState(0);
-
-  const handleNext = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-  };
+  const [selectedTest, setSelectedTest] = useState('A');
 
   return (
-    <Stack
-      flex={1}
-      minHeight={'100%'}
-      gap={4}
-      width={'100%'}
-    >
-      <Stack gap={1}>
-        <Typography
-          variant='h4'
-          sx={{
-            fontFamily: 'IBM Plex Sans KR',
-            fontWeight: 700,
-          }}
-        >
-          안녕하세요! {managerInfo.name} 매니저님
-        </Typography>
+    <div className='w-full flex-1 gap-4'>
+      <div className='mb-4 gap-1'>
+        <h2 className='font-ibm font-bold'>
+          <Nl2br>안녕하세요! 홍길동 매니저님</Nl2br>
+        </h2>
 
-        <Typography
-          variant='h6'
-          sx={{
-            fontFamily: 'IBM Plex Sans KR',
-            fontWeight: 500,
-          }}
-        >
-          오늘도 활기차게 시작해볼까요?
-        </Typography>
-      </Stack>
+        <h3 className='font-ibm font-medium'>오늘도 활기차게 시작해볼까요?</h3>
+      </div>
 
-      <Stack gap={1}>
-        <Stack
-          gap={1}
-          direction='row'
-          alignItems={'center'}
-        >
-          <Stack
-            sx={{
-              width: 24,
-              height: 24,
-              borderRadius: '50%',
-              backgroundColor: 'primary.main',
-              color: '#fff',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
+      <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-1'>
+          <h4 className='font-ibm font-bold'>{steps[0].label}</h4>
+          <p className='font-ibm font-medium'>{steps[0].description}</p>
+
+          <Select
+            value={target}
+            onValueChange={(value) => setTarget(value)}
           >
-            1
-          </Stack>
-          <Typography variant='h6'>{steps[0].label}</Typography>
-        </Stack>
-        <Typography>{steps[0].description}</Typography>
-
-        <Select
-          size='small'
-          sx={{ width: '80%' }}
-          value={target}
-          onChange={(e) => setTarget(e.target.value)}
-          displayEmpty
-          inputProps={{ 'aria-label': 'Without label' }}
-        >
-          <MenuItem value={'김길동'}>김길동</MenuItem>
-          <MenuItem value={'이길동'}>이길동</MenuItem>
-          <MenuItem value={'박길동'}>박길동</MenuItem>
-        </Select>
-      </Stack>
-
-      <Stack gap={1}>
-        <Stack
-          gap={1}
-          direction='row'
-          alignItems={'center'}
-        >
-          <Stack
-            sx={{
-              width: 24,
-              height: 24,
-              borderRadius: '50%',
-              backgroundColor: 'primary.main',
-              color: '#fff',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            2
-          </Stack>
-          <Typography variant='h6'>{steps[1].label}</Typography>
-        </Stack>
-        <Typography>{steps[1].description}</Typography>
-
-        <RadioGroup
-          aria-labelledby='service-radio-buttons-group-label'
-          defaultValue='diagnosis'
-          name='service-radio-buttons-group'
-        >
-          <FormControlLabel
-            value='diagnosis'
-            control={<Radio />}
-            label='진단'
-          />
-          <FormControlLabel
-            value='rehabilitation'
-            control={<Radio />}
-            label='재활'
-          />
-        </RadioGroup>
-      </Stack>
-
-      {/* <Stepper
-        activeStep={activeStep}
-        orientation='vertical'
-      >
-        <Step expanded>
-          <StepLabel>
-            <Typography variant='h6'>{steps[0].label}</Typography>
-          </StepLabel>
-
-          <StepContent>
-            <Typography>{steps[0].description}</Typography>
-
-            <Select
-              size='small'
-              sx={{ width: '80%' }}
-              value={target}
-              onChange={(e) => setTarget(e.target.value)}
-              displayEmpty
-              inputProps={{ 'aria-label': 'Without label' }}
+            <SelectTrigger
+              className='border-input w-[620px] border bg-white'
+              size='sm'
             >
-              <MenuItem value={'김길동'}>김길동</MenuItem>
-              <MenuItem value={'이길동'}>이길동</MenuItem>
-              <MenuItem value={'박길동'}>박길동</MenuItem>
-            </Select>
+              <SelectValue placeholder='대상자 선택' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='김길동'>김길동</SelectItem>
+              <SelectItem value='이길동'>이길동</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
 
-            <Box sx={{ mb: 2 }}>
-              <Button
-                variant='contained'
-                onClick={handleNext}
-                sx={{ mt: 1, mr: 1 }}
-              >
-                확인
-              </Button>
-            </Box>
-          </StepContent>
-        </Step>
+        <div className='flex flex-col gap-1'>
+          <h4 className='font-ibm font-bold'>{steps[1].label}</h4>
+          <p className='font-ibm font-medium'>{steps[1].description}</p>
 
-        <Step expanded>
-          <StepLabel>
-            <Typography variant='h6'>{steps[1].label}</Typography>
-          </StepLabel>
-
-          <StepContent>
-            <Typography>{steps[1].description}</Typography>
-
-            <RadioGroup
-              aria-labelledby='service-radio-buttons-group-label'
-              defaultValue='diagnosis'
-              name='service-radio-buttons-group'
+          <div className='flex gap-2'>
+            <label
+              className={`border-input relative flex h-[140px] w-[300px] cursor-pointer flex-col items-center justify-center rounded-xl border-1 ${
+                selectedTest === 'A' ? 'border-primary bg-white' : 'bg-neutral-200'
+              }`}
             >
-              <FormControlLabel
-                value='diagnosis'
-                control={<Radio />}
-                label='진단'
+              <input
+                type='radio'
+                name='test'
+                value='A'
+                className='sr-only'
+                checked={selectedTest === 'A'}
+                onChange={(e) => setSelectedTest(e.target.value)}
               />
-              <FormControlLabel
-                value='rehabilitation'
-                control={<Radio />}
-                label='재활'
-              />
-            </RadioGroup>
+              {selectedTest === 'A' ? <CircleCheckBig /> : <CircleDashed />}
+              <span className='mt-1 text-2xl font-bold'>진단</span>
+            </label>
 
-            <Box sx={{ mb: 2 }}>
-              <Button
-                variant='contained'
-                onClick={handleNext}
-                sx={{ mt: 1, mr: 1 }}
-              >
-                완료
-              </Button>
-            </Box>
-          </StepContent>
-        </Step>
-      </Stepper> */}
-    </Stack>
+            <label
+              className={`border-input relative flex h-[140px] w-[300px] cursor-pointer flex-col items-center justify-center rounded-xl border-1 ${
+                selectedTest === 'B' ? 'border-primary bg-white' : 'bg-neutral-200'
+              }`}
+            >
+              <input
+                type='radio'
+                name='test'
+                value='B'
+                className='sr-only'
+                checked={selectedTest === 'B'}
+                onChange={(e) => setSelectedTest(e.target.value)}
+              />
+              {selectedTest === 'B' ? <CircleCheckBig /> : <CircleDashed />}
+              <span className='mt-1 text-2xl font-bold'>재활</span>
+            </label>
+          </div>
+
+          <Link href='/diagnosis'>
+            <Button
+              className='mt-2 w-[620px]'
+              size='lg'
+            >
+              완료
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
   );
 }

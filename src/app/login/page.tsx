@@ -1,11 +1,9 @@
 'use client';
 import Logocopy from '@/components/logo';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
-import { Box, Button, Stack, TextField, ThemeProvider, Typography } from '@mui/material';
 import Link from 'next/link';
-import theme from '@/components/MoaTheme';
-import { useGlobalStore } from '@/hooks/globalStore';
-import { useState } from 'react';
 
 export default function Home() {
   const [id, setId] = useState('');
@@ -21,46 +19,25 @@ export default function Home() {
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Stack
-        sx={{ height: '100%' }}
-        alignItems={'center'}
-        justifyContent={'center'}
-        gap={1}
-      >
-        <Box>
+    <div className='flex flex-col items-center justify-center h-screen'>
+      <div className='w-xs flex flex-col items-center justify-center gap-1'>
+        <div className='flex flex-col items-center '>
           <Logocopy />
-          <Typography
-            variant='h2'
-            sx={{ fontFamily: 'HakgyoansimDunggeunmiso', color: '#707070' }}
-          >
-            Moa
-          </Typography>
-        </Box>
-
-        <TextField
-          label='아이디'
-          sx={{ width: 240 }}
-          value={id}
-          onChange={(e) => setId(e.target.value)}
+          <h1 className='text-5xl font-hakgyo text-[#707070]'>Moa</h1>
+        </div>
+        <Input
+          type='text'
+          placeholder='아이디'
         />
-        <TextField
-          label='비밀번호'
-          sx={{ width: 240 }}
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+        <Input
+          type='password'
+          placeholder='비밀번호'
         />
 
         <Link href='/service'>
-          <Button
-            onClick={handleLoginClick}
-            variant='contained'
-            sx={{ width: 240 }}
-          >
-            로그인
-          </Button>
+          <Button className='w-xs'>로그인</Button>
         </Link>
-      </Stack>
-    </ThemeProvider>
+      </div>
+    </div>
   );
 }
