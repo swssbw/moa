@@ -1,21 +1,7 @@
 'use client';
-import {
-  Stack,
-  Typography,
-  Button,
-  Select,
-  MenuItem,
-  Stepper,
-  Step,
-  StepLabel,
-  StepContent,
-  Box,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
-} from '@mui/material';
-import Nl2br from '@/components/Nl2br';
+import { Stack, Typography, Button, Select, MenuItem, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import { useState } from 'react';
+import { useGlobalStore } from '@/hooks/globalStore';
 
 const steps = [
   {
@@ -29,8 +15,7 @@ const steps = [
 ];
 
 export default function Home() {
-  // const target = useGlobalStore((state) => state.targetName);
-  // const setTargetName = useGlobalStore((state) => state.setTargetName);
+  const managerInfo = useGlobalStore((state) => state.managerInfo);
 
   const [target, setTarget] = useState('');
   const [activeStep, setActiveStep] = useState(0);
@@ -54,7 +39,7 @@ export default function Home() {
             fontWeight: 700,
           }}
         >
-          <Nl2br>안녕하세요! 홍길동 매니저님</Nl2br>
+          안녕하세요! {managerInfo.name} 매니저님
         </Typography>
 
         <Typography
@@ -68,7 +53,85 @@ export default function Home() {
         </Typography>
       </Stack>
 
-      <Stepper
+      <Stack gap={1}>
+        <Stack
+          gap={1}
+          direction='row'
+          alignItems={'center'}
+        >
+          <Stack
+            sx={{
+              width: 24,
+              height: 24,
+              borderRadius: '50%',
+              backgroundColor: 'primary.main',
+              color: '#fff',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            1
+          </Stack>
+          <Typography variant='h6'>{steps[0].label}</Typography>
+        </Stack>
+        <Typography>{steps[0].description}</Typography>
+
+        <Select
+          size='small'
+          sx={{ width: '80%' }}
+          value={target}
+          onChange={(e) => setTarget(e.target.value)}
+          displayEmpty
+          inputProps={{ 'aria-label': 'Without label' }}
+        >
+          <MenuItem value={'김길동'}>김길동</MenuItem>
+          <MenuItem value={'이길동'}>이길동</MenuItem>
+          <MenuItem value={'박길동'}>박길동</MenuItem>
+        </Select>
+      </Stack>
+
+      <Stack gap={1}>
+        <Stack
+          gap={1}
+          direction='row'
+          alignItems={'center'}
+        >
+          <Stack
+            sx={{
+              width: 24,
+              height: 24,
+              borderRadius: '50%',
+              backgroundColor: 'primary.main',
+              color: '#fff',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            2
+          </Stack>
+          <Typography variant='h6'>{steps[1].label}</Typography>
+        </Stack>
+        <Typography>{steps[1].description}</Typography>
+
+        <RadioGroup
+          aria-labelledby='service-radio-buttons-group-label'
+          defaultValue='diagnosis'
+          name='service-radio-buttons-group'
+        >
+          <FormControlLabel
+            value='diagnosis'
+            control={<Radio />}
+            label='진단'
+          />
+          <FormControlLabel
+            value='rehabilitation'
+            control={<Radio />}
+            label='재활'
+          />
+        </RadioGroup>
+      </Stack>
+
+      {/* <Stepper
         activeStep={activeStep}
         orientation='vertical'
       >
@@ -141,7 +204,7 @@ export default function Home() {
             </Box>
           </StepContent>
         </Step>
-      </Stepper>
+      </Stepper> */}
     </Stack>
   );
 }

@@ -4,6 +4,12 @@ import { devtools, persist } from 'zustand/middleware';
 interface GlobalState {
   targetName: string;
   setTargetName: (name: string) => void;
+
+  managerInfo: {
+    name: string;
+    id: string;
+  };
+  setManagerInfo: (info: { name: string; id: string }) => void;
 }
 
 export const useGlobalStore = create<GlobalState>()(
@@ -12,6 +18,12 @@ export const useGlobalStore = create<GlobalState>()(
       (set) => ({
         targetName: '',
         setTargetName: (name: string) => set({ targetName: name }),
+
+        managerInfo: {
+          name: '',
+          id: '',
+        },
+        setManagerInfo: (info: { name: string; id: string }) => set({ managerInfo: info }),
       }),
       {
         name: 'global-store', // localStorage key 이름
