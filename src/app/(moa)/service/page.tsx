@@ -1,10 +1,10 @@
 'use client';
-import Nl2br from '@/components/Nl2br';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { CircleCheckBig, CircleDashed } from 'lucide-react';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
+import { useGlobalStore } from '@/hooks/globalStore';
 
 const steps = [
   {
@@ -26,9 +26,7 @@ export default function Home() {
   return (
     <div className='w-full flex-1 gap-4'>
       <div className='mb-4 gap-1'>
-        <h2 className='font-ibm font-bold'>
-          <Nl2br>안녕하세요! 홍길동 매니저님</Nl2br>
-        </h2>
+        <h2 className='font-ibm font-bold'>안녕하세요! {managerInfo.name} 매니저님</h2>
 
         <h3 className='font-ibm font-medium'>오늘도 활기차게 시작해볼까요?</h3>
       </div>

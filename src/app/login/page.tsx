@@ -4,6 +4,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 import Link from 'next/link';
+import { useState } from 'react';
+import { useGlobalStore } from '@/hooks/globalStore';
 
 export default function Home() {
   const [id, setId] = useState('');
@@ -28,14 +30,23 @@ export default function Home() {
         <Input
           type='text'
           placeholder='아이디'
+          value={id}
+          onChange={(e) => setId(e.target.value)}
         />
         <Input
           type='password'
           placeholder='비밀번호'
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
 
         <Link href='/service'>
-          <Button className='w-xs'>로그인</Button>
+          <Button
+            className='w-xs'
+            onClick={handleLoginClick}
+          >
+            로그인
+          </Button>
         </Link>
       </div>
     </div>

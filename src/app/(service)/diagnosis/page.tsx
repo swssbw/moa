@@ -1,28 +1,20 @@
-import { Button } from '@/components/ui/button';
-import { House, Settings } from 'lucide-react';
+'use client';
+
+import { data as examine1 } from '@/data/examine1';
+import { useDiagnosisStore } from '@/hooks/diagnosisStore';
+import Description from './components/Description';
+import Unresolved from './components/Unresolved';
+import Content from './components/Content';
 
 export default function Diagnosis() {
+  const { currentIndex, subIndex } = useDiagnosisStore();
+  const data = examine1[currentIndex];
+
   return (
-    <div className='flex h-dvh w-dvw flex-col'>
-      <div className='flex justify-between px-2 py-1'>
-        <House className='size-3 text-neutral-500' />
-        <Settings className='size-3 text-neutral-500' />
-      </div>
-      <div className='flex-1'>진단 콘텐츠</div>
-      <div className='flex justify-between border-t border-input bg-white p-1'>
-        <Button
-          className='w-[60px]'
-          variant='outline'
-        >
-          이전
-        </Button>
-        <Button
-          className='w-[60px]'
-          variant='secondary'
-        >
-          다음
-        </Button>
-      </div>
-    </div>
+    <>
+      {subIndex === 0 && <Description data={data} />}
+      {subIndex === 1 && <Content />}
+      {subIndex === 2 && <Unresolved data={data} />}
+    </>
   );
 }
