@@ -1,9 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'Moa',
@@ -84,9 +80,7 @@ export default function RootLayout({
           href='/splash/apple-splash-1536-2048.png'
         />
       </head>
-      <body className={inter.className}>
-        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
