@@ -8,6 +8,7 @@ import Content from './components/Content';
 
 export default function Diagnosis() {
   const { currentIndex, subIndex } = useDiagnosisStore();
+
   const data = examine1[currentIndex];
 
   return (

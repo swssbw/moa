@@ -72,7 +72,7 @@ export default function Home() {
                 onChange={(e) => setSelectedTest(e.target.value)}
               />
               {selectedTest === 'A' ? <CircleCheckBig /> : <CircleDashed />}
-              <span className='mt-1 text-2xl font-bold'>진단</span>
+              <span className='mt-1 text-2xl font-bold'>인지 기능 평가</span>
             </label>
 
             <label
@@ -89,7 +89,7 @@ export default function Home() {
                 onChange={(e) => setSelectedTest(e.target.value)}
               />
               {selectedTest === 'B' ? <CircleCheckBig /> : <CircleDashed />}
-              <span className='mt-1 text-2xl font-bold'>재활</span>
+              <span className='mt-1 text-2xl font-bold'>재활 콘텐츠</span>
             </label>
           </div>
 

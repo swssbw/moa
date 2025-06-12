@@ -212,3 +212,31 @@ body {
     @apply text-base font-medium leading-normal;
   }
 }
+
+/* swiper */
+/* .mySwiper {
+  border: 1px solid blue;
+  width: 100%;
+  height: 100%;
+} */
+
+.swiper {
+  /* border: 1px solid red; */
+  width: 500px;
+  height: 600px;
+}
+
+.swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 40px;
+  background-color: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.059);
+}
+
+.swiper-3d .swiper-slide-shadow {
+  background: #00000016 !important;
+}
