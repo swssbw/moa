@@ -45,9 +45,9 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
           </Button>
         </div>
 
-        <p className='text-sm text-neutral-500 font-bold'>
+        {/* <p className='text-sm text-neutral-500 font-bold'>
           {currentIndex + 1} / {examine1.length}
-        </p>
+        </p> */}
 
         {currentIndex < examine1.length - 1 ? (
           <Button
