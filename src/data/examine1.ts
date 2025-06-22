@@ -114,10 +114,10 @@ export const data: ADASITEM[] = [
       },
     ],
     content: [
-      { name: '동그라미', hint: '' },
-      { name: '두 개의 겹쳐진 직사각형', hint: '' },
-      { name: '마름모(다이아몬드)', hint: '' },
-      { name: '정육면체', hint: '' },
+      { name: '동그라미', hint: '/3_1.PNG' },
+      { name: '두 개의 겹쳐진 직사각형', hint: '/3_2.PNG' },
+      { name: '마름모(다이아몬드)', hint: '/3_3.PNG' },
+      { name: '정육면체', hint: '/3_4.PNG' },
     ],
   },
   {
