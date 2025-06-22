@@ -2,7 +2,7 @@ import WordSlider from '../WordSlider';
 import Description from '../Description';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Box, Stack, Typography, Checkbox, FormControlLabel } from '@mui/material';
+import { Box, Stack, Typography, Checkbox, FormControlLabel, TextField } from '@mui/material';
 
 export default function ADAS01() {
   const data = examine1[0];
@@ -12,34 +12,42 @@ export default function ADAS01() {
       <Description data={data} />
       <WordSlider content={data.content} />
 
-      <Box sx={{ p: 3 }}>
+      <Box sx={{ p: 5 }}>
         <Typography
-          variant='h4'
+          variant='h5'
           fontWeight='bold'
           gutterBottom
         >
           채점
         </Typography>
-        <Stack spacing={1}>
-          {data.content.map((word, index) => (
+
+        <Stack direction='row'>
+          <Stack
+            spacing={1}
+            width='50%'
+          >
+            {data.content.map((word, index) => (
+              <FormControlLabel
+                key={index}
+                control={<Checkbox name={word.name} />}
+                label={<Typography component='span'>{word.name}</Typography>}
+              />
+            ))}
+          </Stack>
+
+          <Stack width='50%'>
             <FormControlLabel
-              key={index}
-              control={
-                <Checkbox
-                  id={word.name}
-                  name={word.name}
-                />
-              }
-              label={
-                <Typography
-                  variant='h5'
-                  component='span'
-                >
-                  {word.name}
-                </Typography>
-              }
+              control={<Checkbox />}
+              label={<Typography component='span'>회상한 단어 없음</Typography>}
             />
-          ))}
+
+            <TextField
+              placeholder='대상자 답변이나 목록에 없는 단어를 기록할 수 있습니다.'
+              multiline
+              rows={3}
+              fullWidth
+            />
+          </Stack>
         </Stack>
       </Box>
       <Unresolved data={data} />

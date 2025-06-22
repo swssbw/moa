@@ -3,33 +3,36 @@ import { Box, Stack, Typography } from '@mui/material';
 
 export default function Description({ data }: { data: (typeof exam)[0] }) {
   return (
-    <Box sx={{ p: 3 }}>
-      <Stack spacing={2}>
+    <Box sx={{ p: 5 }}>
+      <Stack gap={2}>
         <Typography
           variant='h4'
           fontWeight='bold'
         >
           {data.cognitiveName}
         </Typography>
+
         <Typography
           variant='body2'
           color='text.secondary'
         >
           {data.description}
         </Typography>
+
         <Typography
           variant='h5'
           fontWeight='bold'
         >
           검사자 지시사항
         </Typography>
-        <Stack spacing={2}>
+
+        <Stack gap={2}>
           {data.instructions.map((item) => (
             <Stack
               key={item.situation}
               spacing={0.5}
             >
-              <Typography fontWeight='semibold'>{item.situation}</Typography>
+              <Typography fontWeight='600'>{item.situation}</Typography>
               <Typography
                 sx={{
                   pl: 1,

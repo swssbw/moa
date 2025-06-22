@@ -3,10 +3,10 @@ import { Box, Stack, Typography, Checkbox, FormControlLabel, TextField } from '@
 
 export default function Unresolved({ data }: { data: (typeof exam)[0] }) {
   return (
-    <Box sx={{ p: 3 }}>
-      <Stack spacing={2}>
+    <Box sx={{ p: 5 }}>
+      <Stack gap={2}>
         <Typography
-          variant='h4'
+          variant='h5'
           fontWeight='bold'
         >
           {data.cognitiveName}
@@ -30,7 +30,7 @@ export default function Unresolved({ data }: { data: (typeof exam)[0] }) {
           </Typography>
         </Box>
 
-        <Stack spacing={1}>
+        <Stack gap={1}>
           <Typography fontWeight='bold'>이유</Typography>
           <FormControlLabel
             control={
