@@ -4,14 +4,9 @@ import 'swiper/css/pagination';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Navigation, Pagination } from 'swiper/modules';
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
-import { data } from '@/data/examine1';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function WordSlider() {
-  const { currentIndex } = useDiagnosisStore();
-  const content = data[currentIndex].content as { name: string; hint: string }[];
-
+export default function WordSlider({ content }: { content: { name: string; hint: string }[] }) {
   return (
     <div className='flex h-full w-full items-center justify-center px-10'>
       <button className='custom_prev bg-white rounded-full p-2 border border-input shadow-sm'>

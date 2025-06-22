@@ -1,9 +1,27 @@
-export const data = [
+type ADASITEM = {
+  cognitiveId: number;
+  cognitiveSubId: number;
+  cognitiveName: string;
+  testId: string;
+  description: string[];
+  instructions: { situation: string; script: string }[];
+  content: {
+    name: string;
+    hint: string;
+    // src?: string;
+  }[];
+  evaluation?: {
+    name: string;
+    score: number;
+  }[];
+};
+
+export const data: ADASITEM[] = [
   {
     cognitiveId: 1,
     cognitiveSubId: 0,
     cognitiveName: '단어회상(A)',
-    testId: 'word-remind',
+    testId: 'ADAS01',
     description: [''],
     instructions: [
       {
@@ -67,8 +85,8 @@ export const data = [
     ],
     instructions: [],
     content: [
-      '연필을 카드 위에 놓았다가. 다시 제자리에 놓아주세요',
-      '손목 시계를 연필의 반대 편에 놓고, 카드를 뒤집으세요',
+      { name: '연필을 카드 위에 놓았다가. 다시 제자리에 놓아주세요', hint: '' },
+      { name: '손목 시계를 연필의 반대 편에 놓고, 카드를 뒤집으세요', hint: '' },
     ],
   },
   {
@@ -78,7 +96,7 @@ export const data = [
     testId: 'command-execution',
     description: ['책상 위에 놓여 있던 연필을 손목 시계, 카드를 치운 후 다음과 같이 지시한다.'],
     instructions: [],
-    content: ['눈을 감고, 손가락 두 개로 양쪽 어깨를 각각 두 번식 두드 리세요.'],
+    content: [{ name: '눈을 감고, 손가락 두 개로 양쪽 어깨를 각각 두 번식 두드리세요.', hint: '' }],
   },
   {
     cognitiveId: 3,
@@ -96,10 +114,10 @@ export const data = [
       },
     ],
     content: [
-      { title: '동그라미', src: '' },
-      { title: '두 개의 겹쳐진 직사각형', src: '' },
-      { title: '마름모(다이아몬드)', src: '' },
-      { title: '정육면체', src: '' },
+      { name: '동그라미', hint: '' },
+      { name: '두 개의 겹쳐진 직사각형', hint: '' },
+      { name: '마름모(다이아몬드)', hint: '' },
+      { name: '정육면체', hint: '' },
     ],
   },
   {
@@ -301,7 +319,6 @@ export const data = [
       },
     ],
   },
-
   {
     cognitiveId: 8,
     cognitiveSubId: 0,
@@ -621,6 +638,71 @@ export const data = [
       {
         name: '5 심각',
         hint: '대상자가 적절한 반응을 보인 경우가 거의 없었음 (단, 언어 구사력 문제로 인한 경우는 채점 시 고려하지 않는다.)',
+      },
+    ],
+    evaluation: [],
+  },
+];
+
+export const cistData = [
+  {
+    cognitiveId: 1,
+    cognitiveSubId: 0,
+    cognitiveName: '지남력',
+    testId: 'cist01',
+    description: [],
+    instructions: [],
+    content: [
+      {
+        name: '올해는 몇 년도 입니까?',
+        hint: '',
+      },
+      {
+        name: '지금은 몇 월입니까?',
+        hint: '',
+      },
+      {
+        name: '오늘은 며칠입니까?',
+        hint: '',
+      },
+      {
+        name: '오늘은 무슨 요일입니까?',
+        hint: '',
+      },
+      {
+        name: '지금 ___님이 계신 여기는 어디인가요?',
+        hint: '',
+      },
+    ],
+    evaluation: [],
+  },
+  {
+    cognitiveId: 2,
+    cognitiveSubId: 0,
+    cognitiveName: '기억력',
+    testId: 'cist02',
+    description: [],
+    instructions: ['지금부터 외우셔야 하는 문장 하나를 불러드리겠습니다. 끝까지 잘 듣고 따라 해 보세요.'],
+    content: [
+      {
+        name: '올해는 몇 년도 입니까?',
+        hint: '',
+      },
+      {
+        name: '지금은 몇 월입니까?',
+        hint: '',
+      },
+      {
+        name: '오늘은 며칠입니까?',
+        hint: '',
+      },
+      {
+        name: '오늘은 무슨 요일입니까?',
+        hint: '',
+      },
+      {
+        name: '지금 ___님이 계신 여기는 어디인가요?',
+        hint: '',
       },
     ],
     evaluation: [],
