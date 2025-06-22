@@ -8,7 +8,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react';
 
 export default function ServiceLayout({ children }: { children: React.ReactNode }) {
-  const { goToNext, goToPrevious, currentIndex, subIndex, setBaseFontSize } = useDiagnosisStore();
+  const { goToNext, goToPrevious, currentIndex, setBaseFontSize } = useDiagnosisStore();
   const router = useRouter();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -78,10 +78,10 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
           <Button
             variant='text'
             onClick={goToPrevious}
-            disabled={currentIndex === 0 && subIndex === 0}
+            disabled={currentIndex === 0}
             sx={{ width: '80px' }}
           >
-            이전
+            이전 문항
           </Button>
         </Stack>
 
@@ -89,9 +89,8 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
           <Button
             variant='contained'
             onClick={goToNext}
-            sx={{ width: '80px' }}
           >
-            다음
+            다음 문항
           </Button>
         ) : (
           <Button
@@ -99,7 +98,6 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
             onClick={() => {
               alert('검사완료');
             }}
-            sx={{ width: '80px' }}
           >
             완료
           </Button>

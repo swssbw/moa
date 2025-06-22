@@ -1,9 +1,9 @@
 import { data as exam } from '@/data/examine1';
-import { Box, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 export default function Description({ data }: { data: (typeof exam)[0] }) {
   return (
-    <Box sx={{ p: 5 }}>
+    <Stack p={5}>
       <Stack gap={2}>
         <Typography
           variant='h4'
@@ -47,6 +47,6 @@ export default function Description({ data }: { data: (typeof exam)[0] }) {
           ))}
         </Stack>
       </Stack>
-    </Box>
+    </Stack>
   );
 }

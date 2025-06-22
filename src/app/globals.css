@@ -77,12 +77,12 @@ body {
   overscroll-behavior-x: none;
 }
 
-.swiper {
+.word-slide {
   width: 400px;
   height: 500px;
 }
 
-.swiper .swiper-slide {
+.word-slide .swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -93,6 +93,11 @@ body {
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.059);
 }
 
-.swiper-3d .swiper-slide-shadow {
+.word-slide .swiper-3d .swiper-slide-shadow {
   background: #00000016 !important;
+}
+
+.page-slider {
+  width: 100%;
+  height: 100%;
 }

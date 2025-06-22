@@ -4,13 +4,17 @@ import 'swiper/css/pagination';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Navigation, Pagination } from 'swiper/modules';
-import { Box, IconButton, Typography } from '@mui/material';
+import { Box, IconButton, Stack, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function WordSlider({ content }: { content: { name: string; hint: string }[] }) {
   return (
-    <Box sx={{ display: 'flex', height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center', p: 5 }}>
+    <Stack
+      direction='row'
+      alignItems='center'
+      width='80%'
+    >
       <IconButton
         className='custom_prev'
         sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
@@ -22,7 +26,7 @@ export default function WordSlider({ content }: { content: { name: string; hint:
         <div
           className='custom_pagination'
           style={{ textAlign: 'center', fontSize: '0.875rem', marginBottom: '4px' }}
-        ></div>
+        />
         <Swiper
           pagination={{
             el: '.custom_pagination',
@@ -35,6 +39,7 @@ export default function WordSlider({ content }: { content: { name: string; hint:
             nextEl: '.custom_next',
             prevEl: '.custom_prev',
           }}
+          className='word-slide'
         >
           {content.map((item, index: number) => (
             <SwiperSlide key={index}>
@@ -55,6 +60,6 @@ export default function WordSlider({ content }: { content: { name: string; hint:
       >
         <ChevronRightIcon />
       </IconButton>
-    </Box>
+    </Stack>
   );
 }
