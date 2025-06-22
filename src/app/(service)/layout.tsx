@@ -78,14 +78,14 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
           <Button
             variant='text'
             onClick={goToPrevious}
-            disabled={currentIndex === 0}
+            disabled={currentIndex === 1}
             sx={{ width: '80px' }}
           >
             이전 문항
           </Button>
         </Stack>
 
-        {currentIndex < examine1.length - 1 ? (
+        {currentIndex < examine1.length ? (
           <Button
             variant='contained'
             onClick={goToNext}

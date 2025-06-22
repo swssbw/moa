@@ -15,7 +15,7 @@ interface DiagnosisState {
 
 export const useDiagnosisStore = create<DiagnosisState>()(
   devtools((set) => ({
-    currentIndex: 0,
+    currentIndex: 1,
     setCurrentIndex: (index: number) => set({ currentIndex: index }),
     goToNext: () => set((state) => ({ currentIndex: state.currentIndex + 1 })),
     goToPrevious: () => set((state) => ({ currentIndex: state.currentIndex - 1 })),

@@ -4,9 +4,13 @@ import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { Box, Stack, Typography, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 
 export default function ADAS01() {
-  const data = examine1[0];
+  const { currentIndex } = useDiagnosisStore();
+  const data = examine1.find((item) => item.cognitiveId === currentIndex);
+
+  if (!data) return;
 
   return (
     <>
