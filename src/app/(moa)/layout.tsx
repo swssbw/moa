@@ -3,6 +3,7 @@
 import Logo from '@/components/logo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { Box, Typography, Stack, Paper } from '@mui/material';
 
 const menuItems = [
   { text: '인지 재활 서비스', path: '/service' },
@@ -11,7 +12,7 @@ const menuItems = [
   { text: '방문 일정 조회', path: '/schedule' },
 ];
 
-export default function RootLayout({
+export default function MoaLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -19,16 +20,41 @@ export default function RootLayout({
   const pathname = usePathname();
 
   return (
-    <div className='flex h-dvh w-dvw flex-row overflow-hidden'>
+    <Stack
+      direction='row'
+      sx={{
+        width: '100%',
+        height: '100%',
+        overflow: 'hidden',
+      }}
+    >
       {/* 사이드바 */}
-      <div className='w-[200px] flex-shrink-0 bg-[#ffffff] p-[20px_0] shadow-[0px_3px_10px_rgba(0,0,0,0.1)]'>
-        <div className='flex flex-col gap-2'>
-          <div className='flex flex-col items-center'>
+      <Paper
+        elevation={3}
+        sx={{
+          width: 240,
+          height: '100%',
+          backgroundColor: '#ffffff',
+          boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.1)',
+          padding: '20px 0',
+          flexShrink: 0,
+        }}
+      >
+        <Stack gap={2}>
+          <Stack alignItems={'center'}>
             <Logo />
-            <h1 className='font-hakgyo text-[#707070]'>Moa</h1>
-          </div>
+            <Typography
+              variant='h4'
+              sx={{ fontFamily: 'HakgyoansimDunggeunmiso', color: '#707070' }}
+            >
+              Moa
+            </Typography>
+          </Stack>
 
-          <ul className='flex flex-col gap-1 p-[12px]'>
+          <Stack
+            component='ul'
+            sx={{ padding: '12px', gap: 1 }}
+          >
             {menuItems.map((item) => {
               const isActive = pathname.startsWith(item.path);
 
@@ -36,24 +62,46 @@ export default function RootLayout({
                 <Link
                   href={item.path}
                   key={item.path}
-                  className='text-decoration-none text-inherit'
+                  style={{
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
                 >
-                  <li
-                    className={`rounded-[16px] p-[12px_20px] transition-colors duration-200 ${
-                      isActive ? 'bg-neutral-100' : ''
-                    }`}
+                  <Stack
+                    component='li'
+                    sx={{
+                      borderRadius: '16px',
+                      padding: '12px 20px',
+                      backgroundColor: isActive ? '#70b1ab5c' : 'transparent',
+                    }}
                   >
-                    <span className={` ${isActive ? 'font-bold' : 'font-medium'}`}>{item.text}</span>
-                  </li>
+                    <Typography
+                      sx={{
+                        fontWeight: isActive ? 700 : 400,
+                      }}
+                    >
+                      {item.text}
+                    </Typography>
+                  </Stack>
                 </Link>
               );
             })}
-          </ul>
-        </div>
-      </div>
+          </Stack>
+        </Stack>
+      </Paper>
 
       {/* 콘텐트 영역 */}
-      <div className='h-full flex-1 overflow-auto p-[40px]'>{children}</div>
-    </div>
+      <Box
+        sx={{
+          background: '#fdfbf6',
+          flex: 1,
+          height: '100%',
+          overflow: 'auto',
+          padding: '40px',
+        }}
+      >
+        {children}
+      </Box>
+    </Stack>
   );
 }

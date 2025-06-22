@@ -1,74 +1,111 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
-import { Settings } from 'lucide-react';
 import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 import { data as examine1 } from '@/data/examine1';
 import { useRouter } from 'next/navigation';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuItem,
-} from '@/components/ui/dropdown-menu';
-// import { Progress } from '@/components/ui/progress';
+import { Box, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
+import SettingsIcon from '@mui/icons-material/Settings';
+import React from 'react';
 
 export default function ServiceLayout({ children }: { children: React.ReactNode }) {
   const { goToNext, goToPrevious, currentIndex, subIndex, setBaseFontSize } = useDiagnosisStore();
   const router = useRouter();
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleGoHome = () => {
+    router.push('/service');
+    handleClose();
+  };
+
+  const handleSetLargeFont = () => {
+    setBaseFontSize(20);
+    handleClose();
+  };
+
+  const handleSetNormalFont = () => {
+    setBaseFontSize(16);
+    handleClose();
+  };
 
   return (
-    <div className='flex h-dvh w-dvw flex-col'>
-      <div className='flex-1 overflow-y-auto overscroll-none'>{children}</div>
+    <Box sx={{ display: 'flex', height: '100vh', width: '100vw', flexDirection: 'column' }}>
+      <Box sx={{ flex: 1, overflowY: 'auto', background: '#fdfbf6' }}>{children}</Box>
 
-      {/* <Progress value={((subIndex + 1) / 3) * 100} /> */}
-      <div className='flex items-center justify-between border-t border-input bg-white px-4 pb-4 pt-2'>
-        <div className='flex items-center gap-2'>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Settings className='size-3 text-neutral-500' />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent className='w-[130px] m-2'>
-              <DropdownMenuItem onClick={() => router.push('/service')}>홈으로 가기</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setBaseFontSize(20)}>큰 글씨 보기</DropdownMenuItem>
-              <DropdownMenuItem onClick={() => setBaseFontSize(16)}>보통 글씨 보기</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderTop: '1px solid',
+          borderColor: 'divider',
+          bgcolor: 'background.paper',
+          px: 2,
+          py: 1,
+        }}
+      >
+        <Stack
+          direction='row'
+          alignItems='center'
+          spacing={1}
+        >
+          <IconButton
+            id='settings-button'
+            aria-controls={open ? 'settings-menu' : undefined}
+            aria-haspopup='true'
+            aria-expanded={open ? 'true' : undefined}
+            onClick={handleClick}
+          >
+            <SettingsIcon sx={{ fontSize: 16, color: 'text.secondary' }} />
+          </IconButton>
+          <Menu
+            id='settings-menu'
+            anchorEl={anchorEl}
+            open={open}
+            onClose={handleClose}
+          >
+            <MenuItem onClick={handleGoHome}>홈으로 가기</MenuItem>
+            <MenuItem onClick={handleSetLargeFont}>큰 글씨 보기</MenuItem>
+            <MenuItem onClick={handleSetNormalFont}>보통 글씨 보기</MenuItem>
+          </Menu>
 
           <Button
-            className='w-[80px]'
-            variant='ghost'
+            variant='text'
             onClick={goToPrevious}
             disabled={currentIndex === 0 && subIndex === 0}
+            sx={{ width: '80px' }}
           >
             이전
           </Button>
-        </div>
-
-        {/* <p className='text-sm text-neutral-500 font-bold'>
-          {currentIndex + 1} / {examine1.length}
-        </p> */}
+        </Stack>
 
         {currentIndex < examine1.length - 1 ? (
           <Button
-            className='w-[80px]'
-            variant='secondary'
+            variant='contained'
             onClick={goToNext}
+            sx={{ width: '80px' }}
           >
             다음
           </Button>
         ) : (
           <Button
-            className='w-[80px]'
-            variant='secondary'
+            variant='contained'
             onClick={() => {
               alert('검사완료');
             }}
+            sx={{ width: '80px' }}
           >
             완료
           </Button>
         )}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }

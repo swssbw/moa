@@ -1,17 +1,36 @@
 'use client';
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { CircleCheckBig, CircleDashed, Laugh, Meh, Smile, Frown, Angry } from 'lucide-react';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Link from 'next/link';
-import { Textarea } from '@/components/ui/textarea';
+import {
+  Stack,
+  Typography,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  TextField,
+  Button,
+  Collapse,
+  ToggleButtonGroup,
+  ToggleButton,
+  SelectChangeEvent,
+} from '@mui/material';
+import {
+  SentimentVeryDissatisfied,
+  SentimentDissatisfied,
+  SentimentNeutral,
+  SentimentSatisfied,
+  SentimentVerySatisfied,
+  CheckCircle,
+  RadioButtonUnchecked,
+} from '@mui/icons-material';
 
 const moods = [
-  { value: 'very_bad', icon: Angry, label: '아주 나쁨' },
-  { value: 'bad', icon: Frown, label: '조금 나쁨' },
-  { value: 'neutral', icon: Meh, label: '보통' },
-  { value: 'good', icon: Smile, label: '조금 좋음' },
-  { value: 'very_good', icon: Laugh, label: '아주 좋음' },
+  { value: 'very_bad', icon: <SentimentVeryDissatisfied fontSize='large' />, label: '아주 나쁨' },
+  { value: 'bad', icon: <SentimentDissatisfied fontSize='large' />, label: '조금 나쁨' },
+  { value: 'neutral', icon: <SentimentNeutral fontSize='large' />, label: '보통' },
+  { value: 'good', icon: <SentimentSatisfied fontSize='large' />, label: '조금 좋음' },
+  { value: 'very_good', icon: <SentimentVerySatisfied fontSize='large' />, label: '아주 좋음' },
 ];
 
 export default function Home() {
@@ -24,93 +43,139 @@ export default function Home() {
     { value: 'B', label: '재활 콘텐츠' },
   ];
 
+  const handleTargetChange = (event: SelectChangeEvent) => {
+    setTarget(event.target.value as string);
+  };
+
+  const handleMoodChange = (mood: string) => {
+    setSelectedMood(mood);
+  };
+
+  const handleTestChange = (event: React.MouseEvent<HTMLElement>, newTest: string | null) => {
+    if (newTest !== null) {
+      setSelectedTest(newTest);
+    }
+  };
+
   return (
-    <div className={`flex w-full flex-1 flex-col items-center justify-center gap-4 ${target ? 'h-auto' : 'h-full'}`}>
-      <div className='flex flex-col gap-3'>
-        <div className='flex flex-col gap-1'>
-          <h4 className='font-ibm font-bold'>오늘 만날 어르신은?</h4>
-
-          <Select
-            value={target}
-            onValueChange={setTarget}
+    <Stack
+      alignItems='center'
+      justifyContent='center'
+      py={4}
+    >
+      <Stack
+        spacing={3}
+        sx={{ width: 620 }}
+      >
+        <Stack spacing={1}>
+          <Typography
+            variant='h6'
+            fontWeight={700}
+            fontFamily='IBMPlexSans'
           >
-            <SelectTrigger
-              className='border-input w-[620px] border bg-white'
-              size='sm'
+            오늘 만날 어르신은?
+          </Typography>
+          <FormControl fullWidth>
+            <InputLabel id='target-select-label'>대상자 선택</InputLabel>
+            <Select
+              labelId='target-select-label'
+              id='target-select'
+              value={target}
+              label='대상자 선택'
+              onChange={handleTargetChange}
             >
-              <SelectValue placeholder='대상자 선택' />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value='김길동'>김길동</SelectItem>
-              <SelectItem value='이길동'>이길동</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
+              <MenuItem value='김길동'>김길동</MenuItem>
+              <MenuItem value='이길동'>이길동</MenuItem>
+            </Select>
+          </FormControl>
+        </Stack>
 
-        <div
-          className={`flex flex-col gap-1 transition-all duration-500 ease-in-out ${target ? 'opacity-100 h-[214px]' : 'opacity-0 h-[0px]'} [transition-delay:200ms]`}
-        >
-          <h4 className='font-ibm font-bold'>기분 Check!</h4>
+        <Collapse in={!!target}>
+          <Stack gap={2}>
+            <Typography
+              variant='h6'
+              fontWeight={700}
+              fontFamily='IBMPlexSans'
+            >
+              기분 Check!
+            </Typography>
+            <Stack
+              direction='row'
+              spacing={4}
+              justifyContent='center'
+              sx={{ pt: 1 }}
+            >
+              {moods.map((mood) => (
+                <Stack
+                  key={mood.value}
+                  alignItems='center'
+                  spacing={0.5}
+                  onClick={() => handleMoodChange(mood.value)}
+                  sx={{ cursor: 'pointer', color: selectedMood === mood.value ? 'primary.main' : 'text.secondary' }}
+                >
+                  {mood.icon}
+                  <Typography sx={{ fontWeight: selectedMood === mood.value ? 'bold' : 'normal' }}>
+                    {mood.label}
+                  </Typography>
+                </Stack>
+              ))}
+            </Stack>
+            <TextField
+              placeholder='오늘 하루 어떠셨나요?'
+              multiline
+              rows={3}
+              fullWidth
+            />
 
-          <div className='flex gap-4'>
-            {moods.map((mood) => (
-              <div
-                key={mood.value}
-                className={`flex flex-col items-center gap-1 cursor-pointer transition-colors ${
-                  selectedMood === mood.value ? 'text-primary' : 'text-gray-500'
-                }`}
-                onClick={() => setSelectedMood(mood.value)}
-              >
-                <mood.icon size={40} />
-                <span className={`${selectedMood === mood.value ? 'font-bold' : 'font-normal'}`}>{mood.label}</span>
-              </div>
-            ))}
-          </div>
-
-          <Textarea
-            placeholder='오늘 하루 어땠어요?'
-            className='w-[620px]'
-            rows={3}
-          />
-        </div>
-
-        <div
-          className={`flex flex-col gap-1 transition-all duration-500 ease-in-out ${target ? 'opacity-100 h-[260px]' : 'opacity-0 h-[0px]'} [transition-delay:500ms]`}
-        >
-          <h4 className='font-ibm font-bold'>시작하기</h4>
-
-          <div className='flex gap-2'>
-            {services.map((service) => (
-              <label
-                key={service.value}
-                className={`border-input relative flex h-[120px] flex-1 cursor-pointer flex-col items-center justify-center rounded-xl border-1 ${
-                  selectedTest === service.value ? 'border-primary bg-white' : 'bg-neutral-200'
-                }`}
-              >
-                <input
-                  type='radio'
-                  name='test'
+            <Typography
+              variant='h6'
+              fontWeight={700}
+              fontFamily='IBMPlexSans'
+            >
+              시작하기
+            </Typography>
+            <ToggleButtonGroup
+              value={selectedTest}
+              exclusive
+              onChange={handleTestChange}
+              fullWidth
+              sx={{ gap: 2 }}
+            >
+              {services.map((service) => (
+                <ToggleButton
+                  key={service.value}
                   value={service.value}
-                  className='sr-only'
-                  checked={selectedTest === service.value}
-                  onChange={(e) => setSelectedTest(e.target.value)}
-                />
-                {selectedTest === service.value ? <CircleCheckBig /> : <CircleDashed />}
-                <span className='mt-1 text-xl font-bold'>{service.label}</span>
-              </label>
-            ))}
-          </div>
-
-          <Link href='/diagnosis'>
+                  sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: 120,
+                    flex: 1,
+                    border: '1px solid',
+                    borderColor: 'divider',
+                    '&.Mui-selected': {
+                      borderColor: 'primary.main',
+                      bgcolor: 'action.selected',
+                    },
+                  }}
+                >
+                  {selectedTest === service.value ? <CheckCircle /> : <RadioButtonUnchecked />}
+                  <Typography sx={{ mt: 1, fontSize: '1.25rem', fontWeight: 'bold' }}>{service.label}</Typography>
+                </ToggleButton>
+              ))}
+            </ToggleButtonGroup>
             <Button
-              className='mt-2 w-[620px]'
-              size='lg'
+              component={Link}
+              href='/diagnosis'
+              variant='contained'
+              size='large'
+              fullWidth
+              sx={{ mt: 2 }}
             >
               완료
             </Button>
-          </Link>
-        </div>
-      </div>
-    </div>
+          </Stack>
+        </Collapse>
+      </Stack>
+    </Stack>
   );
 }

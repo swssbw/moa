@@ -1,11 +1,12 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import MUIProvider from '@/components/MUIProvider';
 
 export const metadata: Metadata = {
   title: 'Moa',
   description: '모아',
   manifest: '/manifest.json',
-  themeColor: '#ffffff',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'black-translucent',
@@ -42,7 +43,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='ko'>
+    <html
+      lang='ko'
+      suppressHydrationWarning
+    >
       <head>
         <link
           rel='apple-touch-icon'
@@ -60,27 +64,12 @@ export default function RootLayout({
           name='apple-mobile-web-app-title'
           content='Moa'
         />
-
-        {/* iPad Pro */}
-        <link
-          rel='apple-touch-startup-image'
-          media='screen and (device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)'
-          href='/splash/apple-splash-2048-2732.png'
-        />
-        {/* iPad Air */}
-        <link
-          rel='apple-touch-startup-image'
-          media='screen and (device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)'
-          href='/splash/apple-splash-1668-2388.png'
-        />
-        {/* iPad */}
-        <link
-          rel='apple-touch-startup-image'
-          media='screen and (device-width: 768px) and (device-height: 1024px) and (-webkit-device-pixel-ratio: 2)'
-          href='/splash/apple-splash-1536-2048.png'
-        />
       </head>
-      <body>{children}</body>
+      <body>
+        <AppRouterCacheProvider>
+          <MUIProvider>{children}</MUIProvider>
+        </AppRouterCacheProvider>
+      </body>
     </html>
   );
 }

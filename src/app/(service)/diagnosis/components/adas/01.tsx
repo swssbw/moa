@@ -2,6 +2,7 @@ import WordSlider from '../WordSlider';
 import Description from '../Description';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
+import { Box, Stack, Typography, Checkbox, FormControlLabel } from '@mui/material';
 
 export default function ADAS01() {
   const data = examine1[0];
@@ -11,25 +12,36 @@ export default function ADAS01() {
       <Description data={data} />
       <WordSlider content={data.content} />
 
-      <div className='flex flex-col gap-2 p-6'>
-        <h4 className='font-bold'>채점</h4>
-        <div className='flex items-center gap-3'>
-          <div className='flex flex-col gap-2'>
-            {data.content.map((word, index) => (
-              <div key={index}>
-                <input
-                  type='checkbox'
-                  className='mr-1'
+      <Box sx={{ p: 3 }}>
+        <Typography
+          variant='h4'
+          fontWeight='bold'
+          gutterBottom
+        >
+          채점
+        </Typography>
+        <Stack spacing={1}>
+          {data.content.map((word, index) => (
+            <FormControlLabel
+              key={index}
+              control={
+                <Checkbox
                   id={word.name}
+                  name={word.name}
                 />
-                <label htmlFor={word.name}>
-                  <span className='text-2xl'>{word.name}</span>
-                </label>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+              }
+              label={
+                <Typography
+                  variant='h5'
+                  component='span'
+                >
+                  {word.name}
+                </Typography>
+              }
+            />
+          ))}
+        </Stack>
+      </Box>
       <Unresolved data={data} />
     </>
   );

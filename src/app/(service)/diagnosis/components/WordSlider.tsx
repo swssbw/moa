@@ -4,17 +4,25 @@ import 'swiper/css/pagination';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Navigation, Pagination } from 'swiper/modules';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { Box, IconButton, Typography } from '@mui/material';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function WordSlider({ content }: { content: { name: string; hint: string }[] }) {
   return (
-    <div className='flex h-full w-full items-center justify-center px-10'>
-      <button className='custom_prev bg-white rounded-full p-2 border border-input shadow-sm'>
-        <ChevronLeft className='size-5' />
-      </button>
+    <Box sx={{ display: 'flex', height: '100%', width: '100%', alignItems: 'center', justifyContent: 'center', p: 5 }}>
+      <IconButton
+        className='custom_prev'
+        sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
+      >
+        <ChevronLeftIcon />
+      </IconButton>
 
-      <div className='flex-1'>
-        <div className='custom_pagination text-center text-sm mb-1'></div>
+      <Box sx={{ flex: 1 }}>
+        <div
+          className='custom_pagination'
+          style={{ textAlign: 'center', fontSize: '0.875rem', marginBottom: '4px' }}
+        ></div>
         <Swiper
           pagination={{
             el: '.custom_pagination',
@@ -30,15 +38,23 @@ export default function WordSlider({ content }: { content: { name: string; hint:
         >
           {content.map((item, index: number) => (
             <SwiperSlide key={index}>
-              <h1 className='text-5xl font-bold'>{item.name}</h1>
+              <Typography
+                variant='h1'
+                sx={{ fontSize: '3rem', fontWeight: 'bold' }}
+              >
+                {item.name}
+              </Typography>
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </Box>
 
-      <button className='custom_next  bg-white rounded-full p-2 border border-input shadow-sm'>
-        <ChevronRight className='size-5' />
-      </button>
-    </div>
+      <IconButton
+        className='custom_next'
+        sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
+      >
+        <ChevronRightIcon />
+      </IconButton>
+    </Box>
   );
 }

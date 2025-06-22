@@ -1,11 +1,9 @@
 'use client';
 import Logocopy from '@/components/logo';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
 import Link from 'next/link';
 import { useState } from 'react';
 import { useGlobalStore } from '@/hooks/globalStore';
+import { Box, Stack, TextField, Button, Typography } from '@mui/material';
 
 export default function Home() {
   const [id, setId] = useState('');
@@ -21,34 +19,55 @@ export default function Home() {
   };
 
   return (
-    <div className='flex flex-col items-center justify-center h-screen'>
-      <div className='w-xs flex flex-col items-center justify-center gap-1'>
-        <div className='flex flex-col items-center '>
+    <Box
+      display='flex'
+      flexDirection='column'
+      alignItems='center'
+      justifyContent='center'
+      minHeight='100vh'
+    >
+      <Stack
+        spacing={2}
+        alignItems='center'
+        sx={{ width: '320px' }}
+      >
+        <Stack alignItems='center'>
           <Logocopy />
-          <h1 className='text-5xl font-hakgyo text-[#707070]'>Moa</h1>
-        </div>
-        <Input
+          <Typography
+            variant='h1'
+            sx={{ fontFamily: 'var(--font-hakgyo)', color: '#707070', fontSize: '3rem' }}
+          >
+            Moa
+          </Typography>
+        </Stack>
+        <TextField
           type='text'
-          placeholder='아이디'
+          label='아이디'
+          variant='outlined'
+          fullWidth
           value={id}
           onChange={(e) => setId(e.target.value)}
         />
-        <Input
+        <TextField
           type='password'
-          placeholder='비밀번호'
+          label='비밀번호'
+          variant='outlined'
+          fullWidth
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <Link href='/service'>
-          <Button
-            className='w-xs'
-            onClick={handleLoginClick}
-          >
-            로그인
-          </Button>
-        </Link>
-      </div>
-    </div>
+        <Button
+          component={Link}
+          href='/service'
+          variant='contained'
+          fullWidth
+          size='large'
+          onClick={handleLoginClick}
+        >
+          로그인
+        </Button>
+      </Stack>
+    </Box>
   );
 }

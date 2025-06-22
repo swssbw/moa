@@ -1,3 +1,5 @@
+import { Typography } from '@mui/material';
+
 export default function Customer() {
-  return <div>Customer</div>;
+  return <Typography variant='h4'>Customer</Typography>;
 }
