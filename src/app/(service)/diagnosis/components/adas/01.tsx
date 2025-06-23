@@ -1,5 +1,4 @@
 import WordSlider from '../WordSlider';
-import Description from '../Description';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { Box, Stack, Typography, Checkbox, FormControlLabel, TextField } from '@mui/material';
@@ -21,26 +20,57 @@ export default function ADAS01() {
         }}
         className='page-slider'
       >
+        {/* 설명 */}
         <SwiperSlide>
-          <Description data={data} />
+          <Stack
+            p={5}
+            gap={2}
+          >
+            <Typography variant='h5'>
+              {data.cognitiveId}. {data.cognitiveName}
+            </Typography>
+
+            <Typography color='text.secondary'>{data.description}</Typography>
+
+            {data.items.instructions.map((item) => (
+              <Stack
+                key={item.situation}
+                spacing={0.5}
+              >
+                <Typography fontWeight='bold'>{item.situation}</Typography>
+                <Typography
+                  sx={{
+                    pl: 1,
+                    borderLeft: '2px solid',
+                    borderColor: 'grey.300',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  {item.script}
+                </Typography>
+              </Stack>
+            ))}
+          </Stack>
         </SwiperSlide>
+
         <SwiperSlide>
           <Stack
             height='100%'
             alignItems='center'
             justifyContent='center'
           >
-            <WordSlider content={data.content} />
+            <WordSlider content={data.items?.content} />
           </Stack>
         </SwiperSlide>
+
         <SwiperSlide>
           <Box sx={{ p: 5 }}>
             <Typography
-              variant='h5'
+              variant='h6'
               fontWeight='bold'
               gutterBottom
             >
-              채점
+              답안 입력
             </Typography>
 
             <Stack direction='row'>
@@ -48,7 +78,7 @@ export default function ADAS01() {
                 spacing={1}
                 width='50%'
               >
-                {data.content.map((word, index) => (
+                {data.items?.content.map((word, index) => (
                   <FormControlLabel
                     key={index}
                     control={<Checkbox name={word.name} />}
@@ -73,6 +103,7 @@ export default function ADAS01() {
             </Stack>
           </Box>
         </SwiperSlide>
+
         <SwiperSlide>
           <Unresolved data={data} />
         </SwiperSlide>
