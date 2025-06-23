@@ -41,7 +41,7 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
 
   return (
     <Box sx={{ display: 'flex', height: '100dvh', width: '100dvw', flexDirection: 'column' }}>
-      <Box sx={{ flex: 1, overflowY: 'auto', background: '#fdfbf6' }}>{children}</Box>
+      <Box sx={{ flex: 1, overflowY: 'auto', background: '#f9f8f8' }}>{children}</Box>
 
       <Box
         sx={{

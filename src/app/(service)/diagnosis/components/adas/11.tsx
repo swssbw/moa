@@ -1,56 +1,71 @@
-import Description from '../Description';
+'use client';
 import { data as examine1 } from '@/data/examine1';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
+import { useParams } from 'next/navigation';
 import { FormControl, FormControlLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 
 export default function ADAS11() {
-  const { currentIndex } = useDiagnosisStore();
-  const data = examine1.filter((item) => item.cognitiveId === currentIndex);
+  const params = useParams<{ index: string }>();
+  const currentIndex = parseInt(params.index);
+  const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   if (!data) return;
 
   return (
     <>
-      <Swiper
-        direction={'vertical'}
-        pagination={{
-          clickable: true,
-        }}
-        className='page-slider'
+      <Stack
+        p={5}
+        gap={2}
       >
-        <SwiperSlide>
-          <Description data={data[0]} />
+        <Typography variant='h5'>
+          {data.cognitiveId}. {data.cognitiveName}
+        </Typography>
 
-          <Stack px={5}>
-            <FormControl>
-              <RadioGroup
-                aria-labelledby='demo-radio-buttons-group-label'
-                defaultValue={0}
-                name='radio-buttons-group'
-              >
-                {data[0].content.map((item, idx) => (
-                  <FormControlLabel
-                    key={idx}
-                    value={idx}
-                    control={<Radio />}
-                    label={
-                      <Stack
-                        direction='row'
-                        gap={2}
-                      >
-                        <Typography fontWeight={'bold'}>{item.name}</Typography>
-                        <Typography>{item.hint}</Typography>
-                      </Stack>
-                    }
-                  />
-                ))}
-              </RadioGroup>
-            </FormControl>
+        <Typography color='text.secondary'>{data.description}</Typography>
+
+        {data.items[0].instructions.map((item) => (
+          <Stack
+            key={item.situation}
+            spacing={0.5}
+          >
+            <Typography fontWeight='bold'>{item.situation}</Typography>
+            <Typography
+              sx={{
+                pl: 1,
+                borderLeft: '2px solid',
+                borderColor: 'grey.300',
+                fontStyle: 'italic',
+              }}
+            >
+              {item.script}
+            </Typography>
           </Stack>
-        </SwiperSlide>
-      </Swiper>
+        ))}
+
+        <FormControl>
+          <RadioGroup
+            aria-labelledby='demo-radio-buttons-group-label'
+            defaultValue={0}
+            name='radio-buttons-group'
+          >
+            {data.items[0].content.map((item, idx) => (
+              <FormControlLabel
+                key={idx}
+                value={idx}
+                control={<Radio />}
+                label={
+                  <Stack
+                    direction='row'
+                    gap={2}
+                  >
+                    <Typography fontWeight={'bold'}>{item.name}</Typography>
+                    <Typography>{item.hint}</Typography>
+                  </Stack>
+                }
+              />
+            ))}
+          </RadioGroup>
+        </FormControl>
+      </Stack>
     </>
   );
 }

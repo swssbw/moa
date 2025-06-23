@@ -1,10 +1,11 @@
 'use client';
 
-import WordSlider from '../WordSlider';
+import { WordSliderWithModal } from '../WordSlider';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Stack, Typography, Checkbox, FormControlLabel, TextField } from '@mui/material';
+import { Stack, Typography, Checkbox, FormControlLabel, TextField, Grid, Divider } from '@mui/material';
 import { useParams } from 'next/navigation';
+import SectionCard from '../SectionCard';
 
 export default function ADAS01() {
   const params = useParams<{ index: string }>();
@@ -17,65 +18,61 @@ export default function ADAS01() {
     <>
       <Stack
         p={5}
-        gap={2}
+        gap={5}
       >
-        <Typography variant='h5'>
-          {data.cognitiveId}. {data.cognitiveName}
-        </Typography>
+        <SectionCard>
+          <Typography variant='h5'>
+            {data.cognitiveId}. {data.cognitiveName}
+          </Typography>
 
-        <Typography color='text.secondary'>{data.description}</Typography>
-
-        {data.items[0].instructions.map((item) => (
-          <Stack
-            key={item.situation}
-            spacing={0.5}
-          >
-            <Typography fontWeight='bold'>{item.situation}</Typography>
-            <Typography
-              sx={{
-                pl: 1,
-                borderLeft: '2px solid',
-                borderColor: 'grey.300',
-                fontStyle: 'italic',
-              }}
+          {data.items[0].instructions.map((item) => (
+            <Stack
+              key={item.situation}
+              gap={2}
             >
-              {item.script}
-            </Typography>
-          </Stack>
-        ))}
-      </Stack>
+              <Typography fontWeight='bold'>{item.situation}</Typography>
+              <Typography
+                sx={{
+                  pl: 2,
+                  borderLeft: '4px solid',
+                  borderColor: 'grey.300',
+                  fontStyle: 'italic',
+                }}
+              >
+                {item.script}
+              </Typography>
+            </Stack>
+          ))}
 
-      <Stack
-        height='100%'
-        alignItems='center'
-        justifyContent='center'
-      >
-        <WordSlider content={data.items[0].content} />
-      </Stack>
+          <WordSliderWithModal content={data.items[0].content} />
+        </SectionCard>
 
-      <Stack sx={{ p: 5 }}>
-        <Typography
-          variant='h6'
-          gutterBottom
-        >
-          답안 입력
-        </Typography>
+        <Divider variant='middle' />
 
-        <Stack direction='row'>
-          <Stack
-            spacing={1}
-            width='50%'
+        <SectionCard>
+          <Typography
+            variant='h6'
+            gutterBottom
           >
-            {data.items[0].content.map((word, index) => (
-              <FormControlLabel
-                key={index}
-                control={<Checkbox name={word.name} />}
-                label={<Typography component='span'>{word.name}</Typography>}
-              />
-            ))}
-          </Stack>
+            답안 입력
+          </Typography>
 
-          <Stack width='50%'>
+          <Grid container>
+            {data.items[0].content.map((word, index) => (
+              <Grid
+                size={6}
+                key={index}
+              >
+                <FormControlLabel
+                  key={index}
+                  control={<Checkbox name={word.name} />}
+                  label={<Typography component='span'>{word.name}</Typography>}
+                />
+              </Grid>
+            ))}
+          </Grid>
+
+          <Stack mt={2}>
             <FormControlLabel
               control={<Checkbox />}
               label={<Typography component='span'>회상한 단어 없음</Typography>}
@@ -88,10 +85,14 @@ export default function ADAS01() {
               fullWidth
             />
           </Stack>
-        </Stack>
-      </Stack>
+        </SectionCard>
 
-      <Unresolved data={data} />
+        <Divider variant='middle' />
+
+        <SectionCard>
+          <Unresolved data={data} />
+        </SectionCard>
+      </Stack>
     </>
   );
 }
