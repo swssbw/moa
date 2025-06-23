@@ -3,8 +3,9 @@
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Checkbox, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Checkbox, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
 import WordSlider from '../WordSlider';
+import SectionCard from '../SectionCard';
 
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
@@ -14,16 +15,16 @@ export default function ADAS05() {
   if (!data) return;
 
   return (
-    <>
-      <Stack
-        p={5}
-        gap={2}
-      >
+    <Stack
+      p={5}
+      gap={3}
+    >
+      <SectionCard>
         <Typography variant='h5'>
           {data.cognitiveId}. {data.cognitiveName}
         </Typography>
 
-        <Typography variant='h5'>
+        <Typography variant='h6'>
           {data.cognitiveId}.1 {data.items[0].name}
         </Typography>
 
@@ -35,7 +36,6 @@ export default function ADAS05() {
             {desc}
           </Typography>
         ))}
-
         {data.items[0].instructions.map((instruction, idx) => (
           <Stack
             spacing={0.5}
@@ -54,7 +54,7 @@ export default function ADAS05() {
             </Typography>
           </Stack>
         ))}
-      </Stack>
+      </SectionCard>
 
       <Stack
         height='100%'
@@ -65,91 +65,99 @@ export default function ADAS05() {
       </Stack>
 
       {/* 5-1 채점 */}
-      <Stack p={5}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+      <SectionCard>
+        <Typography
+          variant='h6'
+          gutterBottom
         >
-          <Grid size={3}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              사물
-            </Typography>
-          </Grid>
-          <Grid size={5}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              답변
-            </Typography>
-          </Grid>
-          <Grid size={2}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              정답
-            </Typography>
-          </Grid>
-          <Grid size={2}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              오답
-            </Typography>
-          </Grid>
-        </Grid>
+          답안 입력
+        </Typography>
 
-        {/* 데이터 행 */}
-        {data.items[0].content.map((item, idx) => (
+        <Stack>
           <Grid
             container
             spacing={2}
-            key={idx}
-            alignItems='center'
-            sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+            sx={{ p: 1, borderBottom: '1px solid #ddd' }}
           >
             <Grid size={3}>
-              <Typography fontWeight='bold'>{item.name}</Typography>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                사물
+              </Typography>
             </Grid>
             <Grid size={5}>
-              <TextField
-                size='small'
-                fullWidth
-                // value={item.answer || ''}
-                // onChange={(e) => handleAnswerChange(idx, e.target.value)}
-              />
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                답변
+              </Typography>
             </Grid>
             <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                정답
+              </Typography>
             </Grid>
             <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                오답
+              </Typography>
             </Grid>
           </Grid>
-        ))}
-      </Stack>
 
-      <Stack
-        p={5}
-        gap={2}
-      >
-        <Typography variant='h5'>
+          {/* 데이터 행 */}
+          {data.items[0].content.map((item, idx) => (
+            <Grid
+              container
+              spacing={2}
+              key={idx}
+              alignItems='center'
+              sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+            >
+              <Grid size={3}>
+                <Typography fontWeight='bold'>{item.name}</Typography>
+              </Grid>
+              <Grid size={5}>
+                <TextField
+                  size='small'
+                  fullWidth
+                  // value={item.answer || ''}
+                  // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                />
+              </Grid>
+              <Grid size={2}>
+                <Stack alignItems='center'>
+                  <Checkbox
+                  // checked={item.isCorrect || false}
+                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                  />
+                </Stack>
+              </Grid>
+              <Grid size={2}>
+                <Stack alignItems='center'>
+                  <Checkbox
+                  // checked={item.isCorrect || false}
+                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                  />
+                </Stack>
+              </Grid>
+            </Grid>
+          ))}
+        </Stack>
+      </SectionCard>
+
+      <Divider variant='middle' />
+
+      <SectionCard>
+        <Typography variant='h6'>
           {data.cognitiveId}.2 {data.items[0].name}
         </Typography>
 
@@ -179,89 +187,99 @@ export default function ADAS05() {
             </Typography>
           </Stack>
         ))}
-      </Stack>
+      </SectionCard>
 
       {/* 5-2 채점 */}
-      <Stack p={5}>
-        <Grid
-          container
-          spacing={2}
-          sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+      <SectionCard>
+        <Typography
+          variant='h6'
+          gutterBottom
         >
-          <Grid size={3}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              손가락
-            </Typography>
-          </Grid>
-          <Grid size={5}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              답변
-            </Typography>
-          </Grid>
-          <Grid size={2}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              정답
-            </Typography>
-          </Grid>
-          <Grid size={2}>
-            <Typography
-              align='center'
-              fontWeight='bold'
-            >
-              오답
-            </Typography>
-          </Grid>
-        </Grid>
-
-        {/* 데이터 행 */}
-        {data.items[1].content.map((item, idx) => (
+          답안 입력
+        </Typography>
+        <Stack>
           <Grid
             container
             spacing={2}
-            key={idx}
-            alignItems='center'
-            sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+            sx={{ p: 1, borderBottom: '1px solid #ddd' }}
           >
             <Grid size={3}>
-              <Typography fontWeight='bold'>{item.name}</Typography>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                손가락
+              </Typography>
             </Grid>
             <Grid size={5}>
-              <TextField
-                size='small'
-                fullWidth
-                // value={item.answer || ''}
-                // onChange={(e) => handleAnswerChange(idx, e.target.value)}
-              />
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                답변
+              </Typography>
             </Grid>
             <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                정답
+              </Typography>
             </Grid>
             <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                오답
+              </Typography>
             </Grid>
           </Grid>
-        ))}
-      </Stack>
+
+          {/* 데이터 행 */}
+          {data.items[1].content.map((item, idx) => (
+            <Grid
+              container
+              spacing={2}
+              key={idx}
+              alignItems='center'
+              sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+            >
+              <Grid size={3}>
+                <Typography fontWeight='bold'>{item.name}</Typography>
+              </Grid>
+              <Grid size={5}>
+                <TextField
+                  size='small'
+                  fullWidth
+                  // value={item.answer || ''}
+                  // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                />
+              </Grid>
+              <Grid size={2}>
+                <Stack alignItems='center'>
+                  <Checkbox
+                  // checked={item.isCorrect || false}
+                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                  />
+                </Stack>
+              </Grid>
+              <Grid size={2}>
+                <Stack alignItems='center'>
+                  <Checkbox
+                  // checked={item.isCorrect || false}
+                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                  />
+                </Stack>
+              </Grid>
+            </Grid>
+          ))}
+        </Stack>
+      </SectionCard>
+      <Divider variant='middle' />
+
       <Unresolved data={data} />
-    </>
+    </Stack>
   );
 }

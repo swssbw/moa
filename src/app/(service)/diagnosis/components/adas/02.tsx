@@ -2,15 +2,10 @@
 
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Stack, Checkbox, Paper, Typography } from '@mui/material';
+import { Stack, Checkbox, Typography, Grid, Divider } from '@mui/material';
 
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
 import { useParams } from 'next/navigation';
+import SectionCard from '../SectionCard';
 
 export default function ADAS02() {
   const params = useParams<{ index: string }>();
@@ -20,96 +15,120 @@ export default function ADAS02() {
   if (!data) return;
 
   return (
-    <>
-      <Stack p={5}>
+    <Stack
+      p={5}
+      gap={3}
+    >
+      <SectionCard>
         <Typography variant='h5'>
           {data.cognitiveId}. {data.cognitiveName}
         </Typography>
 
-        <Stack gap={5}>
+        <Stack gap={10}>
           {data.items.map((item, idx) => (
-            <Stack
-              key={idx}
-              gap={2}
-            >
-              {item.description.map((desc, idx) => (
-                <Typography
-                  key={idx}
-                  color='text.secondary'
-                >
-                  {desc}
-                </Typography>
-              ))}
-
-              {item.instructions.map((instruction, idx) => (
-                <Stack
-                  spacing={0.5}
-                  key={idx}
-                >
-                  <Typography fontWeight='bold'>{instruction.situation}</Typography>
-                  <Typography
-                    sx={{
-                      pl: 1,
-                      borderLeft: '2px solid',
-                      borderColor: 'grey.300',
-                      fontStyle: 'italic',
-                    }}
+            <>
+              <Stack
+                key={idx}
+                gap={2}
+              >
+                {item.instructions.map((instruction, idx) => (
+                  <Stack
+                    spacing={0.5}
+                    key={idx}
                   >
-                    {instruction.script}
-                  </Typography>
-                </Stack>
-              ))}
+                    <Typography fontWeight='bold'>{instruction.situation}</Typography>
+                    <Typography
+                      sx={{
+                        pl: 1,
+                        borderLeft: '2px solid',
+                        borderColor: 'grey.300',
+                        fontStyle: 'italic',
+                      }}
+                    >
+                      {instruction.script}
+                    </Typography>
+                  </Stack>
+                ))}
 
-              <TableContainer component={Paper}>
-                <Table
-                  sx={{ minWidth: 650 }}
-                  aria-label='command table'
-                >
-                  <TableHead>
-                    <TableRow>
-                      <TableCell>명령 지침</TableCell>
-                      <TableCell
+                {item.description.map((desc, idx) => (
+                  <Typography
+                    key={idx}
+                    color='text.secondary'
+                    sx={{ background: '#eee', padding: 1 }}
+                  >
+                    {desc}
+                  </Typography>
+                ))}
+
+                <Stack>
+                  <Grid
+                    container
+                    spacing={2}
+                    sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+                  >
+                    <Grid size={8}>
+                      <Typography
                         align='center'
-                        sx={{ width: 80 }}
+                        fontWeight='bold'
+                      >
+                        명령 지침
+                      </Typography>
+                    </Grid>
+                    <Grid size={2}>
+                      <Typography
+                        align='center'
+                        fontWeight='bold'
                       >
                         정답
-                      </TableCell>
-                      <TableCell
+                      </Typography>
+                    </Grid>
+                    <Grid size={2}>
+                      <Typography
                         align='center'
-                        sx={{ width: 80 }}
+                        fontWeight='bold'
                       >
                         오답
-                      </TableCell>
-                    </TableRow>
-                  </TableHead>
+                      </Typography>
+                    </Grid>
+                  </Grid>
 
-                  <TableBody>
-                    {item.content.map((con, idx) => (
-                      <TableRow key={idx}>
-                        <TableCell>{con.name}</TableCell>
-                        <TableCell
-                          align='center'
-                          sx={{ width: 80 }}
-                        >
-                          <Checkbox />
-                        </TableCell>
-                        <TableCell
-                          align='center'
-                          sx={{ width: 80 }}
-                        >
-                          <Checkbox />
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Stack>
+                  {item.content.map((con, idx) => (
+                    <Grid
+                      container
+                      spacing={2}
+                      key={idx}
+                      alignItems='center'
+                      sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+                    >
+                      <Grid size={8}>
+                        <Typography fontWeight='bold'>{con.name}</Typography>
+                      </Grid>
+                      <Grid size={2}>
+                        <Stack alignItems='center'>
+                          <Checkbox
+                          // checked={item.isCorrect || false}
+                          // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                          />
+                        </Stack>
+                      </Grid>
+                      <Grid size={2}>
+                        <Stack alignItems='center'>
+                          <Checkbox
+                          // checked={item.isCorrect || false}
+                          // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                          />
+                        </Stack>
+                      </Grid>
+                    </Grid>
+                  ))}
+                </Stack>
+              </Stack>
+            </>
           ))}
         </Stack>
-      </Stack>
-
+      </SectionCard>
+      <Divider variant='middle' />
       <Unresolved data={data} />
-    </>
+    </Stack>
   );
 }
