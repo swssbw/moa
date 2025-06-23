@@ -5,11 +5,8 @@ export default function Unresolved({ data }: { data: (typeof exam)[0] }) {
   return (
     <Box sx={{ p: 5 }}>
       <Stack gap={2}>
-        <Typography
-          variant='h5'
-          fontWeight='bold'
-        >
-          {data.cognitiveName}
+        <Typography variant='h6'>
+          {data.cognitiveId}. {data.cognitiveName}
         </Typography>
         <Box>
           <FormControlLabel

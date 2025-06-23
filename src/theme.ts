@@ -5,21 +5,27 @@ const theme = createTheme({
     fontFamily: 'Pretendard',
     h1: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     h2: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     h3: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     h4: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     h5: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     h6: {
       lineHeight: 1.5,
+      fontWeight: 700,
     },
     body1: {
       lineHeight: 1.5,

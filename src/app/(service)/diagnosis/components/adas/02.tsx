@@ -1,8 +1,6 @@
-import Description from '../Description';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Stack, Checkbox, Paper } from '@mui/material';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Stack, Checkbox, Paper, Typography } from '@mui/material';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,197 +12,101 @@ import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 
 export default function ADAS02() {
   const { currentIndex } = useDiagnosisStore();
-  const data = examine1.filter((item) => item.cognitiveId === currentIndex);
+  const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   if (!data) return;
 
   return (
     <>
-      <Swiper
-        direction={'vertical'}
-        pagination={{
-          clickable: true,
-        }}
-        className='page-slider'
-      >
-        <SwiperSlide>
-          <Description data={data[0]} />
-          <Stack p={5}>
-            <TableContainer component={Paper}>
-              <Table
-                sx={{ minWidth: 650 }}
-                aria-label='command table'
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>명령 지침</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      정답
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      오답
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+      <Stack p={5}>
+        <Typography variant='h5'>
+          {data.cognitiveId}. {data.cognitiveName}
+        </Typography>
 
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{data[0].content[0].name}</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{data[0].content[1].name}</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Stack>
-        </SwiperSlide>
+        <Stack gap={5}>
+          {data.items.map((item, idx) => (
+            <Stack
+              key={idx}
+              gap={2}
+            >
+              {item.description.map((desc, idx) => (
+                <Typography
+                  key={idx}
+                  color='text.secondary'
+                >
+                  {desc}
+                </Typography>
+              ))}
 
-        <SwiperSlide>
-          <Description data={data[1]} />
-          <Stack p={5}>
-            <TableContainer component={Paper}>
-              <Table
-                sx={{ minWidth: 650 }}
-                aria-label='command table'
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>명령 지침</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      정답
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      오답
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+              {item.instructions.map((instruction, idx) => (
+                <Stack
+                  spacing={0.5}
+                  key={idx}
+                >
+                  <Typography fontWeight='bold'>{instruction.situation}</Typography>
+                  <Typography
+                    sx={{
+                      pl: 1,
+                      borderLeft: '2px solid',
+                      borderColor: 'grey.300',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    {instruction.script}
+                  </Typography>
+                </Stack>
+              ))}
 
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{data[1].content[0].name}</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                  <TableRow>
-                    <TableCell>{data[1].content[1].name}</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Stack>
-        </SwiperSlide>
+              <TableContainer component={Paper}>
+                <Table
+                  sx={{ minWidth: 650 }}
+                  aria-label='command table'
+                >
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>명령 지침</TableCell>
+                      <TableCell
+                        align='center'
+                        sx={{ width: 80 }}
+                      >
+                        정답
+                      </TableCell>
+                      <TableCell
+                        align='center'
+                        sx={{ width: 80 }}
+                      >
+                        오답
+                      </TableCell>
+                    </TableRow>
+                  </TableHead>
 
-        <SwiperSlide>
-          <Description data={data[2]} />
-          <Stack p={5}>
-            <TableContainer component={Paper}>
-              <Table
-                sx={{ minWidth: 650 }}
-                aria-label='command table'
-              >
-                <TableHead>
-                  <TableRow>
-                    <TableCell>명령 지침</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      정답
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      오답
-                    </TableCell>
-                  </TableRow>
-                </TableHead>
+                  <TableBody>
+                    {item.content.map((con, idx) => (
+                      <TableRow key={idx}>
+                        <TableCell>{con.name}</TableCell>
+                        <TableCell
+                          align='center'
+                          sx={{ width: 80 }}
+                        >
+                          <Checkbox />
+                        </TableCell>
+                        <TableCell
+                          align='center'
+                          sx={{ width: 80 }}
+                        >
+                          <Checkbox />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </Stack>
+          ))}
+        </Stack>
+      </Stack>
 
-                <TableBody>
-                  <TableRow>
-                    <TableCell>{data[2].content[0].name}</TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                    <TableCell
-                      align='center'
-                      sx={{ width: 80 }}
-                    >
-                      <Checkbox />
-                    </TableCell>
-                  </TableRow>
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Stack>
-        </SwiperSlide>
-
-        <SwiperSlide>
-          <Unresolved data={data[0]} />
-        </SwiperSlide>
-      </Swiper>
+      <Unresolved data={data} />
     </>
   );
 }

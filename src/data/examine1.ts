@@ -1,15 +1,15 @@
 type ADASITEM = {
   cognitiveId: number;
-  cognitiveSubId?: number; // TODO: delete
   cognitiveName: string;
   testId: string;
+  cognitiveSubId?: number; // TODO: delete
   description?: string[]; // TODO: delete
   instructions?: { situation: string; script: string }[]; // TODO: delete
-  content: {
+  content?: {
     name: string;
     hint: string;
     // src?: string;
-  }[];
+  }[]; // TODO: delete
   evaluation?: {
     name: string;
     score: number;
@@ -21,148 +21,114 @@ type ADASITEM = {
       name: string;
       hint: string;
     }[];
-  };
+  }[];
 };
 
 export const data: ADASITEM[] = [
   {
     cognitiveId: 1,
-    cognitiveSubId: 0,
     cognitiveName: '단어회상(A)',
     testId: 'ADAS_01',
-    items: {
-      description: [''],
-      instructions: [
-        {
-          situation: '첫 번째 시행 전, 검사자는 다음과 같이 지시한다.',
-          script:
-            '이제 제가 이 흰색 카드 위에 쓰여진 몇 개의 단어를 한 번에 하나씩 보여드리겠습니다. 각 단어를 소리 내어 읽으면서 이 단어를 기억하려고 노력해보세요. 잠시 후 보여드렸던 단어를 모두 기억하는지 여쭤보겠습니다. 준비되셨습니까? 이 단어를 읽고 기억해 보세요.',
-        },
-        {
-          situation: '상황에 따라, 검사자는 다음과 같이 말할 수 있다.',
-          script: '소리 내어 읽고 단어를 기억해보세요',
-        },
-        {
-          situation: '10개의 단어를 보여주고 난 후, 검사자는 대상자에게 가능한 한 많은 단어를 회상해보라고 한다.',
-          script: '좋습니다. 이제 제가 보여드렸던 단어들 중에서 생각나는 단어를 모두 말씀해주세요.',
-        },
-        {
-          situation:
-            '대상자가 본인이 회상할 수 있는 모든 단어들을 다 말한 것처럼 보이면, 회상할 수 있는 단어가 더 있는지 알아보기 위해, 다음과 같이 묻는다.',
-          script: '기억나는 단어가 또 있습니까?',
-        },
-      ],
-      content: [
-        { name: '참기름', hint: '' },
-        { name: '팔', hint: '' },
-        { name: '해변', hint: '' },
-        { name: '편지', hint: '' },
-        { name: '공주', hint: '' },
-        { name: '오두막', hint: '' },
-        { name: '기둥', hint: '' },
-        { name: '영수증', hint: '' },
-        { name: '잎', hint: '' },
-        { name: '소방차', hint: '' },
-      ],
-    },
-    description: [''],
-    instructions: [
+    items: [
       {
-        situation: '첫 번째 시행 전, 검사자는 다음과 같이 지시한다.',
-        script:
-          '이제 제가 이 흰색 카드 위에 쓰여진 몇 개의 단어를 한 번에 하나씩 보여드리겠습니다. 각 단어를 소리 내어 읽으면서 이 단어를 기억하려고 노력해보세요. 잠시 후 보여드렸던 단어를 모두 기억하는지 여쭤보겠습니다. 준비되셨습니까? 이 단어를 읽고 기억해 보세요.',
+        description: [''],
+        instructions: [
+          {
+            situation: '첫 번째 시행 전, 검사자는 다음과 같이 지시한다.',
+            script:
+              '이제 제가 이 흰색 카드 위에 쓰여진 몇 개의 단어를 한 번에 하나씩 보여드리겠습니다. 각 단어를 소리 내어 읽으면서 이 단어를 기억하려고 노력해보세요. 잠시 후 보여드렸던 단어를 모두 기억하는지 여쭤보겠습니다. 준비되셨습니까? 이 단어를 읽고 기억해 보세요.',
+          },
+          {
+            situation: '상황에 따라, 검사자는 다음과 같이 말할 수 있다.',
+            script: '소리 내어 읽고 단어를 기억해보세요',
+          },
+          {
+            situation: '10개의 단어를 보여주고 난 후, 검사자는 대상자에게 가능한 한 많은 단어를 회상해보라고 한다.',
+            script: '좋습니다. 이제 제가 보여드렸던 단어들 중에서 생각나는 단어를 모두 말씀해주세요.',
+          },
+          {
+            situation:
+              '대상자가 본인이 회상할 수 있는 모든 단어들을 다 말한 것처럼 보이면, 회상할 수 있는 단어가 더 있는지 알아보기 위해, 다음과 같이 묻는다.',
+            script: '기억나는 단어가 또 있습니까?',
+          },
+        ],
+        content: [
+          { name: '참기름', hint: '' },
+          { name: '팔', hint: '' },
+          { name: '해변', hint: '' },
+          { name: '편지', hint: '' },
+          { name: '공주', hint: '' },
+          { name: '오두막', hint: '' },
+          { name: '기둥', hint: '' },
+          { name: '영수증', hint: '' },
+          { name: '잎', hint: '' },
+          { name: '소방차', hint: '' },
+        ],
       },
-      {
-        situation: '상황에 따라, 검사자는 다음과 같이 말할 수 있다.',
-        script: '소리 내어 읽고 단어를 기억해보세요',
-      },
-      {
-        situation: '10개의 단어를 보여주고 난 후, 검사자는 대상자에게 가능한 한 많은 단어를 회상해보라고 한다.',
-        script: '좋습니다. 이제 제가 보여드렸던 단어들 중에서 생각나는 단어를 모두 말씀해주세요.',
-      },
-      {
-        situation:
-          '대상자가 본인이 회상할 수 있는 모든 단어들을 다 말한 것처럼 보이면, 회상할 수 있는 단어가 더 있는지 알아보기 위해, 다음과 같이 묻는다.',
-        script: '기억나는 단어가 또 있습니까?',
-      },
-    ],
-    content: [
-      { name: '참기름', hint: '' },
-      { name: '팔', hint: '' },
-      { name: '해변', hint: '' },
-      { name: '편지', hint: '' },
-      { name: '공주', hint: '' },
-      { name: '오두막', hint: '' },
-      { name: '기둥', hint: '' },
-      { name: '영수증', hint: '' },
-      { name: '잎', hint: '' },
-      { name: '소방차', hint: '' },
     ],
   },
-  // {
-  //   cognitiveId: 2,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '명령 시행',
-  //   testId: 'command-execution',
-  //   description: [
-  //     ' 대상자가 자신이 실수 했다는 것을 인지하는 경우 또는 다른 시도를 요청하는 경우에만 2차 시도를 제안한다. 정답으로 채점하려면 대상자가 지시에 따라 모든 사항을 정확하게 수행하여야 한다.',
-  //   ],
-  //   instructions: [
-  //     {
-  //       situation: '시작하려면 다음처럼 말한다.',
-  //       script: '지금부터 제가 말씀드리는 대로 몇가지를 해주시기 바랍니다. 먼저...',
-  //     },
-  //   ],
-  //   content: [
-  //     { name: '주먹을 쥐어 보세요', hint: '' },
-  //     { name: '손가락으로 천장을 가리킨 다음 바닥을 가리키세요', hint: '' },
-  //   ],
-  // },
-  // {
-  //   cognitiveId: 2,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '명령 시행',
-  //   testId: 'command-execution',
-  //   description: [
-  //     '세 번째 및 네 번째 명령을 위해 연필, 손목 시계, 카드를 대상자의 왼쪽에서 오른쪽으로 책상 위에 순서대로 놓고 지시한다.',
-  //   ],
-  //   instructions: [],
-  //   content: [
-  //     { name: '연필을 카드 위에 놓았다가. 다시 제자리에 놓아주세요', hint: '' },
-  //     { name: '손목 시계를 연필의 반대 편에 놓고, 카드를 뒤집으세요', hint: '' },
-  //   ],
-  // },
-  // {
-  //   cognitiveId: 2,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '명령 시행',
-  //   testId: 'command-execution',
-  //   description: ['책상 위에 놓여 있던 연필을 손목 시계, 카드를 치운 후 다음과 같이 지시한다.'],
-  //   instructions: [],
-  //   content: [{ name: '눈을 감고, 손가락 두 개로 양쪽 어깨를 각각 두 번식 두드리세요.', hint: '' }],
-  // },
-  // {
-  //   cognitiveId: 3,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '구성 실행력',
-  //   testId: 'configuration-execution',
-  //   description: [
-  //     '대상자가 또 다른 시도를 요청하는 경우 또는 1차 시도에 대한 불만족을 표시하는 경우에만 2차 시도를 제안한다.',
-  //     '구성 실행력의 총점은 추후에 계산된다. 따라서 검사 용지에 점수를 기록할 필요는 없다.',
-  //   ],
-  //   instructions: [
-  //     {
-  //       situation: '검사 시작 전, 다음과 같이 지시한다.',
-  //       script: '종이에 어떤 도형이 그려져 있습니다. 종이의 빈 공간에 이 도형과 똑같이 그려보세요.',
-  //     },
-  //   ],
-  //   content: [
-  //     { name: '동그라미', hint: '/3_1.PNG' },
-  //     { name: '두 개의 겹쳐진 직사각형', hint: '/3_2.PNG' },
-  //     { name: '마름모(다이아몬드)', hint: '/3_3.PNG' },
-  //     { name: '정육면체', hint: '/3_4.PNG' },
-  //   ],
-  // },
+  {
+    cognitiveId: 2,
+    cognitiveName: '명령 시행',
+    testId: 'ADAS_02',
+    items: [
+      {
+        description: [
+          '대상자가 자신이 실수 했다는 것을 인지하는 경우 또는 다른 시도를 요청하는 경우에만 2차 시도를 제안한다. 정답으로 채점하려면 대상자가 지시에 따라 모든 사항을 정확하게 수행하여야 한다.',
+        ],
+        instructions: [
+          {
+            situation: '시작하려면 다음처럼 말한다.',
+            script: '지금부터 제가 말씀드리는 대로 몇가지를 해주시기 바랍니다. 먼저...',
+          },
+        ],
+        content: [
+          { name: '주먹을 쥐어 보세요', hint: '' },
+          { name: '손가락으로 천장을 가리킨 다음 바닥을 가리키세요', hint: '' },
+        ],
+      },
+      {
+        description: [
+          '세 번째 및 네 번째 명령을 위해 연필, 손목 시계, 카드를 대상자의 왼쪽에서 오른쪽으로 책상 위에 순서대로 놓고 지시한다.',
+        ],
+        instructions: [],
+        content: [
+          { name: '연필을 카드 위에 놓았다가. 다시 제자리에 놓아주세요', hint: '' },
+          { name: '손목 시계를 연필의 반대 편에 놓고, 카드를 뒤집으세요', hint: '' },
+        ],
+      },
+      {
+        description: ['책상 위에 놓여 있던 연필을 손목 시계, 카드를 치운 후 다음과 같이 지시한다.'],
+        instructions: [],
+        content: [{ name: '눈을 감고, 손가락 두 개로 양쪽 어깨를 각각 두 번식 두드리세요.', hint: '' }],
+      },
+    ],
+  },
+  {
+    cognitiveId: 3,
+    cognitiveName: '구성 실행력',
+    testId: 'ADAS_03',
+    items: [
+      {
+        description: [
+          '대상자가 또 다른 시도를 요청하는 경우 또는 1차 시도에 대한 불만족을 표시하는 경우에만 2차 시도를 제안한다.',
+          '구성 실행력의 총점은 추후에 계산된다. 따라서 검사 용지에 점수를 기록할 필요는 없다.',
+        ],
+        instructions: [
+          {
+            situation: '검사 시작 전, 다음과 같이 지시한다.',
+            script: '종이에 어떤 도형이 그려져 있습니다. 종이의 빈 공간에 이 도형과 똑같이 그려보세요.',
+          },
+        ],
+        content: [
+          { name: '동그라미', hint: '/3_1.PNG' },
+          { name: '두 개의 겹쳐진 직사각형', hint: '/3_2.PNG' },
+          { name: '마름모(다이아몬드)', hint: '/3_3.PNG' },
+          { name: '정육면체', hint: '/3_4.PNG' },
+        ],
+      },
+    ],
+  },
   // {
   //   cognitiveId: 4,
   //   cognitiveSubId: 0,

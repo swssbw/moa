@@ -3,14 +3,9 @@ import { Stack, Typography } from '@mui/material';
 
 export default function Description({ data }: { data: (typeof exam)[0] }) {
   return (
-    <Stack sx={{ padding: '40px 40px 0px 40px' }}>
+    <Stack>
       <Stack gap={2}>
-        <Typography
-          variant='h4'
-          fontWeight='bold'
-        >
-          {data.cognitiveName}
-        </Typography>
+        <Typography variant='h4'>{data.cognitiveName}</Typography>
 
         <Typography
           variant='body2'

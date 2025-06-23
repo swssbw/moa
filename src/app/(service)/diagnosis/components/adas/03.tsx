@@ -1,226 +1,185 @@
-import Description from '../Description';
-import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Checkbox, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
-import { Swiper, SwiperRef, SwiperSlide } from 'swiper/react';
+import { Button, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
+import Unresolved from '../Unresolved';
 
 export default function ADAS03() {
   const { currentIndex } = useDiagnosisStore();
-  const data = examine1.filter((item) => item.cognitiveId === currentIndex);
-  console.log(data);
+  const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
-  const swiperRef = useRef<SwiperRef | null>(null);
   const canvasRefs = useRef<(ReactSketchCanvasRef | null)[]>([]);
   const [images, setImages] = useState<string[]>([]);
 
-  const disableSwiper = () => {
-    if (swiperRef.current?.swiper) {
-      swiperRef.current.swiper.allowTouchMove = false;
-    }
-  };
+  const handleScroingButtonCLick = async () => {
+    const dataUrls: string[] = [];
 
-  const enableSwiper = () => {
-    if (swiperRef.current?.swiper) {
-      swiperRef.current.swiper.allowTouchMove = true;
-    }
-  };
-
-  const handleSlideChange = async () => {
-    const swiper = swiperRef.current?.swiper;
-    if (!swiper) return;
-
-    if (swiper.activeIndex === 4) {
-      // 5번째 슬라이드에 진입했을 때만 이미지 수집
-      const dataUrls: string[] = [];
-
-      for (let i = 0; i < 4; i++) {
-        const ref = canvasRefs.current[i];
-        if (ref) {
-          try {
-            const data = await ref.exportImage('png');
-            dataUrls.push(data);
-          } catch (err) {
-            console.log(err);
-            dataUrls.push(''); // 비어있으면 빈 값
-          }
+    for (let i = 0; i < 4; i++) {
+      const ref = canvasRefs.current[i];
+      if (ref) {
+        try {
+          const data = await ref.exportImage('png');
+          dataUrls.push(data);
+        } catch (err) {
+          console.log(err);
+          dataUrls.push(''); // 비어있으면 빈 값
         }
       }
-
-      setImages(dataUrls);
     }
-  };
 
+    setImages(dataUrls);
+  };
   if (!data) return;
 
   return (
     <>
-      <Swiper
-        onSlideChange={handleSlideChange}
-        ref={swiperRef}
-        direction={'vertical'}
-        pagination={{
-          clickable: true,
-        }}
-        className='page-slider'
+      <Stack
+        p={5}
+        gap={2}
       >
-        <SwiperSlide>
-          <Description data={data[0]} />
-        </SwiperSlide>
+        <Typography variant='h5'>
+          {data.cognitiveId}. {data.cognitiveName}
+        </Typography>
 
-        {data[0].content.map((item, idx) => (
-          <SwiperSlide key={idx}>
-            <Stack
-              direction='row'
-              p={5}
-              gap={5}
-              alignItems='center'
-              justifyContent='center'
-              sx={{ height: '90%' }}
-            >
-              <Image
-                width={400}
-                height={400}
-                src={item.hint}
-                alt={item.name}
-              />
-              <div
-                style={{ width: '400px', height: '400px' }}
-                onPointerDown={disableSwiper}
-                onPointerUp={enableSwiper}
-                onPointerLeave={enableSwiper}
-              >
-                <ReactSketchCanvas
-                  // ref={(el) => (canvasRefs.current[i] = el)}
-                  ref={(el: ReactSketchCanvasRef | null) => {
-                    canvasRefs.current[idx] = el;
-                  }}
-                  canvasColor='#fff'
-                  strokeColor='#000'
-                  strokeWidth={5}
-                />
-              </div>
-            </Stack>
-          </SwiperSlide>
-        ))}
+        <Typography color='text.secondary'>{data.description}</Typography>
 
-        <SwiperSlide>
-          <Stack p={5}>
+        {data.items[0].instructions.map((item) => (
+          <Stack
+            key={item.situation}
+            spacing={0.5}
+          >
+            <Typography fontWeight='bold'>{item.situation}</Typography>
             <Typography
-              variant='h5'
-              fontWeight='bold'
-              gutterBottom
+              sx={{
+                pl: 1,
+                borderLeft: '2px solid',
+                borderColor: 'grey.300',
+                fontStyle: 'italic',
+              }}
             >
-              채점
+              {item.script}
             </Typography>
-            {images.length === 0 ? (
-              <Typography>그림이 없습니다.</Typography>
-            ) : (
-              <Grid
-                container
-                spacing={2}
-              >
-                {images.map((img, idx) => (
-                  <Grid
-                    key={idx}
-                    size={6}
-                  >
-                    <Stack
-                      direction='row'
-                      key={idx}
-                    >
-                      <Stack>
-                        <Typography variant='h6'>{data[0].content[idx].name}</Typography>
-                        <FormControlLabel
-                          control={<Checkbox />}
-                          label='정답'
-                        />
-                        <FormControlLabel
-                          control={<Checkbox />}
-                          label='오답(최소1개 이상의 면/부분을 그림)'
-                        />
-                        <FormControlLabel
-                          control={<Checkbox />}
-                          label='모든 면/부분이 식별 불가능'
-                        />
-                      </Stack>
-
-                      <Stack alignItems='center'>
-                        <Typography>보기</Typography>
-
-                        <Image
-                          src={data[0].content[idx].hint}
-                          width={150}
-                          height={150}
-                          alt={data[0].content[idx].name}
-                        />
-                      </Stack>
-
-                      <Stack alignItems='center'>
-                        <Typography>제출한 답안</Typography>
-
-                        <Image
-                          width={150}
-                          height={150}
-                          src={img}
-                          alt={`slide-${idx + 1}`}
-                        />
-                      </Stack>
-                    </Stack>
-                  </Grid>
-                ))}
-              </Grid>
-            )}
           </Stack>
-        </SwiperSlide>
+        ))}
+      </Stack>
 
-        {/* <SwiperSlide>
-          <Box sx={{ p: 5 }}>
-            <Typography
-              variant='h5'
-              fontWeight='bold'
-              gutterBottom
+      <Stack p={5}>
+        {data.items[0].content.map((item, idx) => (
+          <Stack
+            key={idx}
+            direction='row'
+            p={5}
+            gap={5}
+            alignItems='center'
+            justifyContent='center'
+            sx={{ height: '90%' }}
+          >
+            <Image
+              width={400}
+              height={400}
+              src={item.hint}
+              alt={item.name}
+            />
+            <div
+              style={{ width: '400px', height: '400px' }}
+              // onPointerDown={disableSwiper}
+              // onPointerUp={enableSwiper}
+              // onPointerLeave={enableSwiper}
             >
-              채점
-            </Typography>
+              <ReactSketchCanvas
+                // ref={(el) => (canvasRefs.current[i] = el)}
+                ref={(el: ReactSketchCanvasRef | null) => {
+                  canvasRefs.current[idx] = el;
+                }}
+                canvasColor='#fff'
+                strokeColor='#000'
+                strokeWidth={5}
+              />
+            </div>
+          </Stack>
+        ))}
+      </Stack>
 
-            <Stack direction='row'>
-              <Stack
-                spacing={1}
-                width='50%'
-              >
-                {data.content.map((word, index) => (
-                  <FormControlLabel
-                    key={index}
-                    control={<Checkbox name={word.name} />}
-                    label={<Typography component='span'>{word.name}</Typography>}
-                  />
-                ))}
-              </Stack>
+      <Stack
+        p={5}
+        gap={2}
+      >
+        <Stack
+          direction='row'
+          justifyContent='space-between'
+        >
+          <Typography
+            variant='h6'
+            gutterBottom
+          >
+            답안 입력
+          </Typography>
+          <Button
+            variant='outlined'
+            onClick={handleScroingButtonCLick}
+          >
+            제출한 그림 가져오기
+          </Button>
+        </Stack>
 
-              <Stack width='50%'>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={<Typography component='span'>회상한 단어 없음</Typography>}
-                />
-
-                <TextField
-                  placeholder='대상자 답변이나 목록에 없는 단어를 기록할 수 있습니다.'
-                  multiline
-                  rows={3}
-                  fullWidth
-                />
-              </Stack>
+        {images.map((img, idx) => (
+          <Stack
+            gap={2}
+            direction='row'
+            key={idx}
+          >
+            <Stack>
+              <Typography fontWeight='bold'>{data.items[0].content[idx].name}</Typography>
+              <FormControlLabel
+                control={<Checkbox />}
+                label='정답'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='오답(최소1개 이상의 면/부분을 그림)'
+              />
+              <FormControlLabel
+                control={<Checkbox />}
+                label='모든 면/부분이 식별 불가능'
+              />
             </Stack>
-          </Box>
-        </SwiperSlide> */}
-        <SwiperSlide>
-          <Unresolved data={data[0]} />
-        </SwiperSlide>
-      </Swiper>
+
+            <Stack
+              alignItems='center'
+              sx={{ border: '1px solid #eee' }}
+              gap={1}
+            >
+              <Typography>보기</Typography>
+
+              <Image
+                src={data.items[0].content[idx].hint}
+                width={150}
+                height={150}
+                alt={data.items[0].content[idx].name}
+              />
+            </Stack>
+
+            <Stack
+              alignItems='center'
+              sx={{ border: '1px solid #eee' }}
+              gap={1}
+            >
+              <Typography>제출한 답안</Typography>
+
+              <Image
+                width={150}
+                height={150}
+                src={img}
+                alt={`slide-${idx + 1}`}
+              />
+            </Stack>
+          </Stack>
+        ))}
+      </Stack>
+
+      <Unresolved data={data} />
     </>
   );
 }
