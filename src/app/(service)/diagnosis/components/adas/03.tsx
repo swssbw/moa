@@ -1,13 +1,23 @@
 'use client';
+import 'swiper/css';
+import 'swiper/css/effect-cards';
+import 'swiper/css/pagination';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { EffectCards, Navigation, Pagination } from 'swiper/modules';
 
 import { data as examine1 } from '@/data/examine1';
-import { Button, Checkbox, Divider, FormControlLabel, Stack, Typography } from '@mui/material';
+import { Checkbox, Divider, FormControlLabel, IconButton, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Unresolved from '../Unresolved';
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
+import { ContentButton } from '../ContentButton';
+import { ComponentWithModal } from '../WordSlider';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 export default function ADAS03() {
   const params = useParams<{ index: string }>();
@@ -36,6 +46,17 @@ export default function ADAS03() {
 
     setImages(dataUrls);
   };
+
+  const [contentModalOpen, setContentModalOpen] = useState(false);
+
+  const handleClickOpen = () => {
+    setContentModalOpen(true);
+  };
+
+  const handleClose = () => {
+    setContentModalOpen(false);
+  };
+
   if (!data) return;
 
   return (
@@ -64,6 +85,7 @@ export default function ADAS03() {
             <Stack
               key={item.situation}
               spacing={0.5}
+              mb={2}
             >
               <Typography fontWeight='bold'>{item.situation}</Typography>
               <Typography
@@ -78,65 +100,20 @@ export default function ADAS03() {
               </Typography>
             </Stack>
           ))}
+
+          <ContentButton
+            title='도형 그리기 열기'
+            handleClickOpen={handleClickOpen}
+          />
         </SectionCard>
 
-        {/* TODO: 슬라이드 형태로 교체 */}
-        {data.items[0].content.map((item, idx) => (
-          <>
-            <SectionCard key={idx}>
-              <Stack
-                direction='row'
-                p={5}
-                gap={5}
-                alignItems='center'
-                justifyContent='center'
-                sx={{ height: '90%' }}
-              >
-                <Image
-                  width={400}
-                  height={400}
-                  src={item.hint}
-                  alt={item.name}
-                />
-                <div
-                  style={{ width: '400px', height: '400px' }}
-                  // onPointerDown={disableSwiper}
-                  // onPointerUp={enableSwiper}
-                  // onPointerLeave={enableSwiper}
-                >
-                  <ReactSketchCanvas
-                    // ref={(el) => (canvasRefs.current[i] = el)}
-                    ref={(el: ReactSketchCanvasRef | null) => {
-                      canvasRefs.current[idx] = el;
-                    }}
-                    canvasColor='#fff'
-                    strokeColor='#000'
-                    strokeWidth={5}
-                  />
-                </div>
-              </Stack>
-            </SectionCard>
-          </>
-        ))}
-
         <SectionCard>
-          <Stack
-            direction='row'
-            justifyContent='space-between'
+          <Typography
+            variant='h6'
+            gutterBottom
           >
-            <Typography
-              variant='h6'
-              gutterBottom
-            >
-              답안 입력
-            </Typography>
-            <Button
-              variant='outlined'
-              onClick={handleScroingButtonCLick}
-            >
-              제출한 그림 가져오기
-            </Button>
-          </Stack>
+            답안 입력
+          </Typography>
 
           {images.map((img, idx) => (
             <Stack
@@ -197,6 +174,97 @@ export default function ADAS03() {
 
         <Unresolved data={data} />
       </Stack>
+
+      <ComponentWithModal
+        handleClose={() => {
+          handleScroingButtonCLick();
+          handleClose();
+        }}
+        open={contentModalOpen}
+      >
+        <Stack
+          direction='row'
+          alignItems='center'
+          width={'100%'}
+          height={'100%'}
+        >
+          <IconButton
+            className='custom_prev'
+            size='large'
+            sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
+          >
+            <ChevronLeftIcon />
+          </IconButton>
+
+          <Swiper
+            pagination={{
+              el: '.custom_pagination',
+              type: 'fraction',
+            }}
+            simulateTouch={false}
+            followFinger={false}
+            grabCursor={false}
+            allowTouchMove={false} // 터치 스와이프 비활성화
+            keyboard={{ enabled: false }} // 키보드 화살표 비활성화
+            mousewheel={false} // 마우스 휠 비활성화
+            loop={true}
+            modules={[Navigation, EffectCards, Pagination]}
+            navigation={{
+              nextEl: '.custom_next',
+              prevEl: '.custom_prev',
+            }}
+            className='draw-slide'
+            style={{
+              width: '100%',
+              height: '100%',
+            }}
+          >
+            {data.items[0].content.map((item, index: number) => (
+              <SwiperSlide
+                key={index}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <SectionCard>
+                  <Stack
+                    direction='row'
+                    alignItems='center'
+                    justifyContent='space-between'
+                  >
+                    <Image
+                      width={400}
+                      height={400}
+                      src={item.hint}
+                      alt={item.name}
+                    />
+                    <div style={{ width: '400px', height: '400px' }}>
+                      <ReactSketchCanvas
+                        ref={(el: ReactSketchCanvasRef | null) => {
+                          canvasRefs.current[index] = el;
+                        }}
+                        canvasColor='#fff'
+                        strokeColor='#000'
+                        strokeWidth={5}
+                      />
+                    </div>
+                  </Stack>
+                </SectionCard>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+
+          <IconButton
+            className='custom_next'
+            size='large'
+            sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
+          >
+            <ChevronRightIcon />
+          </IconButton>
+        </Stack>
+      </ComponentWithModal>
     </>
   );
 }

@@ -7,7 +7,7 @@ import { EffectCards, Navigation, Pagination } from 'swiper/modules';
 import { Button, Dialog, IconButton, Slide, Stack, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { forwardRef, useState } from 'react';
+import { forwardRef, PropsWithChildren, useState } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 
 export default function WordSlider({ content }: { content: { name: string; hint: string }[] }) {
@@ -146,5 +146,49 @@ export function WordSliderWithModal({ content }: { content: { name: string; hint
         </Stack>
       </Dialog>
     </>
+  );
+}
+
+export function ComponentWithModal({
+  children,
+  handleClose,
+  open,
+}: PropsWithChildren & {
+  open: boolean;
+  handleClose: () => void;
+}) {
+  return (
+    <Dialog
+      fullScreen
+      open={open}
+      onClose={handleClose}
+      slots={{
+        transition: Transition,
+      }}
+      slotProps={{
+        paper: {
+          sx: {
+            background: 'rgba(0, 0, 0, 0.8)',
+          },
+        },
+      }}
+    >
+      <Stack
+        p={5}
+        height='100%'
+        alignItems='center'
+        justifyContent='center'
+        sx={{ position: 'relative' }}
+      >
+        <Button
+          sx={{ position: 'absolute', top: '40px', right: '40px' }}
+          color='info'
+          onClick={handleClose}
+        >
+          완료
+        </Button>
+        {children}
+      </Stack>
+    </Dialog>
   );
 }
