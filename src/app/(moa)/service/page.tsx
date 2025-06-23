@@ -165,7 +165,7 @@ export default function Home() {
             </ToggleButtonGroup>
             <Button
               component={Link}
-              href='/diagnosis'
+              href='/diagnosis/1'
               variant='contained'
               size='large'
               fullWidth

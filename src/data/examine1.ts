@@ -129,47 +129,48 @@ export const data: ADASITEM[] = [
       },
     ],
   },
-  // {
-  //   cognitiveId: 4,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '단어 지연 회상',
-  //   testId: 'word-remind-delay',
-  //   description: [
-  //     '반응이 없거나 “또 있습니까?”라고 물은 후에 대상자가 더 이상 추가적인 단어를 기억해내지 못하는 것이 명백한 경우 검사를 중단한다.',
-  //   ],
-  //   instructions: [
-  //     {
-  //       situation: '검사 시작 전, 다음과 같이 지시한다.',
-  //       script:
-  //         '몇 분 전에 제가 (단어 카드를 가리키며)이 카드에 인쇄된 단어 몇 가지를 읽어보라고 했습니다. 카드에 있었던 단어 중에 기억나는 것을 모두 말씀해 주십시오.',
-  //     },
-  //     {
-  //       situation: '대상자가 어떤 단어도 기억나지 않는다고 말하면, 다음과 같이 묻는다.',
-  //       script: '그저 최선을 다하시면 됩니다. 확실하지 않다면 추측하셔도 됩니다.',
-  //     },
-  //     {
-  //       situation: '필요한 경우 다음과 같이 말하여 대상자를 격려한다.',
-  //       script: '또 있습니까?',
-  //     },
-  //     {
-  //       situation:
-  //         '반응이 없거나 “또 있습니까?”라고 물은 후에 대상자가 더 이상 추가적인 단어를 기억해내지 못하는 것이 명백한 경우 검사를 중단한다.',
-  //       script: '',
-  //     },
-  //   ],
-  //   content: [
-  //     { name: '참기름', hint: '' },
-  //     { name: '팔', hint: '' },
-  //     { name: '해변', hint: '' },
-  //     { name: '편지', hint: '' },
-  //     { name: '공주', hint: '' },
-  //     { name: '오두막', hint: '' },
-  //     { name: '기둥', hint: '' },
-  //     { name: '영수증', hint: '' },
-  //     { name: '잎', hint: '' },
-  //     { name: '소방차', hint: '' },
-  //   ],
-  // },
+  {
+    cognitiveId: 4,
+    cognitiveName: '단어 지연 회상',
+    testId: 'ADAS_04',
+    items: [
+      {
+        description: [],
+        instructions: [
+          {
+            situation: '검사 시작 전, 다음과 같이 지시한다.',
+            script:
+              '몇 분 전에 제가 (단어 카드를 가리키며)이 카드에 인쇄된 단어 몇 가지를 읽어보라고 했습니다. 카드에 있었던 단어 중에 기억나는 것을 모두 말씀해 주십시오.',
+          },
+          {
+            situation: '대상자가 어떤 단어도 기억나지 않는다고 말하면, 다음과 같이 묻는다.',
+            script: '그저 최선을 다하시면 됩니다. 확실하지 않다면 추측하셔도 됩니다.',
+          },
+          {
+            situation: '필요한 경우 다음과 같이 말하여 대상자를 격려한다.',
+            script: '또 있습니까?',
+          },
+          {
+            situation:
+              '반응이 없거나 “또 있습니까?”라고 물은 후에 대상자가 더 이상 추가적인 단어를 기억해내지 못하는 것이 명백한 경우 검사를 중단한다.',
+            script: '',
+          },
+        ],
+        content: [
+          { name: '참기름', hint: '' },
+          { name: '팔', hint: '' },
+          { name: '해변', hint: '' },
+          { name: '편지', hint: '' },
+          { name: '공주', hint: '' },
+          { name: '오두막', hint: '' },
+          { name: '기둥', hint: '' },
+          { name: '영수증', hint: '' },
+          { name: '잎', hint: '' },
+          { name: '소방차', hint: '' },
+        ],
+      },
+    ],
+  },
   // {
   //   cognitiveId: 5,
   //   cognitiveSubId: 1,

@@ -2,10 +2,6 @@ import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
 
 interface DiagnosisState {
-  currentIndex: number;
-  setCurrentIndex: (index: number) => void;
-  goToNext: () => void;
-  goToPrevious: () => void;
   baseFontSize: number;
   increaseBaseFontSize: () => void;
   decreaseBaseFontSize: () => void;
@@ -15,10 +11,6 @@ interface DiagnosisState {
 
 export const useDiagnosisStore = create<DiagnosisState>()(
   devtools((set) => ({
-    currentIndex: 1,
-    setCurrentIndex: (index: number) => set({ currentIndex: index }),
-    goToNext: () => set((state) => ({ currentIndex: state.currentIndex + 1 })),
-    goToPrevious: () => set((state) => ({ currentIndex: state.currentIndex - 1 })),
     baseFontSize: 16, // 기본 폰트 사이즈
     increaseBaseFontSize: () =>
       set((state) => {

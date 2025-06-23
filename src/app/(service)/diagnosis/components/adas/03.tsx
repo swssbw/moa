@@ -1,13 +1,17 @@
+'use client';
+
 import { data as examine1 } from '@/data/examine1';
 import { Button, Checkbox, FormControlLabel, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
 import Unresolved from '../Unresolved';
+import { useParams } from 'next/navigation';
 
 export default function ADAS03() {
-  const { currentIndex } = useDiagnosisStore();
+  const params = useParams<{ index: string }>();
+  const currentIndex = parseInt(params.index);
+
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   const canvasRefs = useRef<(ReactSketchCanvasRef | null)[]>([]);

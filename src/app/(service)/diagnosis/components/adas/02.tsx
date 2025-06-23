@@ -1,3 +1,5 @@
+'use client';
+
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { Stack, Checkbox, Paper, Typography } from '@mui/material';
@@ -8,10 +10,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
+import { useParams } from 'next/navigation';
 
 export default function ADAS02() {
-  const { currentIndex } = useDiagnosisStore();
+  const params = useParams<{ index: string }>();
+  const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   if (!data) return;

@@ -2,14 +2,18 @@
 
 import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 import { data as examine1 } from '@/data/examine1';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Box, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react';
 
 export default function ServiceLayout({ children }: { children: React.ReactNode }) {
-  const { goToNext, goToPrevious, currentIndex, setBaseFontSize } = useDiagnosisStore();
+  const { setBaseFontSize } = useDiagnosisStore();
   const router = useRouter();
+  const params = useParams<{ index: string }>();
+
+  const currentIndex = parseInt(params.index);
+
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
@@ -77,7 +81,7 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
 
           <Button
             variant='text'
-            onClick={goToPrevious}
+            onClick={() => router.push(`/diagnosis/${currentIndex - 1}`)}
             disabled={currentIndex === 1}
             sx={{ width: '80px' }}
           >
@@ -88,7 +92,7 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
         {currentIndex < examine1.length ? (
           <Button
             variant='contained'
-            onClick={goToNext}
+            onClick={() => router.push(`/diagnosis/${currentIndex + 1}`)}
           >
             다음 문항
           </Button>
