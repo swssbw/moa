@@ -1,33 +1,121 @@
-import Description from '../Description';
+'use client';
+
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Swiper, SwiperSlide } from 'swiper/react';
-
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
+import { useParams } from 'next/navigation';
+import { Checkbox, Grid, Stack, TextField, Typography } from '@mui/material';
 
 export default function ADAS07() {
-  const { currentIndex } = useDiagnosisStore();
-  const data = examine1.filter((item) => item.cognitiveId === currentIndex);
-
+  const params = useParams<{ index: string }>();
+  const currentIndex = parseInt(params.index);
+  const data = examine1.find((item) => item.cognitiveId === currentIndex);
+  console.log(data);
   if (!data) return;
 
   return (
     <>
-      <Swiper
-        direction={'vertical'}
-        pagination={{
-          clickable: true,
-        }}
-        className='page-slider'
+      <Stack
+        p={5}
+        gap={2}
       >
-        <SwiperSlide>
-          <Description data={data[0]} />
-        </SwiperSlide>
+        <Typography variant='h5'>
+          {data.cognitiveId}. {data.cognitiveName}
+        </Typography>
 
-        <SwiperSlide>
-          <Unresolved data={data[0]} />
-        </SwiperSlide>
-      </Swiper>
+        {data.items[0].description.map((desc, idx) => (
+          <Typography
+            key={idx}
+            color='text.secondary'
+          >
+            {desc}
+          </Typography>
+        ))}
+      </Stack>
+
+      <Stack p={5}>
+        <Grid
+          container
+          spacing={2}
+          sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+        >
+          <Grid size={2}>
+            <Typography
+              align='center'
+              fontWeight='bold'
+            >
+              항목
+            </Typography>
+          </Grid>
+          <Grid size={6}>
+            <Typography
+              align='center'
+              fontWeight='bold'
+            >
+              질문 및 답변
+            </Typography>
+          </Grid>
+          <Grid size={2}>
+            <Typography
+              align='center'
+              fontWeight='bold'
+            >
+              정답
+            </Typography>
+          </Grid>
+          <Grid size={2}>
+            <Typography
+              align='center'
+              fontWeight='bold'
+            >
+              오답
+            </Typography>
+          </Grid>
+        </Grid>
+
+        {/* 데이터 행 */}
+        {data.items[0].content.map((item, idx) => (
+          <Grid
+            container
+            spacing={2}
+            key={idx}
+            alignItems='center'
+            sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+          >
+            <Grid size={2}>
+              <Typography fontWeight='bold'>{item.name}</Typography>
+            </Grid>
+            <Grid size={6}>
+              <Stack>
+                <Typography variant='body2'>{item.hint}</Typography>
+                <TextField
+                  size='small'
+                  fullWidth
+                  // value={item.answer || ''}
+                  // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                />
+              </Stack>
+            </Grid>
+            <Grid size={2}>
+              <Stack alignItems='center'>
+                <Checkbox
+                // checked={item.isCorrect || false}
+                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                />
+              </Stack>
+            </Grid>
+            <Grid size={2}>
+              <Stack alignItems='center'>
+                <Checkbox
+                // checked={item.isCorrect || false}
+                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                />
+              </Stack>
+            </Grid>
+          </Grid>
+        ))}
+      </Stack>
+
+      <Unresolved data={data} />
     </>
   );
 }
