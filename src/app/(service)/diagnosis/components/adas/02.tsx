@@ -6,6 +6,8 @@ import { Stack, Checkbox, Typography, Grid, Divider } from '@mui/material';
 
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
+import SectionTitle from '../SectionTitle';
+import { Description, Instruction } from '../Instruction';
 
 export default function ADAS02() {
   const params = useParams<{ index: string }>();
@@ -20,9 +22,7 @@ export default function ADAS02() {
       gap={3}
     >
       <SectionCard>
-        <Typography variant='h5'>
-          {data.cognitiveId}. {data.cognitiveName}
-        </Typography>
+        <SectionTitle data={data} />
 
         <Stack gap={10}>
           {data.items.map((item, idx) => (
@@ -31,33 +31,18 @@ export default function ADAS02() {
                 key={idx}
                 gap={2}
               >
-                {item.instructions.map((instruction, idx) => (
-                  <Stack
-                    spacing={0.5}
-                    key={idx}
-                  >
-                    <Typography fontWeight='bold'>{instruction.situation}</Typography>
-                    <Typography
-                      sx={{
-                        pl: 1,
-                        borderLeft: '2px solid',
-                        borderColor: 'grey.300',
-                        fontStyle: 'italic',
-                      }}
-                    >
-                      {instruction.script}
-                    </Typography>
-                  </Stack>
+                {item.instructions.map((item) => (
+                  <Instruction
+                    item={item}
+                    key={item.situation}
+                  />
                 ))}
 
-                {item.description.map((desc, idx) => (
-                  <Typography
-                    key={idx}
-                    color='text.secondary'
-                    sx={{ padding: 1 }}
-                  >
-                    {desc}
-                  </Typography>
+                {item.description.map((item) => (
+                  <Description
+                    item={item}
+                    key={item}
+                  />
                 ))}
 
                 <Stack>

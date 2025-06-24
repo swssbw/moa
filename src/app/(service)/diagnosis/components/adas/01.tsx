@@ -8,6 +8,8 @@ import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import { ContentButton } from '../ContentButton';
 import { useState } from 'react';
+import { Instruction } from '../Instruction';
+import SectionTitle from '../SectionTitle';
 
 export default function ADAS01() {
   const params = useParams<{ index: string }>();
@@ -33,27 +35,13 @@ export default function ADAS01() {
         gap={3}
       >
         <SectionCard>
-          <Typography variant='h5'>
-            {data.cognitiveId}. {data.cognitiveName}
-          </Typography>
+          <SectionTitle data={data} />
 
           {data.items[0].instructions.map((item) => (
-            <Stack
+            <Instruction
+              item={item}
               key={item.situation}
-              gap={2}
-            >
-              <Typography fontWeight='bold'>{item.situation}</Typography>
-              <Typography
-                sx={{
-                  pl: 2,
-                  borderLeft: '4px solid',
-                  borderColor: 'grey.300',
-                  fontStyle: 'italic',
-                }}
-              >
-                {item.script}
-              </Typography>
-            </Stack>
+            />
           ))}
 
           <ContentButton

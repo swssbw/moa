@@ -27,6 +27,8 @@ import { useState } from 'react';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ContentButton } from '../ContentButton';
+import SectionTitle, { SectionSubTitle } from '../SectionTitle';
+import { Description, Instruction } from '../Instruction';
 
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
@@ -62,39 +64,21 @@ export default function ADAS05() {
         gap={3}
       >
         <SectionCard>
-          <Typography variant='h5'>
-            {data.cognitiveId}. {data.cognitiveName}
-          </Typography>
+          <SectionTitle data={data} />
+          <SectionSubTitle title={`${data.cognitiveId}.1 ${data.items[0].name}`} />
 
-          <Typography variant='h6'>
-            {data.cognitiveId}.1 {data.items[0].name}
-          </Typography>
-
-          {data.items[0].description.map((desc, idx) => (
-            <Typography
-              key={idx}
-              color='text.secondary'
-            >
-              {desc}
-            </Typography>
+          {data.items[0].description.map((item) => (
+            <Description
+              item={item}
+              key={item}
+            />
           ))}
-          {data.items[0].instructions.map((instruction, idx) => (
-            <Stack
-              spacing={0.5}
-              key={idx}
-            >
-              <Typography fontWeight='bold'>{instruction.situation}</Typography>
-              <Typography
-                sx={{
-                  pl: 1,
-                  borderLeft: '2px solid',
-                  borderColor: 'grey.300',
-                  fontStyle: 'italic',
-                }}
-              >
-                {instruction.script}
-              </Typography>
-            </Stack>
+
+          {data.items[0].instructions.map((item) => (
+            <Instruction
+              item={item}
+              key={item.situation}
+            />
           ))}
 
           <ContentButton
@@ -196,35 +180,19 @@ export default function ADAS05() {
         <Divider variant='middle' />
 
         <SectionCard>
-          <Typography variant='h6'>
-            {data.cognitiveId}.2 {data.items[0].name}
-          </Typography>
+          <SectionSubTitle title={`${data.cognitiveId}.1 ${data.items[1].name}`} />
 
-          {data.items[1].description.map((desc, idx) => (
-            <Typography
-              key={idx}
-              color='text.secondary'
-            >
-              {desc}
-            </Typography>
+          {data.items[1].description.map((item) => (
+            <Description
+              item={item}
+              key={item}
+            />
           ))}
-          {data.items[1].instructions.map((instruction, idx) => (
-            <Stack
-              spacing={0.5}
-              key={idx}
-            >
-              <Typography fontWeight='bold'>{instruction.situation}</Typography>
-              <Typography
-                sx={{
-                  pl: 1,
-                  borderLeft: '2px solid',
-                  borderColor: 'grey.300',
-                  fontStyle: 'italic',
-                }}
-              >
-                {instruction.script}
-              </Typography>
-            </Stack>
+          {data.items[1].instructions.map((item) => (
+            <Instruction
+              item={item}
+              key={item.situation}
+            />
           ))}
         </SectionCard>
 

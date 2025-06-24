@@ -18,6 +18,8 @@ import { ContentButton } from '../ContentButton';
 import { ComponentWithModal } from '../WordSlider';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import SectionTitle from '../SectionTitle';
+import { Description, Instruction } from '../Instruction';
 
 export default function ADAS03() {
   const params = useParams<{ index: string }>();
@@ -66,39 +68,15 @@ export default function ADAS03() {
         gap={3}
       >
         <SectionCard>
-          <Typography variant='h5'>
-            {data.cognitiveId}. {data.cognitiveName}
-          </Typography>
+          <SectionTitle data={data} />
 
-          <Stack>
-            {data.items[0].description.map((desc, idx) => (
-              <Typography
-                key={idx}
-                color='text.secondary'
-              >
-                {desc}
-              </Typography>
-            ))}
-          </Stack>
+          <Description item={data.items[0].description.join(`\\n`)} />
 
           {data.items[0].instructions.map((item) => (
-            <Stack
+            <Instruction
+              item={item}
               key={item.situation}
-              spacing={0.5}
-              mb={2}
-            >
-              <Typography fontWeight='bold'>{item.situation}</Typography>
-              <Typography
-                sx={{
-                  pl: 1,
-                  borderLeft: '2px solid',
-                  borderColor: 'grey.300',
-                  fontStyle: 'italic',
-                }}
-              >
-                {item.script}
-              </Typography>
-            </Stack>
+            />
           ))}
 
           <ContentButton

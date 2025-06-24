@@ -1,4 +1,4 @@
-type ADASITEM = {
+export type ADASITEM = {
   cognitiveId: number;
   cognitiveName: string;
   testId: string;

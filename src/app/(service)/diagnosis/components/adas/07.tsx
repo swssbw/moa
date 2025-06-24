@@ -5,6 +5,8 @@ import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
 import { Checkbox, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
 import SectionCard from '../SectionCard';
+import SectionTitle from '../SectionTitle';
+import { Description } from '../Instruction';
 
 export default function ADAS07() {
   const params = useParams<{ index: string }>();
@@ -19,20 +21,8 @@ export default function ADAS07() {
       gap={3}
     >
       <SectionCard>
-        <Typography variant='h5'>
-          {data.cognitiveId}. {data.cognitiveName}
-        </Typography>
-
-        <Stack>
-          {data.items[0].description.map((desc, idx) => (
-            <Typography
-              key={idx}
-              color='text.secondary'
-            >
-              {desc}
-            </Typography>
-          ))}
-        </Stack>
+        <SectionTitle data={data} />
+        <Description item={data.items[0].description.join(`\\n`)} />
       </SectionCard>
 
       <SectionCard>
