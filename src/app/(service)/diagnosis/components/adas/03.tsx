@@ -1,13 +1,13 @@
 'use client';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import 'swiper/css/pagination';
+// import 'swiper/css';
+// import 'swiper/css/effect-cards';
+// import 'swiper/css/pagination';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Navigation, Pagination } from 'swiper/modules';
 
 import { data as examine1 } from '@/data/examine1';
-import { Checkbox, Divider, FormControlLabel, IconButton, Stack, Typography } from '@mui/material';
+import { Checkbox, Divider, FormControlLabel, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { useRef, useState } from 'react';
 import Image from 'next/image';
@@ -15,11 +15,10 @@ import Unresolved from '../Unresolved';
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import { ContentButton } from '../ContentButton';
-import { ComponentWithModal } from '../WordSlider';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import FullScreenModal from '../FullScreenModal';
 import SectionTitle from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
+import SwiperContainer from '../SwiperContainer';
 
 export default function ADAS03() {
   const params = useParams<{ index: string }>();
@@ -168,14 +167,71 @@ export default function ADAS03() {
         <Unresolved data={data} />
       </Stack>
 
-      <ComponentWithModal
+      <FullScreenModal
         handleClose={() => {
           handleScroingButtonCLick();
           handleClose();
         }}
         open={contentModalOpen}
       >
-        <Stack
+        <SwiperContainer>
+          <Swiper
+            simulateTouch={false}
+            followFinger={false}
+            grabCursor={false}
+            allowTouchMove={false} // 터치 스와이프 비활성화
+            keyboard={{ enabled: false }} // 키보드 화살표 비활성화
+            mousewheel={false} // 마우스 휠 비활성화
+            loop={true}
+            modules={[Navigation, EffectCards, Pagination]}
+            navigation={{
+              nextEl: '.custom_next',
+              prevEl: '.custom_prev',
+            }}
+            pagination={{
+              el: '.custom_pagination',
+              type: 'fraction',
+            }}
+          >
+            {data.items[0].content.map((item, index: number) => (
+              <SwiperSlide
+                key={index}
+                style={{
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <Stack
+                  direction='row'
+                  alignItems='center'
+                  justifyContent='space-evenly'
+                  p={4}
+                  bgcolor='white'
+                  width='100%'
+                >
+                  <Image
+                    width={400}
+                    height={400}
+                    src={item.hint}
+                    alt={item.name}
+                  />
+                  <div style={{ width: '400px', height: '400px' }}>
+                    <ReactSketchCanvas
+                      ref={(el: ReactSketchCanvasRef | null) => {
+                        canvasRefs.current[index] = el;
+                      }}
+                      canvasColor='#fff'
+                      strokeColor='#000'
+                      strokeWidth={5}
+                    />
+                  </div>
+                </Stack>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </SwiperContainer>
+        {/* <Stack
           direction='row'
           alignItems='center'
           width={'100%'}
@@ -256,8 +312,8 @@ export default function ADAS03() {
           >
             <ChevronRightIcon />
           </IconButton>
-        </Stack>
-      </ComponentWithModal>
+        </Stack> */}
+      </FullScreenModal>
     </>
   );
 }

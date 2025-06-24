@@ -22,6 +22,7 @@ export type ADASITEM = {
       name: string;
       hint: string;
       src?: string;
+      isAnswer?: boolean;
     }[];
   }[];
 };
@@ -350,7 +351,7 @@ export const data: ADASITEM[] = [
   {
     cognitiveId: 7,
     cognitiveName: '지남력',
-    testId: 'ADAS_05',
+    testId: 'ADAS_07',
     items: [
       {
         description: ['명시된 경우를 제외하고, 답변은 정확해야 한다.', '너무 일반적이거나 모호한 답변은 명확히 한다.'],
@@ -392,139 +393,166 @@ export const data: ADASITEM[] = [
       },
     ],
   },
-  // {
-  //   cognitiveId: 8,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '단어 재인',
-  //   testId: 'word-recognition-a',
-  //   description: ['명시된 경우를 제외하고, 답변은 정확해야 한다.', '너무 일반적이거나 모호한 답변은 명확히 한다.'],
-  //   instructions: [
-  //     {
-  //       situation: '본 하위 검사의 학습 시행을 시작할 때 검사자는 다음과 같이 지시한다.',
-  //       script:
-  //         '이제 제가 이 흰색 카드에 쓰여진 몇 개의 단어를 보여드릴 겁니다. 각 단어를 소리 내어 읽으면서, 해당 단어를 기억하려고 노력해 보십시오. 잠시 후에 보여드렸던 단어를 보두 기억하는지 여쭈어보겠습니다. 준비되셨습니까? 이 단어를 읽고 기억해 보십시오.',
-  //     },
-  //     {
-  //       situation: '상황에 따라 검사자는 다음과 같이 대상자의 반응을 유도한다.',
-  //       script: '소리 내어 읽고 단어를 기억해 보세요.',
-  //     },
-  //     {
-  //       situation: '재인 검사를 시행하는 동안 검사자는 다음과 같이 말해야 한다.',
-  //       script:
-  //         '이제 또 다른 단어들을 보여드리겠습니다. 이 단어들 중에서 어떤 것은 방금 보여드렸던 것이고, 어떤 것은 보여드리지 않은 것입니다. 각 단어를 보면서 그 단어가 방금 제가 보여드린 것인지를 말씀해 주세요.',
-  //     },
-  //     {
-  //       situation: '검사자는 첫 번째 단어를 보여주면서 다음과 같이 말한다.',
-  //       script: '지금 이 단어는 제가 아까 보여드렸던 것인가요 아닌가요? / 제가 아까 이 단어를 보여드렸습니까?',
-  //     },
-  //     {
-  //       situation: '두 번째 단어를 보여주기 전에도 같은 지시를 한다. 나머지 단어부터는 다음과 같이 말한다.',
-  //       script: '이것은 어떻습니까?',
-  //     },
-  //     {
-  //       situation: '만약 대상자가 확신이 없다는 표현을 하면, 다음과 같이 격려하는 것이 좋다.',
-  //       script: '부담없이 할 수 있는 만큼 잘 맞춰 보십시오.',
-  //     },
-  //   ],
-  //   content: [
-  //     {
-  //       name: '간호사',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '교과서',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '마법사',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '마차',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '표범',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '상업',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '하늘',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '기차',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '동전',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '배',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '공공기관',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '지도',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '도끼',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '종이',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '시금치',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '우유',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '부피',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '숲',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '닻',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '보석',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '토끼',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '기금',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '끝',
-  //       hint: '',
-  //     },
-  //     {
-  //       name: '과자',
-  //       hint: '',
-  //     },
-  //   ],
-  // },
+  {
+    cognitiveId: 8,
+    cognitiveName: '단어 재인',
+    testId: 'ADAS_08',
+    items: [
+      {
+        description: ['명시된 경우를 제외하고, 답변은 정확해야 한다.', '너무 일반적이거나 모호한 답변은 명확히 한다.'],
+        instructions: [
+          {
+            situation: '본 하위 검사의 학습 시행을 시작할 때 검사자는 다음과 같이 지시한다.',
+            script:
+              '이제 제가 이 흰색 카드에 쓰여진 몇 개의 단어를 보여드릴 겁니다. 각 단어를 소리 내어 읽으면서, 해당 단어를 기억하려고 노력해 보십시오. 잠시 후에 보여드렸던 단어를 보두 기억하는지 여쭈어보겠습니다. 준비되셨습니까? 이 단어를 읽고 기억해 보십시오.',
+          },
+          {
+            situation: '상황에 따라 검사자는 다음과 같이 대상자의 반응을 유도한다.',
+            script: '소리 내어 읽고 단어를 기억해 보세요.',
+          },
+          {
+            situation: '재인 검사를 시행하는 동안 검사자는 다음과 같이 말해야 한다.',
+            script:
+              '이제 또 다른 단어들을 보여드리겠습니다. 이 단어들 중에서 어떤 것은 방금 보여드렸던 것이고, 어떤 것은 보여드리지 않은 것입니다. 각 단어를 보면서 그 단어가 방금 제가 보여드린 것인지를 말씀해 주세요.',
+          },
+          {
+            situation: '검사자는 첫 번째 단어를 보여주면서 다음과 같이 말한다.',
+            script: '지금 이 단어는 제가 아까 보여드렸던 것인가요 아닌가요? / 제가 아까 이 단어를 보여드렸습니까?',
+          },
+          {
+            situation: '두 번째 단어를 보여주기 전에도 같은 지시를 한다. 나머지 단어부터는 다음과 같이 말한다.',
+            script: '이것은 어떻습니까?',
+          },
+          {
+            situation: '만약 대상자가 확신이 없다는 표현을 하면, 다음과 같이 격려하는 것이 좋다.',
+            script: '부담없이 할 수 있는 만큼 잘 맞춰 보십시오.',
+          },
+        ],
+        content: [
+          {
+            name: '간호사',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '교과서',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '마법사',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '마차',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '표범',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '상업',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '하늘',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '기차',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '동전',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '배',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '공공기관',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '지도',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '도끼',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '종이',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '시금치',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '우유',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '부피',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '숲',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '닻',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '보석',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '토끼',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '기금',
+            hint: '',
+            isAnswer: true,
+          },
+          {
+            name: '끝',
+            hint: '',
+            isAnswer: false,
+          },
+          {
+            name: '과자',
+            hint: '',
+            isAnswer: false,
+          },
+        ],
+      },
+    ],
+  },
   // {
   //   cognitiveId: 9,
   //   cognitiveSubId: 0,

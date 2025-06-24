@@ -1,6 +1,14 @@
 import { Stack, Typography } from '@mui/material';
 
-export function ContentButton({ title, handleClickOpen }: { title: string; handleClickOpen: () => void }) {
+export function ContentButton({
+  title,
+  handleClickOpen,
+  color = 'secondary',
+}: {
+  title: string;
+  handleClickOpen: () => void;
+  color?: string;
+}) {
   return (
     <Stack
       onClick={handleClickOpen}
@@ -10,7 +18,7 @@ export function ContentButton({ title, handleClickOpen }: { title: string; handl
         width: '100%',
         height: '100px',
         cursor: 'pointer',
-        bgcolor: 'secondary.light',
+        bgcolor: `${color}.light`,
         borderRadius: '16px',
       }}
     >

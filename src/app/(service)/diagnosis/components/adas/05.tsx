@@ -1,34 +1,20 @@
 'use client';
-import 'swiper/css';
-import 'swiper/css/effect-cards';
-import 'swiper/css/pagination';
 
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards, Navigation, Pagination } from 'swiper/modules';
+import { SwiperSlide } from 'swiper/react';
+
 import Image from 'next/image';
 
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import {
-  Checkbox,
-  Divider,
-  Grid,
-  Stack,
-  TextField,
-  Typography,
-  IconButton,
-  Switch,
-  FormControlLabel,
-} from '@mui/material';
-import { ComponentWithModal } from '../WordSlider';
+import { Checkbox, Divider, Grid, Stack, TextField, Typography, Switch, FormControlLabel } from '@mui/material';
+import FullScreenModal from '../FullScreenModal';
 import SectionCard from '../SectionCard';
 import { useState } from 'react';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ContentButton } from '../ContentButton';
 import SectionTitle, { SectionSubTitle } from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
+import { CardSwiperContainer } from '../SwiperContainer';
 
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
@@ -288,85 +274,43 @@ export default function ADAS05() {
 
         <Unresolved data={data} />
       </Stack>
-      <ComponentWithModal
+      <FullScreenModal
         handleClose={() => {
           handleClose();
         }}
         open={contentModalOpen}
       >
-        <Stack alignItems='center'>
-          <Stack
-            direction='row'
-            alignItems='center'
-            width='800px'
-            height='550px'
-          >
-            <IconButton
-              className='custom_prev'
-              size='large'
-              sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
-            >
-              <ChevronLeftIcon />
-            </IconButton>
-
-            <Swiper
-              pagination={{
-                el: '.custom_pagination',
-                type: 'fraction',
-              }}
-              loop={true}
-              effect={'cards'}
-              modules={[Navigation, EffectCards, Pagination]}
-              navigation={{
-                nextEl: '.custom_next',
-                prevEl: '.custom_prev',
-              }}
-              className='thing-slide'
-            >
-              {data.items[0].content.map((item, index: number) => (
-                <SwiperSlide key={index}>
-                  <Stack
-                    alignItems='center'
-                    sx={{ p: 3 }}
-                  >
-                    <FormControlLabel
-                      control={
-                        <Switch
-                          checked={!!hintMap[index]}
-                          onChange={() => toggleHint(index)}
-                        />
-                      }
-                      label='힌트 보기'
+        <CardSwiperContainer>
+          {data.items[0].content.map((item, index: number) => (
+            <SwiperSlide key={index}>
+              <Stack
+                alignItems='center'
+                sx={{ p: 3 }}
+              >
+                <FormControlLabel
+                  control={
+                    <Switch
+                      checked={!!hintMap[index]}
+                      onChange={() => toggleHint(index)}
                     />
-                    <Image
-                      src={item.src as string}
-                      alt={item.hint}
-                      width={200}
-                      height={250}
-                    />
-                    <Typography sx={{ height: '30px', color: 'text.secondary' }}>
-                      {!!hintMap[index] && item.hint}
-                    </Typography>
-                    <TextField placeholder='답변 입력' />
-                  </Stack>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-
-            <IconButton
-              className='custom_next'
-              size='large'
-              sx={{ bgcolor: 'white', border: '1px solid', borderColor: 'divider', boxShadow: 1 }}
-            >
-              <ChevronRightIcon />
-            </IconButton>
-          </Stack>
-          <div
-            className='custom_pagination'
-            style={{ textAlign: 'center', fontSize: '0.875rem', marginBottom: '4px', zIndex: 101, color: 'white' }}
-          />
-        </Stack>
-      </ComponentWithModal>
+                  }
+                  label='힌트 보기'
+                />
+                <Image
+                  src={item.src as string}
+                  alt={item.hint}
+                  width={200}
+                  height={250}
+                />
+                <Typography sx={{ height: '30px', color: 'text.secondary' }}>
+                  {!!hintMap[index] && item.hint}
+                </Typography>
+                <TextField placeholder='답변 입력' />
+              </Stack>
+            </SwiperSlide>
+          ))}
+        </CardSwiperContainer>
+      </FullScreenModal>
     </>
   );
 }

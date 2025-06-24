@@ -1,6 +1,6 @@
 'use client';
 
-import WordSlider, { ComponentWithModal } from '../WordSlider';
+import FullScreenModal from '../FullScreenModal';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { Stack, Typography, Checkbox, FormControlLabel, TextField, Grid, Divider } from '@mui/material';
@@ -10,6 +10,8 @@ import { ContentButton } from '../ContentButton';
 import { useState } from 'react';
 import { Instruction } from '../Instruction';
 import SectionTitle from '../SectionTitle';
+import { CardSwiperContainer } from '../SwiperContainer';
+import { SwiperSlide } from 'swiper/react';
 
 export default function ADAS01() {
   const params = useParams<{ index: string }>();
@@ -93,14 +95,25 @@ export default function ADAS01() {
         <Unresolved data={data} />
       </Stack>
 
-      <ComponentWithModal
+      <FullScreenModal
         handleClose={() => {
           handleClose();
         }}
         open={contentModalOpen}
       >
-        <WordSlider content={data.items[0].content} />
-      </ComponentWithModal>
+        <CardSwiperContainer>
+          {data.items[0].content.map((item, index: number) => (
+            <SwiperSlide key={index}>
+              <Typography
+                variant='h1'
+                sx={{ fontSize: '3rem', fontWeight: 'bold' }}
+              >
+                {item.name}
+              </Typography>
+            </SwiperSlide>
+          ))}
+        </CardSwiperContainer>
+      </FullScreenModal>
     </>
   );
 }
