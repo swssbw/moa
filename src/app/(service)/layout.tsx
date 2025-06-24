@@ -81,9 +81,9 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
 
           <Button
             variant='text'
+            color='secondary'
             onClick={() => router.push(`/diagnosis/${currentIndex - 1}`)}
             disabled={currentIndex === 1}
-            sx={{ width: '80px' }}
           >
             이전 문항
           </Button>
@@ -92,6 +92,7 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
         {currentIndex < examine1.length ? (
           <Button
             variant='contained'
+            color='secondary'
             onClick={() => router.push(`/diagnosis/${currentIndex + 1}`)}
           >
             다음 문항
@@ -99,6 +100,7 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
         ) : (
           <Button
             variant='contained'
+            color='secondary'
             onClick={() => {
               alert('검사완료');
             }}

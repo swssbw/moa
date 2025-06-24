@@ -47,7 +47,7 @@ export default function ADAS07() {
           <Grid
             container
             spacing={2}
-            sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+            sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
           >
             <Grid size={2}>
               <Typography

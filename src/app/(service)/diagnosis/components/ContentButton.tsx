@@ -10,7 +10,7 @@ export function ContentButton({ title, handleClickOpen }: { title: string; handl
         width: '100%',
         height: '100px',
         cursor: 'pointer',
-        background: '#5b8cc342',
+        bgcolor: 'secondary.light',
         borderRadius: '16px',
       }}
     >

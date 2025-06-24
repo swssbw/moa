@@ -26,7 +26,7 @@ export default function ADAS02() {
 
         <Stack gap={10}>
           {data.items.map((item, idx) => (
-            <>
+            <div key={idx}>
               <Stack
                 key={idx}
                 gap={2}
@@ -54,7 +54,7 @@ export default function ADAS02() {
                   <Typography
                     key={idx}
                     color='text.secondary'
-                    sx={{ background: '#eee', padding: 1 }}
+                    sx={{ padding: 1 }}
                   >
                     {desc}
                   </Typography>
@@ -64,7 +64,7 @@ export default function ADAS02() {
                   <Grid
                     container
                     spacing={2}
-                    sx={{ p: 1, borderBottom: '1px solid #ddd' }}
+                    sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
                   >
                     <Grid size={8}>
                       <Typography
@@ -123,7 +123,7 @@ export default function ADAS02() {
                   ))}
                 </Stack>
               </Stack>
-            </>
+            </div>
           ))}
         </Stack>
       </SectionCard>

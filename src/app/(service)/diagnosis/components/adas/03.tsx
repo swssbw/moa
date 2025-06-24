@@ -117,7 +117,6 @@ export default function ADAS03() {
 
           {images.map((img, idx) => (
             <Stack
-              gap={2}
               direction='row'
               key={idx}
             >
@@ -139,10 +138,18 @@ export default function ADAS03() {
 
               <Stack
                 alignItems='center'
-                sx={{ border: '1px solid #eee' }}
-                gap={1}
+                sx={{ border: '1px solid #ddd' }}
               >
-                <Typography>보기</Typography>
+                <Typography
+                  sx={{
+                    width: '100%',
+                    backgroundColor: 'grey.200',
+                  }}
+                  fontWeight='bold'
+                  align='center'
+                >
+                  보기
+                </Typography>
 
                 <Image
                   src={data.items[0].content[idx].hint}
@@ -155,9 +162,17 @@ export default function ADAS03() {
               <Stack
                 alignItems='center'
                 sx={{ border: '1px solid #eee' }}
-                gap={1}
               >
-                <Typography>제출한 답안</Typography>
+                <Typography
+                  sx={{
+                    width: '100%',
+                    backgroundColor: 'grey.200',
+                  }}
+                  fontWeight='bold'
+                  align='center'
+                >
+                  제출한 답안
+                </Typography>
 
                 <Image
                   width={150}

@@ -7,7 +7,7 @@ import { EffectCards, Navigation, Pagination } from 'swiper/modules';
 import { Button, Dialog, IconButton, Slide, Stack, Typography } from '@mui/material';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { forwardRef, PropsWithChildren, useState } from 'react';
+import { forwardRef, PropsWithChildren } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 
 export default function WordSlider({ content }: { content: { name: string; hint: string }[] }) {
@@ -84,71 +84,6 @@ const Transition = forwardRef(function Transition(
   );
 });
 
-export function WordSliderWithModal({ content }: { content: { name: string; hint: string }[] }) {
-  const [open, setOpen] = useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <>
-      <Stack
-        onClick={handleClickOpen}
-        alignItems='center'
-        justifyContent='center'
-        sx={{
-          width: '100%',
-          height: '100px',
-          cursor: 'pointer',
-          background: '#5b8cc342',
-          borderRadius: '16px',
-        }}
-      >
-        <Typography variant='h6'>단어 카드 열기</Typography>
-      </Stack>
-      <Dialog
-        fullScreen
-        open={open}
-        onClose={handleClose}
-        slots={{
-          transition: Transition,
-        }}
-        slotProps={{
-          paper: {
-            sx: {
-              // #f9f8f8
-              background: 'rgba(0, 0, 0, 0.8)',
-              // background: 'rgba(255, 255, 255, 0.8)',
-            },
-          },
-        }}
-      >
-        <Stack
-          p={5}
-          height='100%'
-          alignItems='center'
-          justifyContent='center'
-          sx={{ position: 'relative' }}
-        >
-          <Button
-            sx={{ position: 'absolute', top: '40px', right: '40px' }}
-            color='info'
-            onClick={handleClose}
-          >
-            종료하기
-          </Button>
-          <WordSlider content={content} />
-        </Stack>
-      </Dialog>
-    </>
-  );
-}
-
 export function ComponentWithModal({
   children,
   handleClose,
@@ -182,7 +117,7 @@ export function ComponentWithModal({
       >
         <Button
           sx={{ position: 'absolute', top: '40px', right: '40px' }}
-          color='info'
+          color='secondary'
           onClick={handleClose}
         >
           완료
