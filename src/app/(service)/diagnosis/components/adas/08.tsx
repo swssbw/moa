@@ -1,25 +1,22 @@
 'use client';
 
-import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Button, Divider, Stack, ToggleButton, ToggleButtonGroup, Typography } from '@mui/material';
+import { Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
 import SectionTitle from '../SectionTitle';
 import { useState } from 'react';
 import { Description, Instruction } from '../Instruction';
 import SectionCard from '../SectionCard';
 import { ContentButton } from '../ContentButton';
 import FullScreenModal from '../FullScreenModal';
-import { CardSwiperContainer } from '../SwiperContainer';
-import { SwiperSlide } from 'swiper/react';
-import SquareRadioGroup from '../SquaredRadio';
+import EmblaCarousel from '../carousel';
 
 export default function ADAS08() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
-  const [contentModalOpen, setContentModalOpen] = useState(false);
+  const [contentModalOpen, setContentModalOpen] = useState('');
   const [targetWords, setTargetWords] = useState<string[]>([]);
 
   const handleClickOpen = (type: string) => {
@@ -33,12 +30,19 @@ export default function ADAS08() {
       setTargetWords(testWords);
     }
 
-    setContentModalOpen(true);
+    setContentModalOpen(type);
   };
 
   const handleClose = () => {
-    setContentModalOpen(false);
+    setContentModalOpen('');
   };
+
+  const [selected, setSelected] = useState<'y' | 'n' | ''>('');
+
+  const testReplyOptions: { value: 'y' | 'n'; label: string }[] = [
+    { value: 'y', label: '본 적 있어요' },
+    { value: 'n', label: '본 적 없어요' },
+  ];
 
   if (!data) return;
 
@@ -78,45 +82,174 @@ export default function ADAS08() {
 
         <Divider variant='middle' />
 
-        <Unresolved data={data} />
+        <SectionCard>
+          <Typography
+            variant='h6'
+            gutterBottom
+          >
+            답안 입력
+          </Typography>
+
+          <Stack>
+            <Grid
+              container
+              spacing={2}
+              sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
+            >
+              <Grid size={6}>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  단어
+                </Typography>
+              </Grid>
+              <Grid size={2}>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  예
+                </Typography>
+              </Grid>
+              <Grid size={2}>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  아니오
+                </Typography>
+              </Grid>
+              <Grid size={2}>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  재지시
+                </Typography>
+              </Grid>
+            </Grid>
+
+            {/* 데이터 행 */}
+            {data.items[0].content.map((item, idx) => (
+              <Grid
+                container
+                key={idx}
+                alignItems='center'
+                sx={{ borderBottom: '1px solid #ddd' }}
+              >
+                <Grid size={6}>
+                  <Typography
+                    fontWeight={item.isAnswer ? '700' : '400'}
+                    align='center'
+                  >
+                    {item.name}
+                  </Typography>
+                </Grid>
+                <Grid size={2}>
+                  <Stack alignItems='center'>
+                    <Checkbox
+                    // checked={item.isCorrect || false}
+                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid size={2}>
+                  <Stack alignItems='center'>
+                    <Checkbox
+                    // checked={item.isCorrect || false}
+                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid size={2}>
+                  <Stack alignItems='center'>
+                    <Checkbox
+                    // checked={item.isCorrect || false}
+                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                    />
+                  </Stack>
+                </Grid>
+              </Grid>
+            ))}
+          </Stack>
+        </SectionCard>
       </Stack>
 
       <FullScreenModal
         handleClose={() => {
           handleClose();
         }}
-        open={contentModalOpen}
+        open={!!contentModalOpen}
       >
-        <CardSwiperContainer>
-          {targetWords.map((word, index: number) => (
-            <SwiperSlide key={index}>
+        <EmblaCarousel
+          options={{ loop: true }}
+          slides={targetWords.map((word, index: number) => (
+            <Stack
+              key={index}
+              alignItems='center'
+              sx={{
+                p: 5,
+                borderRadius: '24px',
+                gap: 5,
+                background: '#fff',
+                border: '1px solid #ddd',
+                height: '500px',
+                width: '400px',
+              }}
+            >
               <Stack
-                sx={{
-                  height: '80%',
-                  width: '100%',
-                  p: 5,
-                }}
+                height='100%'
                 justifyContent='center'
-                alignItems='center'
               >
-                <Stack
-                  height='100%'
-                  justifyContent='center'
+                <Typography
+                  variant='h1'
+                  sx={{ fontSize: '3rem', fontWeight: 'bold' }}
                 >
-                  <Typography
-                    variant='h1'
-                    sx={{ fontSize: '3rem', fontWeight: 'bold' }}
-                  >
-                    {word}
-                  </Typography>
-                </Stack>
-
-                <Button onClick={() => alert('1234')}>1234</Button>
-                <SquareRadioGroup></SquareRadioGroup>
+                  {word}
+                </Typography>
               </Stack>
-            </SwiperSlide>
+
+              {contentModalOpen === 'test' && (
+                <Stack
+                  alignItems='center'
+                  gap={2}
+                >
+                  <FormControlLabel
+                    control={<Checkbox color='success' />}
+                    label='재지시'
+                  />
+                  <Stack
+                    direction='row'
+                    gap={2}
+                  >
+                    {testReplyOptions.map((option) => (
+                      <Stack
+                        key={option.value}
+                        onClick={() => setSelected(option.value)}
+                        sx={{
+                          width: '150px',
+                          height: '75px',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          cursor: 'pointer',
+                          fontWeight: 'bold',
+                          borderRadius: '16px',
+                          border: selected === option.value ? '1px solid #68AD7E' : '1px solid #ddd',
+                          color: selected === option.value ? '#fff' : '#333',
+                          backgroundColor: selected === option.value ? '#68AD7E' : '#fff',
+                          boxShadow: selected === option.value ? '0 0 8px #68AD7E' : 'none',
+                        }}
+                      >
+                        {option.label}
+                      </Stack>
+                    ))}
+                  </Stack>
+                </Stack>
+              )}
+            </Stack>
           ))}
-        </CardSwiperContainer>
+        />
       </FullScreenModal>
     </>
   );

@@ -23,7 +23,7 @@ const EmblaCarousel: React.FC<PropType> = (props) => {
     <Stack
       direction='row'
       alignItems='center'
-      gap={4}
+      gap={1}
     >
       <PrevButton
         onClick={onPrevButtonClick}

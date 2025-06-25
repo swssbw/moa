@@ -1,7 +1,5 @@
 'use client';
 
-import { SwiperSlide } from 'swiper/react';
-
 import Image from 'next/image';
 
 import Unresolved from '../Unresolved';
@@ -14,7 +12,7 @@ import { useState } from 'react';
 import { ContentButton } from '../ContentButton';
 import SectionTitle, { SectionSubTitle } from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
-import { CardSwiperContainer } from '../SwiperContainer';
+import EmblaCarousel from '../carousel';
 
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
@@ -280,36 +278,40 @@ export default function ADAS05() {
         }}
         open={contentModalOpen}
       >
-        <CardSwiperContainer>
-          {data.items[0].content.map((item, index: number) => (
-            <SwiperSlide key={index}>
-              <Stack
-                alignItems='center'
-                sx={{ p: 3 }}
-              >
-                <FormControlLabel
-                  control={
-                    <Switch
-                      checked={!!hintMap[index]}
-                      onChange={() => toggleHint(index)}
-                    />
-                  }
-                  label='힌트 보기'
-                />
-                <Image
-                  src={item.src as string}
-                  alt={item.hint}
-                  width={200}
-                  height={250}
-                />
-                <Typography sx={{ height: '30px', color: 'text.secondary' }}>
-                  {!!hintMap[index] && item.hint}
-                </Typography>
-                <TextField placeholder='답변 입력' />
-              </Stack>
-            </SwiperSlide>
+        <EmblaCarousel
+          options={{ loop: true }}
+          slides={data.items[0].content.map((item, index: number) => (
+            <Stack
+              key={index}
+              alignItems='center'
+              sx={{
+                p: 5,
+                borderRadius: 5,
+                background: '#fff',
+                border: '1px solid #ddd',
+                width: '400px',
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={!!hintMap[index]}
+                    onChange={() => toggleHint(index)}
+                  />
+                }
+                label='힌트 보기'
+              />
+              <Image
+                src={item.src as string}
+                alt={item.hint as string}
+                width={200}
+                height={250}
+              />
+              <Typography sx={{ height: '30px', color: 'text.secondary' }}>{!!hintMap[index] && item.hint}</Typography>
+              <TextField placeholder='답변 입력' />
+            </Stack>
           ))}
-        </CardSwiperContainer>
+        />
       </FullScreenModal>
     </>
   );

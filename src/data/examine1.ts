@@ -20,9 +20,10 @@ export type ADASITEM = {
     instructions: { situation: string; script: string }[];
     content: {
       name: string;
-      hint: string;
+      hint?: string;
       src?: string;
       isAnswer?: boolean;
+      score?: number;
     }[];
   }[];
 };
@@ -553,43 +554,45 @@ export const data: ADASITEM[] = [
       },
     ],
   },
-  // {
-  //   cognitiveId: 9,
-  //   cognitiveSubId: 0,
-  //   cognitiveName: '단어 인지 하부 검사 지침 기억하기',
-  //   testId: 'word-recognition-b',
-  //   description: [
-  //     '이 항목은 대상자가 단어 재인 검사 수행 도중에 과제 내용을 잘 기억하고 있는지를 평가하는 것이다. 단어 재인 과제를 시행하면서 대상자에게 과제를 상기시킨 횟수로 평가한다. 만약 과제를 완료하지 못했거나 시도하지도 못했다면 이 과제는 채점하지 않는다.',
-  //   ],
-  //   instructions: [],
-  //   content: [],
-  //   evaluation: [
-  //     {
-  //       name: '상기시킴 없음(0)',
-  //       score: 0,
-  //     },
-  //     {
-  //       name: '상기시킴 1회',
-  //       score: 1,
-  //     },
-  //     {
-  //       name: '상기시킴 2회',
-  //       score: 2,
-  //     },
-  //     {
-  //       name: '상기시킴 3-4회',
-  //       score: 3,
-  //     },
-  //     {
-  //       name: '상기시킴 5-6회',
-  //       score: 4,
-  //     },
-  //     {
-  //       name: '상기시킴 7회 이상',
-  //       score: 5,
-  //     },
-  //   ],
-  // },
+  {
+    cognitiveId: 9,
+    cognitiveName: '단어 인지 하부 검사 지침 기억하기',
+    testId: 'ADAS_08',
+    items: [
+      {
+        description: [
+          '이 항목은 대상자가 단어 재인 검사 수행 도중에 과제 내용을 잘 기억하고 있는지를 평가하는 것이다. 단어 재인 과제를 시행하면서 대상자에게 과제를 상기시킨 횟수로 평가한다. 만약 과제를 완료하지 못했거나 시도하지도 못했다면 이 과제는 채점하지 않는다.',
+        ],
+        instructions: [],
+        content: [
+          {
+            name: '상기시킴 없음(0)',
+            score: 0,
+          },
+          {
+            name: '상기시킴 1회',
+            score: 1,
+          },
+          {
+            name: '상기시킴 2회',
+            score: 2,
+          },
+          {
+            name: '상기시킴 3-4회',
+            score: 3,
+          },
+          {
+            name: '상기시킴 5-6회',
+            score: 4,
+          },
+          {
+            name: '상기시킴 7회 이상',
+            score: 5,
+          },
+        ],
+      },
+    ],
+  },
   // {
   //   cognitiveId: 10,
   //   cognitiveSubId: 1,

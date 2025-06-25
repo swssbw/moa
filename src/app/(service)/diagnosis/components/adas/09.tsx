@@ -3,7 +3,10 @@
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Stack, Typography } from '@mui/material';
+import { Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
+import SectionCard from '../SectionCard';
+import SectionTitle from '../SectionTitle';
+import { Description } from '../Instruction';
 
 export default function ADAS09() {
   const params = useParams<{ index: string }>();
@@ -16,34 +19,57 @@ export default function ADAS09() {
     <>
       <Stack
         p={5}
-        gap={2}
+        gap={3}
       >
-        <Typography variant='h5'>
-          {data.cognitiveId}. {data.cognitiveName}
-        </Typography>
+        <SectionCard>
+          <SectionTitle data={data} />
 
-        <Typography color='text.secondary'>{data.description}</Typography>
+          <Description item={data.items[0].description.join(`\\n`)} />
 
-        {data.items[0].instructions.map((item) => (
-          <Stack
-            key={item.situation}
-            spacing={0.5}
-          >
-            <Typography fontWeight='bold'>{item.situation}</Typography>
-            <Typography
-              sx={{
-                pl: 1,
-                borderLeft: '2px solid',
-                borderColor: 'grey.300',
-                fontStyle: 'italic',
-              }}
+          <Stack>
+            <Grid
+              container
+              spacing={2}
+              sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
             >
-              {item.script}
-            </Typography>
+              <Grid size={6}></Grid>
+              <Grid size={6}>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  검사지침 기억하기 점수
+                </Typography>
+              </Grid>
+            </Grid>
+
+            {data.items[0].content.map((item, index) => (
+              <Grid
+                key={index}
+                container
+                spacing={2}
+                alignItems='center'
+                sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
+              >
+                <Grid size={6}>
+                  <Typography align='center'>{item.name}</Typography>
+                </Grid>
+                <Grid size={6}>
+                  <Typography align='center'>
+                    <FormControlLabel
+                      control={<Checkbox />}
+                      label={<Typography component='span'>{item.score} 점</Typography>}
+                    />
+                  </Typography>
+                </Grid>
+              </Grid>
+            ))}
           </Stack>
-        ))}
+        </SectionCard>
+
+        <Divider variant='middle' />
+        <Unresolved data={data} />
       </Stack>
-      <Unresolved data={data} />
     </>
   );
 }

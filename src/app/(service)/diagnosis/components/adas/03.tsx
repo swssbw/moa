@@ -1,15 +1,9 @@
 'use client';
-// import 'swiper/css';
-// import 'swiper/css/effect-cards';
-// import 'swiper/css/pagination';
-
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { EffectCards, Navigation, Pagination } from 'swiper/modules';
 
 import { data as examine1 } from '@/data/examine1';
 import { Checkbox, Divider, FormControlLabel, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
-import { useRef, useState } from 'react';
+import { useState, RefObject, createRef } from 'react';
 import Image from 'next/image';
 import Unresolved from '../Unresolved';
 import { useParams } from 'next/navigation';
@@ -18,7 +12,6 @@ import { ContentButton } from '../ContentButton';
 import FullScreenModal from '../FullScreenModal';
 import SectionTitle from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
-import SwiperContainer from '../SwiperContainer';
 
 export default function ADAS03() {
   const params = useParams<{ index: string }>();
@@ -26,14 +19,17 @@ export default function ADAS03() {
 
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
-  const canvasRefs = useRef<(ReactSketchCanvasRef | null)[]>([]);
+  const [canvasRefs] = useState<RefObject<ReactSketchCanvasRef | null>[]>(() =>
+    Array.from({ length: data?.items[0].content.length ?? 0 }, () => createRef<ReactSketchCanvasRef>())
+  );
   const [images, setImages] = useState<string[]>([]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const handleScroingButtonCLick = async () => {
     const dataUrls: string[] = [];
-
-    for (let i = 0; i < 4; i++) {
-      const ref = canvasRefs.current[i];
+    const contentLength = data?.items[0].content.length ?? 0;
+    for (let i = 0; i < contentLength; i++) {
+      const ref = canvasRefs[i]?.current;
       if (ref) {
         try {
           const data = await ref.exportImage('png');
@@ -42,10 +38,12 @@ export default function ADAS03() {
           console.log(err);
           dataUrls.push(''); // 비어있으면 빈 값
         }
+      } else {
+        dataUrls.push('');
       }
     }
-
     setImages(dataUrls);
+    handleClose();
   };
 
   const [contentModalOpen, setContentModalOpen] = useState(false);
@@ -168,69 +166,86 @@ export default function ADAS03() {
       </Stack>
 
       <FullScreenModal
-        handleClose={() => {
-          handleScroingButtonCLick();
-          handleClose();
-        }}
+        handleClose={handleScroingButtonCLick}
         open={contentModalOpen}
       >
-        <SwiperContainer>
-          <Swiper
-            simulateTouch={false}
-            followFinger={false}
-            grabCursor={false}
-            allowTouchMove={false} // 터치 스와이프 비활성화
-            keyboard={{ enabled: false }} // 키보드 화살표 비활성화
-            mousewheel={false} // 마우스 휠 비활성화
-            loop={true}
-            modules={[Navigation, EffectCards, Pagination]}
-            navigation={{
-              nextEl: '.custom_next',
-              prevEl: '.custom_prev',
-            }}
-            pagination={{
-              el: '.custom_pagination',
-              type: 'fraction',
-            }}
+        <Stack>
+          <Stack
+            direction='row'
+            gap={2}
+            justifyContent='center'
+            mb={3}
           >
-            {data.items[0].content.map((item, index: number) => (
-              <SwiperSlide
-                key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
+            {data.items[0].content.map((_, i) => (
+              <Stack
+                key={i}
+                onClick={() => setSelectedIndex(i)}
+                sx={{
+                  width: 48,
+                  height: 48,
+                  borderRadius: '50%',
                   alignItems: 'center',
+                  justifyContent: 'center',
+                  cursor: 'pointer',
+                  fontWeight: 'bold',
+                  fontSize: 20,
+                  backgroundColor: selectedIndex === i ? '#486a9e' : '#fff',
+                  color: selectedIndex === i ? '#fff' : 'secondary.main',
+                  border: selectedIndex === i ? '1px solid #486a9e' : '1px solid #ddd',
+                  boxShadow: selectedIndex === i ? '0 0 8px #486a9e' : 'none',
                 }}
               >
-                <Stack
-                  direction='row'
-                  alignItems='center'
-                  justifyContent='space-evenly'
-                  p={4}
-                  bgcolor='white'
-                  width='100%'
-                >
-                  <Image
-                    width={400}
-                    height={400}
-                    src={item.hint}
-                    alt={item.name}
-                  />
-                  <div style={{ width: '400px', height: '400px' }}>
+                {i + 1}
+              </Stack>
+            ))}
+          </Stack>
+          <Stack
+            style={{
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
+            <Stack
+              direction='row'
+              alignItems='center'
+              justifyContent='space-evenly'
+              p={4}
+              bgcolor='white'
+              width='100%'
+            >
+              <Image
+                width={400}
+                height={400}
+                src={data.items[0].content[selectedIndex].hint}
+                alt={data.items[0].content[selectedIndex].name}
+              />
+              <div style={{ width: '400px', height: '400px', position: 'relative' }}>
+                {data.items[0].content.map((_, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      opacity: selectedIndex === idx ? 1 : 0,
+                      pointerEvents: selectedIndex === idx ? 'auto' : 'none',
+                      width: '400px',
+                      height: '400px',
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                    }}
+                  >
                     <ReactSketchCanvas
-                      ref={(el: ReactSketchCanvasRef | null) => {
-                        canvasRefs.current[index] = el;
-                      }}
+                      ref={canvasRefs[idx]}
                       canvasColor='#fff'
                       strokeColor='#000'
                       strokeWidth={5}
                     />
                   </div>
-                </Stack>
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </SwiperContainer>
+                ))}
+              </div>
+            </Stack>
+          </Stack>
+        </Stack>
       </FullScreenModal>
     </>
   );
