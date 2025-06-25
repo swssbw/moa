@@ -99,7 +99,7 @@ export function CardSwiperContainer({ children }: PropsWithChildren) {
       </Stack>
       <div
         className='custom_pagination'
-        style={{ textAlign: 'center', fontSize: '0.875rem', marginBottom: '4px', zIndex: 101, color: 'white' }}
+        style={{ textAlign: 'center', fontSize: '0.875rem', marginBottom: '4px', zIndex: 101 }}
       />
     </Stack>
   );

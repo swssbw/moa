@@ -37,7 +37,8 @@ export default function FullScreenModal({
       slotProps={{
         paper: {
           sx: {
-            background: 'rgba(0, 0, 0, 0.8)',
+            background: '#fdfbf6',
+            // background: 'rgba(0, 0, 0, 0.8)',
           },
         },
       }}

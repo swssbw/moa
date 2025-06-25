@@ -101,6 +101,24 @@ export default function ADAS01() {
         }}
         open={contentModalOpen}
       >
+        {/* <EmblaCarousel
+          options={{ loop: true }}
+          slides={data.items[0].content.map((item, index: number) => (
+            <Stack
+              key={index}
+              alignItems='center'
+              justifyContent='center'
+              sx={{ background: '#fff', width: '100%', height: '400px', borderRadius: 3 }}
+            >
+              <Typography
+                variant='h1'
+                sx={{ fontSize: '3rem', fontWeight: 'bold' }}
+              >
+                {item.name}
+              </Typography>
+            </Stack>
+          ))}
+        /> */}
         <CardSwiperContainer>
           {data.items[0].content.map((item, index: number) => (
             <SwiperSlide key={index}>
