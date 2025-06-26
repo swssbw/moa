@@ -35,7 +35,7 @@ export default function Home() {
           <Logocopy />
           <Typography
             variant='h1'
-            sx={{ fontFamily: 'var(--font-hakgyo)', color: '#707070', fontSize: '3rem' }}
+            sx={{ fontFamily: 'HakgyoansimDunggeunmiso', color: '#707070', fontSize: '3rem' }}
           >
             Moa
           </Typography>

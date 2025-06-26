@@ -6,6 +6,13 @@
 }
 
 @font-face {
+  font-family: 'Maplestory';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Pretendard';
   src: url('/fonts/Pretendard-Black.woff2') format('woff2');
   font-weight: 900;

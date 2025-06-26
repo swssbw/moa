@@ -127,10 +127,10 @@ export default function ADAS03() {
                 </Typography>
 
                 <Image
-                  src={data.items[0].content[idx].hint}
+                  src={data.items[0].content[idx].hint as string}
+                  alt={data.items[0].content[idx].name as string}
                   width={150}
                   height={150}
-                  alt={data.items[0].content[idx].name}
                 />
               </Stack>
 
@@ -217,8 +217,8 @@ export default function ADAS03() {
               <Image
                 width={400}
                 height={400}
-                src={data.items[0].content[selectedIndex].hint}
-                alt={data.items[0].content[selectedIndex].name}
+                src={data.items[0].content[selectedIndex].hint as string}
+                alt={data.items[0].content[selectedIndex].name as string}
               />
               <div style={{ width: '400px', height: '400px', position: 'relative' }}>
                 {data.items[0].content.map((_, idx) => (

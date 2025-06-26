@@ -35,7 +35,7 @@ export default function MoaLayout({
           width: 240,
           height: '100%',
           backgroundColor: '#ffffff',
-          boxShadow: '0px 3px 10px rgba(0, 0, 0, 0.1)',
+          borderRight: '1px solid #ddd',
           padding: '20px 0',
           flexShrink: 0,
         }}
