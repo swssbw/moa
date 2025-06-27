@@ -23,7 +23,6 @@ export function Instruction({ item }: { item: { situation: string; script: strin
 }
 
 export function Description({ item }: { item: string }) {
-  console.log(item);
   return (
     <Typography
       key={item}
