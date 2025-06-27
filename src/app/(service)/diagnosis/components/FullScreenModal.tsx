@@ -1,7 +1,8 @@
 import { Button, Dialog, Slide, Stack } from '@mui/material';
-
+import RefreshIcon from '@mui/icons-material/Refresh';
 import { forwardRef, PropsWithChildren } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
+import CheckIcon from '@mui/icons-material/Check';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {
@@ -20,8 +21,8 @@ const Transition = forwardRef(function Transition(
 
 export default function FullScreenModal({
   children,
-  handleClose,
   open,
+  handleClose,
 }: PropsWithChildren & {
   open: boolean;
   handleClose: () => void;
@@ -52,6 +53,7 @@ export default function FullScreenModal({
       >
         <Button
           sx={{ position: 'absolute', top: '40px', right: '40px' }}
+          startIcon={<CheckIcon />}
           color='secondary'
           onClick={handleClose}
         >
