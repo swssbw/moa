@@ -1,8 +1,7 @@
 'use client';
 
 import { useDiagnosisStore } from '@/hooks/diagnosisStore';
-import { data as examine1 } from '@/data/examine1';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, usePathname } from 'next/navigation';
 import { Box, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
 import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react';
@@ -11,7 +10,11 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
   const { setBaseFontSize } = useDiagnosisStore();
   const router = useRouter();
   const params = useParams<{ index: string }>();
+  const pathname = usePathname(); // ['', 'diagnosis', 'adas', '14']
 
+  const TEST_TYPE = pathname.split('/')[2];
+
+  console.log('pathname', pathname.split('/'));
   const currentIndex = parseInt(params.index);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -37,6 +40,18 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
   const handleSetNormalFont = () => {
     setBaseFontSize(16);
     handleClose();
+  };
+
+  const handleClickPrev = () => {
+    router.push(`/diagnosis/${TEST_TYPE}/${currentIndex - 1}`);
+  };
+
+  const handleClickNext = () => {
+    if (TEST_TYPE === 'adas' && currentIndex === 14) {
+      router.push(`/diagnosis/cist/1`);
+    } else {
+      router.push(`/diagnosis/${TEST_TYPE}/${currentIndex + 1}`);
+    }
   };
 
   return (
@@ -82,32 +97,20 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
           <Button
             variant='text'
             color='secondary'
-            onClick={() => router.push(`/diagnosis/${currentIndex - 1}`)}
+            onClick={handleClickPrev}
             disabled={currentIndex === 1}
           >
             이전 문항
           </Button>
         </Stack>
 
-        {currentIndex < examine1.length ? (
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => router.push(`/diagnosis/${currentIndex + 1}`)}
-          >
-            다음 문항
-          </Button>
-        ) : (
-          <Button
-            variant='contained'
-            color='secondary'
-            onClick={() => {
-              alert('검사완료');
-            }}
-          >
-            완료
-          </Button>
-        )}
+        <Button
+          variant='contained'
+          color='secondary'
+          onClick={handleClickNext}
+        >
+          다음 문항
+        </Button>
       </Box>
     </Box>
   );
