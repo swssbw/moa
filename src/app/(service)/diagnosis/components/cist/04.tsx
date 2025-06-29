@@ -1,11 +1,13 @@
 'use client';
 
 import { data as cist1 } from '@/data/cist1';
-import { Stack, Checkbox, Typography, Grid } from '@mui/material';
+import { Stack, Typography, Grid, RadioGroup, FormControl, FormControlLabel, Radio } from '@mui/material';
 
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
+import Image from 'next/image';
+import { ReactSketchCanvas } from 'react-sketch-canvas';
 
 export default function CIST04() {
   const params = useParams<{ index: string }>();
@@ -22,67 +24,63 @@ export default function CIST04() {
       <SectionCard>
         <SectionTitle data={data} />
 
-        {/* <Stack>
+        <Stack>
           <Grid
             container
             spacing={2}
             sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
           >
-            <Grid size={8}>
-              <Typography
-                align='center'
-                fontWeight='bold'
-              >
-                질문
-              </Typography>
-            </Grid>
-            <Grid size={2}>
-              <Typography
-                align='center'
-                fontWeight='bold'
-              >
-                정답
-              </Typography>
-            </Grid>
-            <Grid size={2}>
-              <Typography
-                align='center'
-                fontWeight='bold'
-              >
-                오답
-              </Typography>
-            </Grid>
+            <Typography
+              align='center'
+              fontWeight='bold'
+            >
+              {data.items[0].question}
+            </Typography>
           </Grid>
 
-          {data.items[0].subQuestion?.map((q, i) => (
-            <Grid
-              container
-              spacing={2}
-              key={i}
-              alignItems='center'
-              sx={{ borderBottom: '1px solid #ddd' }}
-            >
-              <Grid size={8}>
-                <Typography fontWeight='bold'>{q}</Typography>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
+          <Grid
+            container
+            alignItems='center'
+            spacing={2}
+            sx={{ borderBottom: '1px solid #ddd', backgroundColor: 'grey.50' }}
+          >
+            <Grid size={6}>
+              <Stack>
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  점수
+                </Typography>
+              </Stack>
             </Grid>
-          ))}
+            <Grid size={6}>
+              <FormControl>
+                <RadioGroup
+                  row
+                  aria-labelledby='demo-radio-buttons-group-label'
+                  defaultValue={0}
+                  name='radio-buttons-group'
+                >
+                  <FormControlLabel
+                    value={0}
+                    control={<Radio />}
+                    label={'0'}
+                  />
+                  <FormControlLabel
+                    value={1}
+                    control={<Radio />}
+                    label={'1'}
+                  />
+                  <FormControlLabel
+                    value={2}
+                    control={<Radio />}
+                    label={'2'}
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+          </Grid>
 
           <Grid
             container
@@ -90,27 +88,31 @@ export default function CIST04() {
             alignItems='center'
             sx={{ borderBottom: '1px solid #ddd' }}
           >
-            <Grid size={8}>
-              <Typography fontWeight='bold'>{data.items[1].question}</Typography>
-            </Grid>
-            <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
-            </Grid>
-            <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
-            </Grid>
+            {data.items[0].src && data.items[0].src.length > 0 && (
+              <>
+                <Grid size={6}>
+                  <Image
+                    src={data.items[0].src[0]}
+                    alt={data.items[0].src[0]}
+                    width={400}
+                    height={400}
+                  />
+                </Grid>
+                <Grid size={6}>
+                  <ReactSketchCanvas
+                    width='400px'
+                    height='400px'
+                    backgroundImage={data.items[0].src[1]}
+                    // ref={canvasRefs[idx]}
+                    canvasColor='#fff'
+                    strokeColor='#000'
+                    strokeWidth={5}
+                  />
+                </Grid>
+              </>
+            )}
           </Grid>
-        </Stack> */}
+        </Stack>
       </SectionCard>
     </Stack>
   );

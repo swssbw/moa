@@ -6,6 +6,7 @@ import CIST05 from '../../components/cist/05';
 import CIST06 from '../../components/cist/06';
 import CIST07 from '../../components/cist/07';
 import CIST08 from '../../components/cist/08';
+import Result from '../../components/cist/Result';
 
 export default async function Diagnosis({ params }: { params: Promise<{ index: string }> }) {
   const { index } = await params;
@@ -21,6 +22,7 @@ export default async function Diagnosis({ params }: { params: Promise<{ index: s
       {currentPageIndex === 6 && <CIST06 />}
       {currentPageIndex === 7 && <CIST07 />}
       {currentPageIndex === 8 && <CIST08 />}
+      {currentPageIndex === 9 && <Result />}
     </>
   );
 }

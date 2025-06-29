@@ -1,5 +1,4 @@
 import { Button, Dialog, Slide, Stack } from '@mui/material';
-import RefreshIcon from '@mui/icons-material/Refresh';
 import { forwardRef, PropsWithChildren } from 'react';
 import { TransitionProps } from '@mui/material/transitions';
 import CheckIcon from '@mui/icons-material/Check';

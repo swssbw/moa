@@ -2,10 +2,12 @@
 
 import { data as cist1 } from '@/data/cist1';
 import { Stack, Checkbox, Typography, Grid } from '@mui/material';
+import Image from 'next/image';
 
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
+import React from 'react';
 
 export default function CIST05() {
   const params = useParams<{ index: string }>();
@@ -22,7 +24,7 @@ export default function CIST05() {
       <SectionCard>
         <SectionTitle data={data} />
 
-        {/* <Stack>
+        <Stack>
           <Grid
             container
             spacing={2}
@@ -54,63 +56,61 @@ export default function CIST05() {
             </Grid>
           </Grid>
 
-          {data.items[0].subQuestion?.map((q, i) => (
-            <Grid
-              container
-              spacing={2}
-              key={i}
-              alignItems='center'
-              sx={{ borderBottom: '1px solid #ddd' }}
-            >
-              <Grid size={8}>
-                <Typography fontWeight='bold'>{q}</Typography>
+          {data.items.map((item, idx) => (
+            <React.Fragment key={idx}>
+              <Grid
+                container
+                gap={1}
+                sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.100' }}
+              >
+                <Typography
+                  align='center'
+                  fontWeight='bold'
+                >
+                  {item.question}
+                </Typography>
+                <Typography>{item.desc}</Typography>
               </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-            </Grid>
-          ))}
 
-          <Grid
-            container
-            spacing={2}
-            alignItems='center'
-            sx={{ borderBottom: '1px solid #ddd' }}
-          >
-            <Grid size={8}>
-              <Typography fontWeight='bold'>{data.items[1].question}</Typography>
-            </Grid>
-            <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
-            </Grid>
-            <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
-            </Grid>
-          </Grid>
-        </Stack> */}
+              <Grid
+                container
+                spacing={2}
+                alignItems='center'
+                sx={{ borderBottom: '1px solid #ddd' }}
+              >
+                <Grid
+                  size={8}
+                  sx={{ position: 'relative', height: '150px' }}
+                >
+                  {item.src && item.src.length > 0 && (
+                    <Image
+                      src={item.src[0]}
+                      alt={item.src[0]}
+                      fill
+                      objectFit='contain'
+                    />
+                  )}
+                </Grid>
+                <Grid size={2}>
+                  <Stack alignItems='center'>
+                    <Checkbox
+                    // checked={item.isCorrect || false}
+                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                    />
+                  </Stack>
+                </Grid>
+                <Grid size={2}>
+                  <Stack alignItems='center'>
+                    <Checkbox
+                    // checked={item.isCorrect || false}
+                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                    />
+                  </Stack>
+                </Grid>
+              </Grid>
+            </React.Fragment>
+          ))}
+        </Stack>
       </SectionCard>
     </Stack>
   );

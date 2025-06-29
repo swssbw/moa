@@ -1,7 +1,7 @@
 'use client';
 
 import { data as cist1 } from '@/data/cist1';
-import { Stack, Checkbox, Typography, Grid } from '@mui/material';
+import { Stack, Typography, Grid, TextField } from '@mui/material';
 
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
@@ -22,13 +22,13 @@ export default function CIST08() {
       <SectionCard>
         <SectionTitle data={data} />
 
-        {/* <Stack>
+        <Stack>
           <Grid
             container
             spacing={2}
             sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
           >
-            <Grid size={8}>
+            <Grid size={9}>
               <Typography
                 align='center'
                 fontWeight='bold'
@@ -36,81 +36,37 @@ export default function CIST08() {
                 질문
               </Typography>
             </Grid>
-            <Grid size={2}>
+            <Grid size={3}>
               <Typography
                 align='center'
                 fontWeight='bold'
               >
-                정답
-              </Typography>
-            </Grid>
-            <Grid size={2}>
-              <Typography
-                align='center'
-                fontWeight='bold'
-              >
-                오답
+                답변 기록
               </Typography>
             </Grid>
           </Grid>
-
-          {data.items[0].subQuestion?.map((q, i) => (
-            <Grid
-              container
-              spacing={2}
-              key={i}
-              alignItems='center'
-              sx={{ borderBottom: '1px solid #ddd' }}
-            >
-              <Grid size={8}>
-                <Typography fontWeight='bold'>{q}</Typography>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-            </Grid>
-          ))}
 
           <Grid
             container
             spacing={2}
             alignItems='center'
-            sx={{ borderBottom: '1px solid #ddd' }}
+            sx={{ borderBottom: '1px solid #ddd', p: 1 }}
           >
-            <Grid size={8}>
-              <Typography fontWeight='bold'>{data.items[1].question}</Typography>
+            <Grid size={9}>
+              <Typography
+                align='center'
+                fontWeight='bold'
+              >
+                {data.items[0].question}
+              </Typography>
             </Grid>
-            <Grid size={2}>
+            <Grid size={3}>
               <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
-              </Stack>
-            </Grid>
-            <Grid size={2}>
-              <Stack alignItems='center'>
-                <Checkbox
-                // checked={item.isCorrect || false}
-                // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                />
+                <TextField placeholder='정답 갯수를 입력해주세요.' />
               </Stack>
             </Grid>
           </Grid>
-        </Stack> */}
+        </Stack>
       </SectionCard>
     </Stack>
   );

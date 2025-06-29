@@ -23,7 +23,7 @@ export const useSelectedSnapDisplay = (emblaApi: EmblaCarouselType | undefined):
     updateScrollSnapState(emblaApi);
     emblaApi.on('select', updateScrollSnapState);
     emblaApi.on('reInit', updateScrollSnapState);
-  }, [emblaApi]);
+  }, [emblaApi, updateScrollSnapState]);
 
   return {
     selectedSnap,
