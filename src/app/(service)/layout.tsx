@@ -49,6 +49,8 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
   const handleClickNext = () => {
     if (TEST_TYPE === 'adas' && currentIndex === 14) {
       router.push(`/diagnosis/cist/1`);
+    } else if (TEST_TYPE === 'cist' && currentIndex === 9) {
+      window.alert('검사종료!');
     } else {
       router.push(`/diagnosis/${TEST_TYPE}/${currentIndex + 1}`);
     }
