@@ -3,16 +3,46 @@
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Checkbox, Divider, Grid, Stack, TextField, Typography } from '@mui/material';
+import { Divider, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, Typography } from '@mui/material';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Description } from '../Instruction';
+import { useState } from 'react';
+
+type AnswerEntry = {
+  value: string; // ex) '사과'
+  result: Result; // 정답 여부
+};
+
+type Result = 'correct' | 'wrong' | '';
 
 export default function ADAS07() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
-  console.log(data);
+
+  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
+
+  const handleAnswerChange = (key: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        value,
+        result: '',
+      },
+    }));
+  };
+
+  const handleResultChange = (key: string, result: 'correct' | 'wrong' | '') => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        result,
+      },
+    }));
+  };
+
   if (!data) return;
 
   return (
@@ -91,26 +121,41 @@ export default function ADAS07() {
                   <TextField
                     size='small'
                     fullWidth
-                    // value={item.answer || ''}
-                    // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                    value={answers[`0-${idx}`]?.value ?? ''}
+                    onChange={(e) => handleAnswerChange(`0-${idx}`, e.target.value)}
                   />
                 </Stack>
               </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
+              <Grid size={4}>
+                <RadioGroup
+                  row
+                  value={answers[`0-${idx}`]?.result ?? ''}
+                  onChange={(e) => {
+                    handleResultChange(`0-${idx}`, e.target.value as Result);
+                  }}
+                  sx={{ gap: '16px' }}
+                >
+                  <Grid size={6}>
+                    <FormControlLabel
+                      value='correct'
+                      control={<Radio />}
+                      label=''
+                      sx={{
+                        justifyContent: 'center',
+                        width: '100%',
+                        margin: 0,
+                      }}
+                    />
+                  </Grid>
+                  <Grid size={6}>
+                    <FormControlLabel
+                      value='wrong'
+                      control={<Radio />}
+                      label=''
+                      sx={{ justifyContent: 'center', width: '100%', margin: 0 }}
+                    />
+                  </Grid>
+                </RadioGroup>
               </Grid>
             </Grid>
           ))}

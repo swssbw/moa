@@ -11,6 +11,11 @@ import { ContentButton } from '../ContentButton';
 import FullScreenModal from '../FullScreenModal';
 import EmblaCarousel from '../carousel';
 
+type AnswerEntry = {
+  seen: 'y' | 'n' | '';
+  retry: 'y' | 'n';
+};
+
 export default function ADAS08() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
@@ -18,6 +23,8 @@ export default function ADAS08() {
 
   const [contentModalOpen, setContentModalOpen] = useState('');
   const [targetWords, setTargetWords] = useState<string[]>([]);
+
+  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
 
   const handleClickOpen = (type: string) => {
     if (type === 'answer') {
@@ -37,7 +44,15 @@ export default function ADAS08() {
     setContentModalOpen('');
   };
 
-  const [selected, setSelected] = useState<'y' | 'n' | ''>('');
+  const handleValueChange = (key: string, value: 'y' | 'n') => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        seen: value,
+      },
+    }));
+  };
 
   const testReplyOptions: { value: 'y' | 'n'; label: string }[] = [
     { value: 'y', label: '본 적 있어요' },
@@ -109,7 +124,7 @@ export default function ADAS08() {
                   align='center'
                   fontWeight='bold'
                 >
-                  예
+                  본 적 있어요
                 </Typography>
               </Grid>
               <Grid size={2}>
@@ -117,7 +132,7 @@ export default function ADAS08() {
                   align='center'
                   fontWeight='bold'
                 >
-                  아니오
+                  본 적 없어요
                 </Typography>
               </Grid>
               <Grid size={2}>
@@ -149,24 +164,24 @@ export default function ADAS08() {
                 <Grid size={2}>
                   <Stack alignItems='center'>
                     <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                      disabled
+                      checked={answers[idx]?.seen === 'y'}
                     />
                   </Stack>
                 </Grid>
                 <Grid size={2}>
                   <Stack alignItems='center'>
                     <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                      disabled
+                      checked={answers[idx]?.seen === 'n'}
                     />
                   </Stack>
                 </Grid>
                 <Grid size={2}>
                   <Stack alignItems='center'>
                     <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
+                      disabled
+                      checked={answers[idx]?.retry === 'y'}
                     />
                   </Stack>
                 </Grid>
@@ -216,7 +231,21 @@ export default function ADAS08() {
                   gap={2}
                 >
                   <FormControlLabel
-                    control={<Checkbox color='success' />}
+                    control={
+                      <Checkbox
+                        color='success'
+                        checked={answers[index]?.retry === 'y'}
+                        onChange={(_, checked) =>
+                          setAnswers((prev) => ({
+                            ...prev,
+                            [index]: {
+                              ...prev[index],
+                              retry: checked ? 'y' : 'n',
+                            },
+                          }))
+                        }
+                      />
+                    }
                     label='재지시'
                   />
                   <Stack
@@ -226,7 +255,7 @@ export default function ADAS08() {
                     {testReplyOptions.map((option) => (
                       <Stack
                         key={option.value}
-                        onClick={() => setSelected(option.value)}
+                        onClick={() => handleValueChange(`${index}`, option.value)}
                         sx={{
                           width: '150px',
                           height: '75px',
@@ -235,10 +264,10 @@ export default function ADAS08() {
                           cursor: 'pointer',
                           fontWeight: 'bold',
                           borderRadius: '16px',
-                          border: selected === option.value ? '1px solid #68AD7E' : '1px solid #ddd',
-                          color: selected === option.value ? '#fff' : '#333',
-                          backgroundColor: selected === option.value ? '#68AD7E' : '#fff',
-                          boxShadow: selected === option.value ? '0 0 8px #68AD7E' : 'none',
+                          border: answers[index]?.seen === option.value ? '1px solid #68AD7E' : '1px solid #ddd',
+                          color: answers[index]?.seen === option.value ? '#fff' : '#333',
+                          backgroundColor: answers[index]?.seen === option.value ? '#68AD7E' : '#fff',
+                          boxShadow: answers[index]?.seen === option.value ? '0 0 8px #68AD7E' : 'none',
                         }}
                       >
                         {option.label}

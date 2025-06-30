@@ -1,17 +1,35 @@
 'use client';
 
 import { data as examine1 } from '@/data/examine1';
-import { Checkbox, Divider, Grid, Stack, Typography } from '@mui/material';
+import { Divider, FormControlLabel, Grid, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import Unresolved from '../Unresolved';
 import { Description, Instruction } from '../Instruction';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
+
+type AnswerEntry = {
+  result: Result; // 정답 여부
+};
+
+type Result = 'correct' | 'wrong' | '';
 
 export default function ADAS06() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
+  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
+
+  const handleAnswerChange = (key: string, result: Result) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        result,
+      },
+    }));
+  };
+
   if (!data) return;
 
   return (
@@ -95,21 +113,36 @@ export default function ADAS06() {
                   <Typography variant='body2'>{item.hint}</Typography>
                 </Stack>
               </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
-              </Grid>
-              <Grid size={2}>
-                <Stack alignItems='center'>
-                  <Checkbox
-                  // checked={item.isCorrect || false}
-                  // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                  />
-                </Stack>
+              <Grid size={4}>
+                <RadioGroup
+                  row
+                  value={answers[`0-${idx}`]?.result ?? ''}
+                  onChange={(e) => {
+                    handleAnswerChange(`0-${idx}`, e.target.value as Result);
+                  }}
+                  sx={{ gap: '16px' }}
+                >
+                  <Grid size={6}>
+                    <FormControlLabel
+                      value='correct'
+                      control={<Radio />}
+                      label=''
+                      sx={{
+                        justifyContent: 'center',
+                        width: '100%',
+                        margin: 0,
+                      }}
+                    />
+                  </Grid>
+                  <Grid size={6}>
+                    <FormControlLabel
+                      value='wrong'
+                      control={<Radio />}
+                      label=''
+                      sx={{ justifyContent: 'center', width: '100%', margin: 0 }}
+                    />
+                  </Grid>
+                </RadioGroup>
               </Grid>
             </Grid>
           ))}
