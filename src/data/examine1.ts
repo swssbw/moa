@@ -206,22 +206,22 @@ export const data: ADASITEM[] = [
           {
             name: '꽃',
             hint: '주로 정원에서 키우는 것',
-            src: '/images/5.png',
+            src: '/images/1.png',
           },
           {
             name: '침대',
             hint: '누워 자는 곳',
-            src: '/images/5.png',
+            src: '/images/2.png',
           },
           {
             name: '호루라기',
             hint: '입으로 불 때 소리가 나는 것',
-            src: '/images/5.png',
+            src: '/images/3.png',
           },
           {
             name: '연필',
             hint: '글씨를 쓸 때 사용하는 것',
-            src: '/images/5.png',
+            src: '/images/4.png',
           },
           {
             name: '지갑',
@@ -231,37 +231,37 @@ export const data: ADASITEM[] = [
           {
             name: '가면',
             hint: '얼굴을 가릴 때 쓰는 것',
-            src: '/images/5.png',
+            src: '/images/6.png',
           },
           {
             name: '가위',
             hint: '종이를 자르는 것',
-            src: '/images/5.png',
+            src: '/images/7.png',
           },
           {
             name: '머리빗',
             hint: '머리카락에 사용하는 것',
-            src: '/images/5.png',
+            src: '/images/8.png',
           },
           {
             name: '딸랑이',
             hint: '갓난 아기의 장난감',
-            src: '/images/5.png',
+            src: '/images/9.png',
           },
           {
             name: '하모니카',
             hint: '악기',
-            src: '/images/5.png',
+            src: '/images/10.png',
           },
           {
             name: '청진기',
             hint: '의사가 심장 소리를 들을 때 사용하는 것',
-            src: '/images/5.png',
+            src: '/images/11.png',
           },
           {
             name: '족집게',
             hint: '손으로 잡기 힘든 작은 물건을 집을 때 사용하는 것',
-            src: '/images/5.png',
+            src: '/images/12.png',
           },
         ],
       },
@@ -347,7 +347,7 @@ export const data: ADASITEM[] = [
   },
   {
     cognitiveId: 7,
-    cognitiveName: '',
+    cognitiveName: '지남력',
     testId: 'ADAS_07',
     items: [
       {

@@ -19,6 +19,7 @@ export default function ADAS01() {
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   const [contentModalOpen, setContentModalOpen] = useState(false);
+  const [answer, setAnswer] = useState<Set<string>>(new Set());
 
   const handleClickOpen = () => {
     setContentModalOpen(true);
@@ -26,6 +27,17 @@ export default function ADAS01() {
 
   const handleClose = () => {
     setContentModalOpen(false);
+  };
+
+  const handleWordCheck = (word: string, checked: boolean) => {
+    const updated = new Set(answer);
+    if (checked) {
+      updated.add(word);
+    } else {
+      updated.delete(word);
+    }
+
+    setAnswer(updated);
   };
 
   if (!data) return;
@@ -68,7 +80,13 @@ export default function ADAS01() {
               >
                 <FormControlLabel
                   key={index}
-                  control={<Checkbox name={word.name} />}
+                  control={
+                    <Checkbox
+                      name={word.name}
+                      checked={answer.has(word.name)}
+                      onChange={(_, checked) => handleWordCheck(word.name, checked)}
+                    />
+                  }
                   label={<Typography component='span'>{word.name}</Typography>}
                 />
               </Grid>

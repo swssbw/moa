@@ -2,17 +2,19 @@
 
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
-import { Stack, Checkbox, Typography, Grid, Divider } from '@mui/material';
+import { Stack, Typography, Grid, Divider, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 
 import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
+import { useState } from 'react';
 
 export default function ADAS02() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
+  const [answerState, setAnswerState] = useState<Record<string, 'correct' | 'wrong' | ''>>({});
 
   if (!data) return;
 
@@ -25,10 +27,10 @@ export default function ADAS02() {
         <SectionTitle data={data} />
 
         <Stack gap={10}>
-          {data.items.map((item, idx) => (
-            <div key={idx}>
+          {data.items.map((item, idx1) => (
+            <div key={idx1}>
               <Stack
-                key={idx}
+                key={idx1}
                 gap={2}
               >
                 {item.instructions.map((item) => (
@@ -77,32 +79,52 @@ export default function ADAS02() {
                     </Grid>
                   </Grid>
 
-                  {item.content.map((con, idx) => (
+                  {item.content.map((con, idx2) => (
                     <Grid
                       container
                       spacing={2}
-                      key={idx}
+                      key={idx2}
                       alignItems='center'
                       sx={{ p: 1, borderBottom: '1px solid #ddd', pb: 1 }}
                     >
                       <Grid size={8}>
                         <Typography fontWeight='bold'>{con.name}</Typography>
                       </Grid>
-                      <Grid size={2}>
-                        <Stack alignItems='center'>
-                          <Checkbox
-                          // checked={item.isCorrect || false}
-                          // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                          />
-                        </Stack>
-                      </Grid>
-                      <Grid size={2}>
-                        <Stack alignItems='center'>
-                          <Checkbox
-                          // checked={item.isCorrect || false}
-                          // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                          />
-                        </Stack>
+
+                      <Grid size={4}>
+                        <RadioGroup
+                          row
+                          value={answerState[`${idx1}-${idx2}`] ?? ''}
+                          onChange={(e) => {
+                            console.log(answerState);
+                            setAnswerState((prev) => ({
+                              ...prev,
+                              [idx1 + '-' + idx2]: e.target.value as 'correct' | 'wrong' | '',
+                            }));
+                          }}
+                          sx={{ gap: '16px' }}
+                        >
+                          <Grid size={6}>
+                            <FormControlLabel
+                              value='correct'
+                              control={<Radio />}
+                              label=''
+                              sx={{
+                                justifyContent: 'center',
+                                width: '100%',
+                                margin: 0,
+                              }}
+                            />
+                          </Grid>
+                          <Grid size={6}>
+                            <FormControlLabel
+                              value='wrong'
+                              control={<Radio />}
+                              label=''
+                              sx={{ justifyContent: 'center', width: '100%', margin: 0 }}
+                            />
+                          </Grid>
+                        </RadioGroup>
                       </Grid>
                     </Grid>
                   ))}

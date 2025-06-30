@@ -5,7 +5,17 @@ import Image from 'next/image';
 import Unresolved from '../Unresolved';
 import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Checkbox, Divider, Grid, Stack, TextField, Typography, Switch, FormControlLabel } from '@mui/material';
+import {
+  Divider,
+  Grid,
+  Stack,
+  TextField,
+  Typography,
+  Switch,
+  FormControlLabel,
+  RadioGroup,
+  Radio,
+} from '@mui/material';
 import FullScreenModal from '../FullScreenModal';
 import SectionCard from '../SectionCard';
 import { useState } from 'react';
@@ -14,13 +24,20 @@ import SectionTitle, { SectionSubTitle } from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
 import EmblaCarousel from '../carousel';
 
+type AnswerEntry = {
+  value: string; // ex) '사과'
+  result: Result; // 정답 여부
+};
+
+type Result = 'correct' | 'wrong' | '';
+
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
-  console.log(data);
 
   const [contentModalOpen, setContentModalOpen] = useState(false);
+  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
 
   const handleClickOpen = () => {
     setContentModalOpen(true);
@@ -36,6 +53,26 @@ export default function ADAS05() {
     setHintMap((prev) => ({
       ...prev,
       [index]: !prev[index],
+    }));
+  };
+
+  const handleAnswerChange = (key: string, value: string) => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        value,
+        result: '',
+      },
+    }));
+  };
+
+  const handleResultChange = (key: string, result: 'correct' | 'wrong' | '') => {
+    setAnswers((prev) => ({
+      ...prev,
+      [key]: {
+        ...prev[key],
+        result,
+      },
     }));
   };
 
@@ -136,25 +173,40 @@ export default function ADAS05() {
                   <TextField
                     size='small'
                     fullWidth
-                    // value={item.answer || ''}
-                    // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                    disabled
+                    defaultValue={answers[`0-${idx}`]?.value || ''}
                   />
                 </Grid>
-                <Grid size={2}>
-                  <Stack alignItems='center'>
-                    <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                    />
-                  </Stack>
-                </Grid>
-                <Grid size={2}>
-                  <Stack alignItems='center'>
-                    <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                    />
-                  </Stack>
+                <Grid size={4}>
+                  <RadioGroup
+                    row
+                    value={answers[`0-${idx}`]?.result ?? ''}
+                    onChange={(e) => {
+                      handleResultChange(`0-${idx}`, e.target.value as Result);
+                    }}
+                    sx={{ gap: '16px' }}
+                  >
+                    <Grid size={6}>
+                      <FormControlLabel
+                        value='correct'
+                        control={<Radio />}
+                        label=''
+                        sx={{
+                          justifyContent: 'center',
+                          width: '100%',
+                          margin: 0,
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={6}>
+                      <FormControlLabel
+                        value='wrong'
+                        control={<Radio />}
+                        label=''
+                        sx={{ justifyContent: 'center', width: '100%', margin: 0 }}
+                      />
+                    </Grid>
+                  </RadioGroup>
                 </Grid>
               </Grid>
             ))}
@@ -244,25 +296,40 @@ export default function ADAS05() {
                   <TextField
                     size='small'
                     fullWidth
-                    // value={item.answer || ''}
-                    // onChange={(e) => handleAnswerChange(idx, e.target.value)}
+                    value={answers[`1-${idx}`]?.value ?? ''}
+                    onChange={(e) => handleAnswerChange(`1-${idx}`, e.target.value)}
                   />
                 </Grid>
-                <Grid size={2}>
-                  <Stack alignItems='center'>
-                    <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                    />
-                  </Stack>
-                </Grid>
-                <Grid size={2}>
-                  <Stack alignItems='center'>
-                    <Checkbox
-                    // checked={item.isCorrect || false}
-                    // onChange={(e) => handleCheck(idx, 'isCorrect', e.target.checked)}
-                    />
-                  </Stack>
+                <Grid size={4}>
+                  <RadioGroup
+                    row
+                    value={answers[`1-${idx}`]?.result ?? ''}
+                    onChange={(e) => {
+                      handleResultChange(`1-${idx}`, e.target.value as Result);
+                    }}
+                    sx={{ gap: '16px' }}
+                  >
+                    <Grid size={6}>
+                      <FormControlLabel
+                        value='correct'
+                        control={<Radio />}
+                        label=''
+                        sx={{
+                          justifyContent: 'center',
+                          width: '100%',
+                          margin: 0,
+                        }}
+                      />
+                    </Grid>
+                    <Grid size={6}>
+                      <FormControlLabel
+                        value='wrong'
+                        control={<Radio />}
+                        label=''
+                        sx={{ justifyContent: 'center', width: '100%', margin: 0 }}
+                      />
+                    </Grid>
+                  </RadioGroup>
                 </Grid>
               </Grid>
             ))}
@@ -304,11 +371,15 @@ export default function ADAS05() {
               <Image
                 src={item.src as string}
                 alt={item.hint as string}
-                width={200}
+                width={250}
                 height={250}
               />
               <Typography sx={{ height: '30px', color: 'text.secondary' }}>{!!hintMap[index] && item.hint}</Typography>
-              <TextField placeholder='답변 입력' />
+              <TextField
+                placeholder='답변 입력'
+                value={answers[`0-${index}`]?.value || ''}
+                onChange={(e) => handleAnswerChange(`0-${index}`, e.target.value)}
+              />
             </Stack>
           ))}
         />

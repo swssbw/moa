@@ -8,13 +8,26 @@ import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Instruction } from '../Instruction';
+import { useState } from 'react';
 
 export default function ADAS04() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
+  const [answer, setAnswer] = useState<Set<string>>(new Set());
 
   if (!data) return;
+
+  const handleWordCheck = (word: string, checked: boolean) => {
+    const updated = new Set(answer);
+    if (checked) {
+      updated.add(word);
+    } else {
+      updated.delete(word);
+    }
+
+    setAnswer(updated);
+  };
 
   return (
     <Stack
@@ -47,8 +60,13 @@ export default function ADAS04() {
               key={index}
             >
               <FormControlLabel
-                key={index}
-                control={<Checkbox name={word.name} />}
+                control={
+                  <Checkbox
+                    name={word.name}
+                    checked={answer.has(word.name)}
+                    onChange={(_, checked) => handleWordCheck(word.name, checked)}
+                  />
+                }
                 label={<Typography component='span'>{word.name}</Typography>}
               />
             </Grid>

@@ -1,7 +1,7 @@
 'use client';
 
 import { data as examine1 } from '@/data/examine1';
-import { Checkbox, Divider, FormControlLabel, Stack, Typography } from '@mui/material';
+import { Divider, FormControlLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 import { ReactSketchCanvas, ReactSketchCanvasRef } from 'react-sketch-canvas';
 import { useState, RefObject, createRef } from 'react';
 import Image from 'next/image';
@@ -93,22 +93,40 @@ export default function ADAS03() {
           {images.map((img, idx) => (
             <Stack
               direction='row'
+              gap={5}
               key={idx}
             >
               <Stack>
                 <Typography fontWeight='bold'>{data.items[0].content[idx].name}</Typography>
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label='정답'
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label='오답(최소1개 이상의 면/부분을 그림)'
-                />
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label='모든 면/부분이 식별 불가능'
-                />
+                <RadioGroup>
+                  <FormControlLabel
+                    value='correct'
+                    control={<Radio />}
+                    label='정답'
+                    sx={{
+                      width: '100%',
+                      margin: 0,
+                    }}
+                  />
+                  <FormControlLabel
+                    value='wrong'
+                    control={<Radio />}
+                    label='오답(최소1개 이상의 면/부분을 그림)'
+                    sx={{
+                      width: '100%',
+                      margin: 0,
+                    }}
+                  />
+                  <FormControlLabel
+                    value='bad'
+                    control={<Radio />}
+                    label='모든 면/부분이 식별 불가능'
+                    sx={{
+                      width: '100%',
+                      margin: 0,
+                    }}
+                  />
+                </RadioGroup>
               </Stack>
 
               <Stack
