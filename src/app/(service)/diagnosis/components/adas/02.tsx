@@ -8,13 +8,14 @@ import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
-import { useState } from 'react';
+import { useADASStore } from '@/hooks/adasStore';
 
 export default function ADAS02() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
-  const [answerState, setAnswerState] = useState<Record<string, 'correct' | 'wrong' | ''>>({});
+
+  const { answer2, setAnswer2 } = useADASStore();
 
   if (!data) return;
 
@@ -94,13 +95,10 @@ export default function ADAS02() {
                       <Grid size={4}>
                         <RadioGroup
                           row
-                          value={answerState[`${idx1}-${idx2}`] ?? ''}
+                          value={answer2[`${idx1}-${idx2}`] ?? ''}
                           onChange={(e) => {
-                            console.log(answerState);
-                            setAnswerState((prev) => ({
-                              ...prev,
-                              [idx1 + '-' + idx2]: e.target.value as 'correct' | 'wrong' | '',
-                            }));
+                            const newAnswer = { ...answer2, [idx1 + '-' + idx2]: e.target.value };
+                            setAnswer2(newAnswer);
                           }}
                           sx={{ gap: '16px' }}
                         >

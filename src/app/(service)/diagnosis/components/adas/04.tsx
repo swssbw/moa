@@ -8,25 +8,25 @@ import { useParams } from 'next/navigation';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Instruction } from '../Instruction';
-import { useState } from 'react';
+import { useADASStore } from '@/hooks/adasStore';
 
 export default function ADAS04() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
-  const [answer, setAnswer] = useState<Set<string>>(new Set());
+  const { answer4, setAnswer4 } = useADASStore();
 
   if (!data) return;
 
   const handleWordCheck = (word: string, checked: boolean) => {
-    const updated = new Set(answer);
+    const updated = new Set(answer4);
     if (checked) {
       updated.add(word);
     } else {
       updated.delete(word);
     }
 
-    setAnswer(updated);
+    setAnswer4([...updated]);
   };
 
   return (
@@ -63,7 +63,7 @@ export default function ADAS04() {
                 control={
                   <Checkbox
                     name={word.name}
-                    checked={answer.has(word.name)}
+                    checked={answer4.includes(word.name)}
                     onChange={(_, checked) => handleWordCheck(word.name, checked)}
                   />
                 }

@@ -7,40 +7,35 @@ import { Divider, FormControlLabel, Grid, Radio, RadioGroup, Stack, TextField, T
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 import { Description } from '../Instruction';
-import { useState } from 'react';
-
-type AnswerEntry = {
-  value: string; // ex) '사과'
-  result: Result; // 정답 여부
-};
-
-type Result = 'correct' | 'wrong' | '';
+import { useADASStore } from '@/hooks/adasStore';
 
 export default function ADAS07() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
-  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
+  const { answer7, setAnswer7 } = useADASStore();
 
   const handleAnswerChange = (key: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
+    const newAnswer = {
+      ...answer7,
       [key]: {
         value,
         result: '',
       },
-    }));
+    };
+    setAnswer7(newAnswer);
   };
 
-  const handleResultChange = (key: string, result: 'correct' | 'wrong' | '') => {
-    setAnswers((prev) => ({
-      ...prev,
+  const handleResultChange = (key: string, result: string) => {
+    const newAnswer = {
+      ...answer7,
       [key]: {
-        ...prev[key],
+        ...answer7[key],
         result,
       },
-    }));
+    };
+    setAnswer7(newAnswer);
   };
 
   if (!data) return;
@@ -121,7 +116,7 @@ export default function ADAS07() {
                   <TextField
                     size='small'
                     fullWidth
-                    value={answers[`0-${idx}`]?.value ?? ''}
+                    value={answer7[`0-${idx}`]?.value ?? ''}
                     onChange={(e) => handleAnswerChange(`0-${idx}`, e.target.value)}
                   />
                 </Stack>
@@ -129,9 +124,9 @@ export default function ADAS07() {
               <Grid size={4}>
                 <RadioGroup
                   row
-                  value={answers[`0-${idx}`]?.result ?? ''}
+                  value={answer7[`0-${idx}`]?.result ?? ''}
                   onChange={(e) => {
-                    handleResultChange(`0-${idx}`, e.target.value as Result);
+                    handleResultChange(`0-${idx}`, e.target.value);
                   }}
                   sx={{ gap: '16px' }}
                 >

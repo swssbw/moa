@@ -7,27 +7,23 @@ import SectionTitle from '../SectionTitle';
 import Unresolved from '../Unresolved';
 import { Description, Instruction } from '../Instruction';
 import { useParams } from 'next/navigation';
-import { useState } from 'react';
-
-type AnswerEntry = {
-  result: Result; // 정답 여부
-};
-
-type Result = 'correct' | 'wrong' | '';
+import { useADASStore } from '@/hooks/adasStore';
 
 export default function ADAS06() {
   const params = useParams<{ index: string }>();
   const currentIndex = parseInt(params.index);
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
-  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
 
-  const handleAnswerChange = (key: string, result: Result) => {
-    setAnswers((prev) => ({
-      ...prev,
+  const { answer6, setAnswer6 } = useADASStore();
+
+  const handleAnswerChange = (key: string, result: string) => {
+    const newAnswer = {
+      ...answer6,
       [key]: {
         result,
       },
-    }));
+    };
+    setAnswer6(newAnswer);
   };
 
   if (!data) return;
@@ -116,9 +112,9 @@ export default function ADAS06() {
               <Grid size={4}>
                 <RadioGroup
                   row
-                  value={answers[`0-${idx}`]?.result ?? ''}
+                  value={answer6[`0-${idx}`]?.result ?? ''}
                   onChange={(e) => {
-                    handleAnswerChange(`0-${idx}`, e.target.value as Result);
+                    handleAnswerChange(`0-${idx}`, e.target.value);
                   }}
                   sx={{ gap: '16px' }}
                 >

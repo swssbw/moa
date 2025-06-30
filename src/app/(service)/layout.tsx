@@ -14,7 +14,6 @@ export default function ServiceLayout({ children }: { children: React.ReactNode 
 
   const TEST_TYPE = pathname.split('/')[2];
 
-  console.log('pathname', pathname.split('/'));
   const currentIndex = parseInt(params.index);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

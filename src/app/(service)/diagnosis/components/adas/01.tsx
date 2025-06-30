@@ -12,6 +12,7 @@ import { Instruction } from '../Instruction';
 import SectionTitle from '../SectionTitle';
 import { CardSwiperContainer } from '../SwiperContainer';
 import { SwiperSlide } from 'swiper/react';
+import { useADASStore } from '@/hooks/adasStore';
 
 export default function ADAS01() {
   const params = useParams<{ index: string }>();
@@ -19,7 +20,8 @@ export default function ADAS01() {
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   const [contentModalOpen, setContentModalOpen] = useState(false);
-  const [answer, setAnswer] = useState<Set<string>>(new Set());
+
+  const { answer1, setAnswer1 } = useADASStore();
 
   const handleClickOpen = () => {
     setContentModalOpen(true);
@@ -30,14 +32,13 @@ export default function ADAS01() {
   };
 
   const handleWordCheck = (word: string, checked: boolean) => {
-    const updated = new Set(answer);
+    const updated = new Set(answer1);
     if (checked) {
       updated.add(word);
     } else {
       updated.delete(word);
     }
-
-    setAnswer(updated);
+    setAnswer1([...updated]);
   };
 
   if (!data) return;
@@ -83,7 +84,7 @@ export default function ADAS01() {
                   control={
                     <Checkbox
                       name={word.name}
-                      checked={answer.has(word.name)}
+                      checked={answer1.includes(word.name)}
                       onChange={(_, checked) => handleWordCheck(word.name, checked)}
                     />
                   }

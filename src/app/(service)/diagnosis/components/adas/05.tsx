@@ -23,13 +23,9 @@ import { ContentButton } from '../ContentButton';
 import SectionTitle, { SectionSubTitle } from '../SectionTitle';
 import { Description, Instruction } from '../Instruction';
 import EmblaCarousel from '../carousel';
+import { useADASStore } from '@/hooks/adasStore';
 
-type AnswerEntry = {
-  value: string; // ex) '사과'
-  result: Result; // 정답 여부
-};
-
-type Result = 'correct' | 'wrong' | '';
+// type Result = 'correct' | 'wrong' | '';
 
 export default function ADAS05() {
   const params = useParams<{ index: string }>();
@@ -37,7 +33,7 @@ export default function ADAS05() {
   const data = examine1.find((item) => item.cognitiveId === currentIndex);
 
   const [contentModalOpen, setContentModalOpen] = useState(false);
-  const [answers, setAnswers] = useState<Record<string, AnswerEntry>>({});
+  const { answer5, setAnswer5 } = useADASStore();
 
   const handleClickOpen = () => {
     setContentModalOpen(true);
@@ -57,23 +53,25 @@ export default function ADAS05() {
   };
 
   const handleAnswerChange = (key: string, value: string) => {
-    setAnswers((prev) => ({
-      ...prev,
+    const newAnswer = {
+      ...answer5,
       [key]: {
         value,
         result: '',
       },
-    }));
+    };
+    setAnswer5(newAnswer);
   };
 
-  const handleResultChange = (key: string, result: 'correct' | 'wrong' | '') => {
-    setAnswers((prev) => ({
-      ...prev,
+  const handleResultChange = (key: string, result: string) => {
+    const newAnswer = {
+      ...answer5,
       [key]: {
-        ...prev[key],
+        ...answer5[key],
         result,
       },
-    }));
+    };
+    setAnswer5(newAnswer);
   };
 
   if (!data) return;
@@ -174,15 +172,15 @@ export default function ADAS05() {
                     size='small'
                     fullWidth
                     disabled
-                    defaultValue={answers[`0-${idx}`]?.value || ''}
+                    defaultValue={answer5[`0-${idx}`]?.value || ''}
                   />
                 </Grid>
                 <Grid size={4}>
                   <RadioGroup
                     row
-                    value={answers[`0-${idx}`]?.result ?? ''}
+                    value={answer5[`0-${idx}`]?.result ?? ''}
                     onChange={(e) => {
-                      handleResultChange(`0-${idx}`, e.target.value as Result);
+                      handleResultChange(`0-${idx}`, e.target.value);
                     }}
                     sx={{ gap: '16px' }}
                   >
@@ -296,16 +294,16 @@ export default function ADAS05() {
                   <TextField
                     size='small'
                     fullWidth
-                    value={answers[`1-${idx}`]?.value ?? ''}
+                    value={answer5[`1-${idx}`]?.value ?? ''}
                     onChange={(e) => handleAnswerChange(`1-${idx}`, e.target.value)}
                   />
                 </Grid>
                 <Grid size={4}>
                   <RadioGroup
                     row
-                    value={answers[`1-${idx}`]?.result ?? ''}
+                    value={answer5[`1-${idx}`]?.result ?? ''}
                     onChange={(e) => {
-                      handleResultChange(`1-${idx}`, e.target.value as Result);
+                      handleResultChange(`1-${idx}`, e.target.value);
                     }}
                     sx={{ gap: '16px' }}
                   >
@@ -377,7 +375,7 @@ export default function ADAS05() {
               <Typography sx={{ height: '30px', color: 'text.secondary' }}>{!!hintMap[index] && item.hint}</Typography>
               <TextField
                 placeholder='답변 입력'
-                value={answers[`0-${index}`]?.value || ''}
+                value={answer5[`0-${index}`]?.value || ''}
                 onChange={(e) => handleAnswerChange(`0-${index}`, e.target.value)}
               />
             </Stack>
