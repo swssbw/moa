@@ -1,6 +1,7 @@
 'use client';
 
 import { Stack, Typography } from '@mui/material';
+
 import SectionCard from '../SectionCard';
 
 export default function Result() {

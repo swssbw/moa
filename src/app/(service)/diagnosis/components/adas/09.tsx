@@ -1,12 +1,15 @@
 'use client';
 
-import Unresolved from '../Unresolved';
-import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
+
 import { Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
+
+import { data as examine1 } from '@/data/examine1';
+
+import { Description } from '../Instruction';
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
-import { Description } from '../Instruction';
+import Unresolved from '../Unresolved';
 
 export default function ADAS09() {
   const params = useParams<{ index: string }>();
@@ -32,7 +35,7 @@ export default function ADAS09() {
               spacing={2}
               sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
             >
-              <Grid size={6}></Grid>
+              <Grid size={6} />
               <Grid size={6}>
                 <Typography
                   align='center'

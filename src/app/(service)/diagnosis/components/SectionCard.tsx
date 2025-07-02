@@ -1,5 +1,6 @@
-import { Stack } from '@mui/material';
 import { PropsWithChildren } from 'react';
+
+import { Stack } from '@mui/material';
 
 export default function SectionCard({ children }: PropsWithChildren) {
   return (

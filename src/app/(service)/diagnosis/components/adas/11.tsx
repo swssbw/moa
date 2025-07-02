@@ -1,7 +1,10 @@
 'use client';
-import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
+
 import { FormControl, FormControlLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material';
+
+import { data as examine1 } from '@/data/examine1';
+
 import SectionTitle from '../SectionTitle';
 
 export default function ADAS11() {
@@ -35,7 +38,7 @@ export default function ADAS11() {
                     direction='row'
                     gap={2}
                   >
-                    <Typography fontWeight={'bold'}>{item.name}</Typography>
+                    <Typography fontWeight="bold">{item.name}</Typography>
                     <Typography>{item.hint}</Typography>
                   </Stack>
                 }

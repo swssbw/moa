@@ -1,9 +1,12 @@
 'use client';
 
-import { data as cist1 } from '@/data/cist1';
+import { useParams } from 'next/navigation';
+
 import { Stack, Typography, Grid, TextField } from '@mui/material';
 
-import { useParams } from 'next/navigation';
+import { data as cist1 } from '@/data/cist1';
+
+
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
 

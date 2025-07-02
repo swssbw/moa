@@ -1,7 +1,8 @@
-import { Button, Dialog, Slide, Stack } from '@mui/material';
 import { forwardRef, PropsWithChildren } from 'react';
-import { TransitionProps } from '@mui/material/transitions';
+
 import CheckIcon from '@mui/icons-material/Check';
+import { Button, Dialog, Slide, Stack } from '@mui/material';
+import { TransitionProps } from '@mui/material/transitions';
 
 const Transition = forwardRef(function Transition(
   props: TransitionProps & {

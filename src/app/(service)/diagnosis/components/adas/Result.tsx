@@ -1,9 +1,11 @@
 'use client';
 
 import { Button, Grid, Stack, Typography } from '@mui/material';
-import SectionCard from '../SectionCard';
-import { useADASStore } from '@/hooks/adasStore';
+
 import { data } from '@/data/examine1';
+import { useADASStore } from '@/hooks/adasStore';
+
+import SectionCard from '../SectionCard';
 
 export default function ADAS01() {
   const { totalScore, calculateTotalScore } = useADASStore();
@@ -34,7 +36,7 @@ export default function ADAS01() {
               spacing={2}
               sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.200' }}
             >
-              <Grid size={1}></Grid>
+              <Grid size={1} />
               <Grid size={8}>
                 <Typography
                   align='center'
@@ -82,7 +84,7 @@ export default function ADAS01() {
               spacing={2}
               sx={{ p: 1, borderBottom: '1px solid #ddd', backgroundColor: 'grey.100' }}
             >
-              <Grid size={1}></Grid>
+              <Grid size={1} />
               <Grid size={8}>
                 <Typography
                   align='right'

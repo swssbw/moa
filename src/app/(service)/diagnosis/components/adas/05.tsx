@@ -1,10 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-
-import Unresolved from '../Unresolved';
-import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
+import { useState } from 'react';
+
 import {
   Divider,
   Grid,
@@ -16,14 +15,17 @@ import {
   RadioGroup,
   Radio,
 } from '@mui/material';
-import FullScreenModal from '../FullScreenModal';
-import SectionCard from '../SectionCard';
-import { useState } from 'react';
-import { ContentButton } from '../ContentButton';
-import SectionTitle, { SectionSubTitle } from '../SectionTitle';
-import { Description, Instruction } from '../Instruction';
-import EmblaCarousel from '../carousel';
+
+import { data as examine1 } from '@/data/examine1';
 import { useADASStore } from '@/hooks/adasStore';
+
+import EmblaCarousel from '../carousel';
+import { ContentButton } from '../ContentButton';
+import FullScreenModal from '../FullScreenModal';
+import { Description, Instruction } from '../Instruction';
+import SectionCard from '../SectionCard';
+import SectionTitle, { SectionSubTitle } from '../SectionTitle';
+import Unresolved from '../Unresolved';
 
 // type Result = 'correct' | 'wrong' | '';
 

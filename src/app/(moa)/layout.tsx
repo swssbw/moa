@@ -1,9 +1,11 @@
 'use client';
 
-import Logo from '@/components/logo';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+
 import { Box, Typography, Stack, Paper } from '@mui/material';
+
+import Logo from '@/components/logo';
 
 const menuItems = [
   { text: '인지 재활 서비스', path: '/service' },
@@ -41,7 +43,7 @@ export default function MoaLayout({
         }}
       >
         <Stack gap={2}>
-          <Stack alignItems={'center'}>
+          <Stack alignItems="center">
             <Logo />
             <Typography
               variant='h4'

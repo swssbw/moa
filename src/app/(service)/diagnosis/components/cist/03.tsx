@@ -1,12 +1,16 @@
 'use client';
 
-import { data as cist1 } from '@/data/cist1';
+import { useParams } from 'next/navigation';
+import React from 'react';
+
 import { Stack, Checkbox, Typography, Grid } from '@mui/material';
 
-import { useParams } from 'next/navigation';
+import { data as cist1 } from '@/data/cist1';
+
+
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
-import React from 'react';
+
 
 export default function CIST03() {
   const params = useParams<{ index: string }>();

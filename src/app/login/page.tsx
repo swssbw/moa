@@ -1,9 +1,11 @@
 'use client';
-import Logocopy from '@/components/logo';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useGlobalStore } from '@/hooks/globalStore';
+
 import { Box, Stack, TextField, Button, Typography } from '@mui/material';
+
+import Logocopy from '@/components/logo';
+import { useGlobalStore } from '@/hooks/globalStore';
 
 export default function Home() {
   const [id, setId] = useState('');

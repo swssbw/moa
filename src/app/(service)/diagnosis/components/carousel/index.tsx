@@ -1,11 +1,13 @@
-import React from 'react';
 import { EmblaOptionsType } from 'embla-carousel';
+import useEmblaCarousel from 'embla-carousel-react';
+import React from 'react';
+
+import { Stack } from '@mui/material';
 
 import { PrevButton, NextButton, usePrevNextButtons } from './EmblaArrowButtons';
-import useEmblaCarousel from 'embla-carousel-react';
 import { SelectedSnapDisplay, useSelectedSnapDisplay } from './EmblaSelectedSnapDisplay';
+
 import './index.css';
-import { Stack } from '@mui/material';
 
 type PropType = {
   slides: React.JSX.Element[];

@@ -1,10 +1,12 @@
 'use client';
 
-import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 import { useRouter, useParams, usePathname } from 'next/navigation';
-import { Box, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
-import SettingsIcon from '@mui/icons-material/Settings';
 import React from 'react';
+
+import SettingsIcon from '@mui/icons-material/Settings';
+import { Box, Button, Stack, IconButton, Menu, MenuItem } from '@mui/material';
+
+import { useDiagnosisStore } from '@/hooks/diagnosisStore';
 
 export default function ServiceLayout({ children }: { children: React.ReactNode }) {
   const { setBaseFontSize } = useDiagnosisStore();

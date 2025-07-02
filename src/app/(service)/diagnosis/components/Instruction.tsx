@@ -1,5 +1,6 @@
-import Nl2br from '@/components/Nl2br';
 import { Stack, Typography } from '@mui/material';
+
+import Nl2br from '@/components/Nl2br';
 
 export function Instruction({ item }: { item: { situation: string; script: string } }) {
   return (

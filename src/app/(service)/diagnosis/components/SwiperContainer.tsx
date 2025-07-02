@@ -1,13 +1,13 @@
 import 'swiper/css';
 import 'swiper/css/effect-cards';
 import 'swiper/css/pagination';
-import { IconButton, Stack } from '@mui/material';
+import { PropsWithChildren } from 'react';
+import { EffectCards, Navigation, Pagination } from 'swiper/modules';
+import { Swiper } from 'swiper/react';
+
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-import { PropsWithChildren } from 'react';
-
-import { Swiper } from 'swiper/react';
-import { EffectCards, Navigation, Pagination } from 'swiper/modules';
+import { IconButton, Stack } from '@mui/material';
 
 export default function SwiperContainer({ children }: PropsWithChildren) {
   return (
@@ -57,8 +57,8 @@ export function CardSwiperContainer({ children }: PropsWithChildren) {
       <Stack
         direction='row'
         alignItems='center'
-        width={'800px'}
-        height={'550px'}
+        width="800px"
+        height="550px"
       >
         <IconButton
           className='custom_prev'
@@ -74,7 +74,7 @@ export function CardSwiperContainer({ children }: PropsWithChildren) {
             type: 'fraction',
           }}
           loop={true}
-          effect={'cards'}
+          effect="cards"
           modules={[Navigation, EffectCards, Pagination]}
           navigation={{
             nextEl: '.custom_next',

@@ -1,15 +1,18 @@
 'use client';
 
-import { data as examine1 } from '@/data/examine1';
 import { useParams } from 'next/navigation';
-import { Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
-import SectionTitle from '../SectionTitle';
 import { useState } from 'react';
-import { Description, Instruction } from '../Instruction';
-import SectionCard from '../SectionCard';
+
+import { Checkbox, Divider, FormControlLabel, Grid, Stack, Typography } from '@mui/material';
+
+import { data as examine1 } from '@/data/examine1';
+
+import EmblaCarousel from '../carousel';
 import { ContentButton } from '../ContentButton';
 import FullScreenModal from '../FullScreenModal';
-import EmblaCarousel from '../carousel';
+import { Description, Instruction } from '../Instruction';
+import SectionCard from '../SectionCard';
+import SectionTitle from '../SectionTitle';
 
 type AnswerEntry = {
   seen: 'y' | 'n' | '';

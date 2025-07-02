@@ -1,12 +1,14 @@
-import { data as exam } from '@/data/examine1';
 import { Box, Stack, Typography, Checkbox, FormControlLabel, TextField } from '@mui/material';
+
+import { data as exam } from '@/data/examine1';
+
 import SectionCard from './SectionCard';
 
 export default function Unresolved({ data }: { data: (typeof exam)[0] }) {
   return (
     <SectionCard>
       <Stack gap={2}>
-        <Typography color={'textSecondary'}>{data.cognitiveName} - 리뷰</Typography>
+        <Typography color="textSecondary">{data.cognitiveName} - 리뷰</Typography>
         <Box>
           <FormControlLabel
             control={

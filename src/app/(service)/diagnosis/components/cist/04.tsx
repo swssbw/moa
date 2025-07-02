@@ -1,13 +1,17 @@
 'use client';
 
-import { data as cist1 } from '@/data/cist1';
+import Image from 'next/image';
+import { useParams } from 'next/navigation';
+import { ReactSketchCanvas } from 'react-sketch-canvas';
+
 import { Stack, Typography, Grid, RadioGroup, FormControl, FormControlLabel, Radio } from '@mui/material';
 
-import { useParams } from 'next/navigation';
+import { data as cist1 } from '@/data/cist1';
+
+
 import SectionCard from '../SectionCard';
 import SectionTitle from '../SectionTitle';
-import Image from 'next/image';
-import { ReactSketchCanvas } from 'react-sketch-canvas';
+
 
 export default function CIST04() {
   const params = useParams<{ index: string }>();
@@ -65,17 +69,17 @@ export default function CIST04() {
                   <FormControlLabel
                     value={0}
                     control={<Radio />}
-                    label={'0'}
+                    label="0"
                   />
                   <FormControlLabel
                     value={1}
                     control={<Radio />}
-                    label={'1'}
+                    label="1"
                   />
                   <FormControlLabel
                     value={2}
                     control={<Radio />}
-                    label={'2'}
+                    label="2"
                   />
                 </RadioGroup>
               </FormControl>
