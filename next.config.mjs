@@ -11,6 +11,9 @@ const nextConfig = {
       },
     ];
   },
+  eslint: {
+    dirs: ['src'],
+  },
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
