@@ -1,6 +1,9 @@
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
+  shape: {
+    borderRadius: 16,
+  },
   typography: {
     fontFamily: 'Pretendard',
     h1: {
@@ -28,9 +31,11 @@ const theme = createTheme({
       fontWeight: 700,
     },
     body1: {
+      fontSize: '1rem',
       lineHeight: 1.5,
     },
     body2: {
+      fontSize: '0.875rem',
       lineHeight: 1.5,
     },
   },
@@ -75,6 +80,17 @@ const theme = createTheme({
           '&.MuiButton-outlined': {
             backgroundColor: '#ffffff',
           },
+        },
+        sizeLarge: {
+          fontSize: '1.125rem',
+          padding: '16px 20px',
+        },
+        sizeMedium: {
+          fontSize: '1rem',
+          padding: '14px 16px',
+        },
+        sizeSmall: {
+          padding: '8px 10px',
         },
       },
       defaultProps: {

@@ -98,7 +98,7 @@ export default function Home() {
               fontWeight={700}
               fontFamily='IBMPlexSans'
             >
-              기분 Check!
+              기분 췍!
             </Typography>
             <Stack
               direction='row'
